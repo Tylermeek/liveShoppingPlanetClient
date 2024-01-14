@@ -3,7 +3,8 @@ import { Icon, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { getEnumValue } from "utlis/type";
-import { TabIconName, tabConfig } from "./navigatorsConfig";
+import { TabIconName, tabConfig } from "./TabConfig";
+import { scaleSizeH } from "utlis/scaleSize";
 
 function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     return (
@@ -56,16 +57,28 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
 const TabNav = createBottomTabNavigator()
 
-const TabBar: React.FC = () => {
+export type TabBarParamList = {
+    Home: undefined,
+    Live: undefined
+}
+
+const TabBar: React.FC<TabBarParamList> = () => {
     return <>
-        <TabNav.Navigator tabBar={(props) => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
+        <TabNav.Navigator
+            tabBar={(props) => <MyTabBar {...props} />}
+            screenOptions={{ headerShown: false }}
+            sceneContainerStyle={{
+                borderBottomColor: "rgba(0, 0, 0, 0.1)",
+                borderBottomWidth: scaleSizeH(0.5)
+            }}
+        >
             {
-                tabConfig.map(({ name, options, components }) => {
+                tabConfig.map(({ name, options, component }) => {
                     return (
                         <TabNav.Screen
                             key={name}
                             name={name}
-                            component={components}
+                            component={component}
                             options={options}>
                         </TabNav.Screen>
                     )

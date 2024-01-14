@@ -5,14 +5,14 @@ import Live from "screens/Live"
 export const tabConfig = [
     {
         name:"Home",
-        components:Home,
+        component:Home,
         options:{
             title:"首页"
         }
     },
     {
         name:"Live",
-        components: Live,
+        component: Live,
         options:{
             title:"直播"
         }

@@ -3,22 +3,21 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
+type SearchProps = {
+    serachContent: string
+    editable?: boolean
+    updateSearchCb: (serachContent:string) => void
+}
 
-const Search: React.FC = () => {
-    const [search, setSearch] = useState<string>("")
-
-    const updateSearch = (search: string) => {
-        setSearch(search)
-    }
-
+const Search: React.FC<SearchProps> = ({ serachContent, editable = true, updateSearchCb }) => {
     return <>
         <SearchBar
-            value={search}
-            onChangeText={updateSearch}
+            value={serachContent}
+            onChangeText={updateSearchCb}
             placeholder="搜你想搜"
             containerStyle={styles.searchContainer}
             inputContainerStyle={styles.searchInput}
-            leftIcon
+            editable={editable}
         >
         </SearchBar>
     </>
@@ -28,8 +27,6 @@ const styles = StyleSheet.create({
     searchContainer: {
         width: scaleSizeW(270),
         height: scaleSizeH(35),
-        top: scaleSizeH(8),
-        left: scaleSizeW(53),
         fontSize: 12,
         backgroundColor: "yellow",
         borderColor: "transparent",
