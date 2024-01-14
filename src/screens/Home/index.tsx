@@ -1,11 +1,15 @@
 import { Text } from "@rneui/themed";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
+import HeaderBar from "./componets/HeaderBar";
 
-const Home: React.FC = () => {
+type homeProps = {
+}
+
+const Home: React.FC<homeProps> = () => {
     return <>
         <View style={styles.home}>
-            <Text h1>首页</Text>
+            <HeaderBar></HeaderBar>
         </View>
     </>
 }
