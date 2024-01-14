@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import RootStack from "navigators/RootStack";
+import { StyleSheet, View } from "react-native";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <>
+      <StatusBar
+        animated={true}
+        hidden={false}
+        translucent={true}
+        backgroundColor="transparent"
+        barStyle={"default"}
+        showHideTransition={"fade"}
+        networkActivityIndicatorVisible={true}
+      />
+      <RootStack></RootStack>
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
