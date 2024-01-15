@@ -78,7 +78,7 @@ const TabBar: React.FC<TabBarParamList> = () => {
                         <TabNav.Screen
                             key={name}
                             name={name}
-                            component={component}
+                            component={component as any}
                             options={options}>
                         </TabNav.Screen>
                     )

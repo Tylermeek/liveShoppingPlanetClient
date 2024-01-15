@@ -106,7 +106,7 @@ class MyAxios {
   }
 }
 
-export default new MyAxios({
+export const request =  new MyAxios({
   baseURL: 'http://192.168.10.7:4523/m1/3898833-0-default',
   timeout: 1000 * 5,
 });

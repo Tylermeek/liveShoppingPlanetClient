@@ -1,13 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "@rneui/themed";
 import { followingInfo, getLivingfollowingList } from "axios/api/followList";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Views } from "types";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 
 
 const LivingFollowingList: React.FC = () => {
     const [list, setList] = useState<followingInfo[]>([])
+
+    const navigation = useNavigation()
 
     const initList = async () => {
         try {
@@ -20,8 +24,11 @@ const LivingFollowingList: React.FC = () => {
         }
     }
 
-    const goLiveRoom = () => {
-        
+    const goLiveRoom = (user: followingInfo) => {
+        navigation.navigate(Views.LiveRoom, {
+            userId: user.id,
+            userName: user.name
+        })
     }
 
     useEffect(() => {
@@ -32,7 +39,7 @@ const LivingFollowingList: React.FC = () => {
         Array.isArray(list) && list?.length !== 0
             ?
             <View style={styles.container}>
-                <Text style={styles.title}>正在关注</Text>
+                <Text style={styles.title}>正在直播</Text>
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -42,7 +49,7 @@ const LivingFollowingList: React.FC = () => {
                         {
                             list.map((user) => {
                                 return (
-                                    <TouchableOpacity style={styles.user} key={user.id} onPress={goLiveRoom}>
+                                    <TouchableOpacity style={styles.user} key={user.id} onPress={() => goLiveRoom(user)}>
                                         <Avatar
                                             size={32}
                                             rounded

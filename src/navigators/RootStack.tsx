@@ -49,7 +49,7 @@ const RootStack: React.FC<RootStackParamList> = () => {
                             <RootNav.Screen
                                 key={name}
                                 name={name}
-                                component={component}
+                                component={component as any}
                             >
                             </RootNav.Screen>
                         )

@@ -1,4 +1,4 @@
-import request, { IResponse } from "axios/config";
+import {request} from "axios/config";
 
 export interface followingInfo {
   id: number;

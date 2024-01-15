@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 import { useNavigation } from "@react-navigation/native";
 import Search from "components/Search";
+import { Views } from "types";
 
 
 const FakeSearchBanner: React.FC = () => {
@@ -14,7 +15,7 @@ const FakeSearchBanner: React.FC = () => {
         setSearch(search)
     }
     const toSearch = () => {
-        navigation.navigate("SearchDetail")
+        navigation.navigate(Views.SearchDetail)
     }
 
     return <>
@@ -22,7 +23,7 @@ const FakeSearchBanner: React.FC = () => {
             onPress={toSearch}
             activeOpacity={1}
         >
-            <Search serachContent={search} editable={false} updateSearchCb={updateSearch}></Search>
+            <Search searchContent={search} editable={false} updateSearchCb={updateSearch}></Search>
         </TouchableOpacity>
     </>
 }
