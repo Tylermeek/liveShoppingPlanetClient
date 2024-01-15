@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import TabBar, { TabBarParamList } from "./TabBar";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import SearchDetail from "screens/SearchDetail";
+import LiveRoom from "screens/LiveRoom";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> = CompositeScreenProps<
     BottomTabScreenProps<TabBarParamList, T>,
@@ -20,6 +21,10 @@ const routeConfig = [
     {
         name: "SearchDetail",
         component: SearchDetail
+    },
+    {
+        name:"LiveRoom",
+        component: LiveRoom
     }
 ]
 
