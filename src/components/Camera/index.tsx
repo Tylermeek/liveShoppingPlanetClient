@@ -6,7 +6,7 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 const Camera: React.FC = () => {
     return <>
         <Button radius={"sm"} type="clear" style={styles.button}>
-            <Icon name="qr-code-scanner" color="rgba(153, 153, 153, 1)" />
+            <Icon name="qr-code-scanner" color="#cccedc" />
         </Button>
     </>
 }

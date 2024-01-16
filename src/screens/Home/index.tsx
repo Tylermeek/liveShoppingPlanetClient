@@ -1,9 +1,9 @@
 import { Button, Text } from "@rneui/themed";
 import React, { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
-import HeaderBar from "./componets/HeaderBar";
+import HeaderBar from "./components/HeaderBar";
 import { CompositeTabScreenParamList } from "navigators/RootStack";
-import LivingFollowingList from "./componets/LivingFollowingList";
+import LivingFollowingList from "./components/LivingFollowingList";
 
 type HomeProps = CompositeTabScreenParamList<"Home">;
 

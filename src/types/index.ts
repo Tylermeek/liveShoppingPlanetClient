@@ -5,22 +5,25 @@ import React from "react";
 export enum Views {
   Home = "Home",
   Live = "Live",
-  SearchDetail = "SearchDetail",
   LiveRoom = "LiveRoom",
+  SearchDetail = "SearchDetail",
+  SearchResultList = "SearchResultList"
 }
 
-// 设置每个路由需要接受的参数列表
-interface LiveRoomProps {
+// 设置每个路由需要接受的参数列表 注意与组件的参数不同
+interface LiveRoomRouteProps {
   userId: number;
   userName: string;
 }
+
 
 // 处理参数路由映射表
 export type RootStackParamList = {
   [Views.Home]: undefined;
   [Views.Live]: undefined;
+  [Views.LiveRoom]: LiveRoomRouteProps;
   [Views.SearchDetail]: undefined;
-  [Views.LiveRoom]: LiveRoomProps;
+  [Views.SearchResultList]: undefined;
 };
 
 // 定义每个子路由接受的具体参数类型，否则useRoute会丢失参数声明

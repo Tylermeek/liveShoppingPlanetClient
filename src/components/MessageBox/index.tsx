@@ -6,7 +6,7 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 const MessageBox: React.FC = () => {
     return <>
         <Button radius={"sm"} type="clear" style={styles.button}>
-            <Icon name="mode-comment" color="rgba(153, 153, 153, 1)" />
+            <Icon name="mode-comment" color="#cccedc" />
         </Button>
     </>
 }

@@ -42,10 +42,10 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         onLongPress={onLongPress}
-                        style={{ flex: 1, alignItems: "center" }}
+                        style={{ height: scaleSizeH(50), flex: 1,justifyContent:"center", alignItems: "center" }}
                     >
-                        <Icon name={getEnumValue(route.name, TabIconName)} color={isFocused ? '#673ab7' : '#222'}></Icon>
-                        <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
+                        <Icon name={getEnumValue(route.name, TabIconName)} color={isFocused ? '#E36255' : '#b5b7cc'}></Icon>
+                        <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc' }}>
                             {label}
                         </Text>
                     </TouchableOpacity>

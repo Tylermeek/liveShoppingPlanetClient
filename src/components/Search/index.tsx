@@ -31,7 +31,7 @@ const Search: React.FC<SearchProps> = (
                 placeholder={placeholder}
                 containerStyle={styles.searchContainer}
                 inputContainerStyle={styles.searchInput}
-                inputStyle={{ fontSize: scaleSizeH(12) }}
+                inputStyle={{ fontSize: scaleSizeH(12), color:"#d5d7e4" }}
             >
             </SearchBar>
             {
@@ -58,20 +58,19 @@ const styles = StyleSheet.create({
     searchContainer: {
         width: scaleSizeW(270),
         height: scaleSizeH(35),
-        backgroundColor: "yellow",
         borderColor: "transparent",
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        borderRadius: 15,
+        borderRadius: scaleSizeW(15),
+        borderWidth:0,
         padding: 0,
     },
     searchInput: {
         width: scaleSizeW(270),
         height: scaleSizeH(35),
         fontSize: scaleSizeH(8),
-        backgroundColor: "rgba(218, 218, 218, 1)",
-        borderRadius: 15,
+        borderRadius: scaleSizeW(12),
     },
     buttonContainer: {
         width: scaleSizeW(45),

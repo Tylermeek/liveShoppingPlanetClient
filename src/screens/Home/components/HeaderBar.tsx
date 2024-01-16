@@ -1,4 +1,4 @@
-import FakeSearchBanner from "screens/Home/componets/FakeSearchBanner";
+import FakeSearchBanner from "screens/Home/components/FakeSearchBanner";
 import Camera from "components/Camera";
 import MessageBox from "components/MessageBox";
 import React from "react";

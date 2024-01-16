@@ -1,5 +1,5 @@
 import { ListItem } from "@rneui/themed";
-import { getSearchSuggestions, suggestionsList } from "axios/api/search";
+import { getSearchSuggestions, SuggestionsList } from "axios/api/search";
 import Camera from "components/Camera";
 import GoBack from "components/GoBack";
 import Search from "components/Search";
@@ -7,11 +7,14 @@ import React, { useEffect, useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { debounce, uniqueId } from "lodash-es"
+import SuggestionList from "./components/SuggestionList";
+import SearchHistory from "./components/SearchHistory";
+import SearchRecommend from "./components/SearchRecommend";
 
 const SearchDetail: React.FC = () => {
     const [searchRef, setSearchRef] = useState<any>(null)
     const [search, setSearch] = useState<string>("")
-    const [suggestionList, setSuggestionList] = useState<suggestionsList>([])
+    const [suggestionList, setSuggestionList] = useState<SuggestionsList>([])
     const updateSearch = debounce((search: string) => {
         setSearch(search)
         getSuggestionsList(search)
@@ -48,19 +51,16 @@ const SearchDetail: React.FC = () => {
         </View>
         {
             Array.isArray(suggestionList) && suggestionList.length !== 0
-            && (
-                suggestionList.map((suggestion) => {
-                    return (
-                        <ListItem bottomDivider key={uniqueId(suggestion)}>
-                            <ListItem.Content>
-                                <ListItem.Title>{suggestion}</ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                    )
+                ? <SuggestionList suggestionList={suggestionList}></SuggestionList>
+                :
+                <View style={styles.searchContainer}>
+                    <SearchHistory></SearchHistory>
+                    <SearchRecommend></SearchRecommend>
+                </View>
 
-                })
-            )
+
         }
+
     </>
 }
 
@@ -77,6 +77,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: scaleSizeH(0.5),
         marginTop: StatusBar.currentHeight
     },
+    searchContainer:{
+        height:"100%",
+        backgroundColor:"white",
+    }
 })
 
 export default SearchDetail
