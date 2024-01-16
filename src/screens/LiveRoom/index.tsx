@@ -2,10 +2,10 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { RootRouteType } from "types";
+import { RootRouteType, Views } from "types";
 
 const LiveRoom: React.FC = () => {
-    const route = useRoute<RootRouteType>()
+    const route = useRoute<RootRouteType<Views.LiveRoom>>()
 
     const userId = route.params?.userId
     const userName = route.params?.userName

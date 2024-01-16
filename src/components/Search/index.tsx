@@ -1,7 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import { SearchBar, Button, SearchBarProps } from "@rneui/themed";
 import React, { PropsWithChildren, Ref, RefAttributes, RefObject, useState } from "react";
 import { TextInput } from "react-native";
 import { StyleSheet, View } from "react-native";
+import { Views } from "types";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
 type SearchProps = {
@@ -21,17 +23,26 @@ const Search: React.FC<SearchProps> = (
         bindRef,
         updateSearchCb
     }) => {
+    const navigation = useNavigation()
+
+
+    const handlePress = (content: string) => {
+        // getSearchResultList
+        navigation.navigate(Views.SearchResultList, {
+            content
+        })
+    }
     return <>
         <View style={styles.container}>
             <SearchBar
                 value={searchContent}
-                ref={(ref:any) => { bindRef && bindRef(ref) }}
+                ref={(ref: any) => { bindRef && bindRef(ref) }}
                 onChangeText={updateSearchCb}
                 editable={editable}
                 placeholder={placeholder}
                 containerStyle={styles.searchContainer}
                 inputContainerStyle={styles.searchInput}
-                inputStyle={{ fontSize: scaleSizeH(12), color:"#d5d7e4" }}
+                inputStyle={{ fontSize: scaleSizeH(12), color: "grey" }}
             >
             </SearchBar>
             {
@@ -43,6 +54,7 @@ const Search: React.FC<SearchProps> = (
                     buttonStyle={{ height: scaleSizeH(25) }}
                     titleStyle={{ fontSize: scaleSizeH(10) }}
                     radius="sm"
+                    onPress={()=>handlePress(searchContent)}
                 ></Button>
             }
         </View>
@@ -63,7 +75,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "absolute",
         borderRadius: scaleSizeW(15),
-        borderWidth:0,
+        borderWidth: 0,
         padding: 0,
     },
     searchInput: {

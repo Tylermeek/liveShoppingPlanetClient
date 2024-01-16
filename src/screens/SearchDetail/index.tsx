@@ -30,7 +30,7 @@ const SearchDetail: React.FC = () => {
                 console.error(err);
 
             })
-    }, 300)
+    }, 200)
 
     const bindRef = (ref: any) => {
         setSearchRef(ref)

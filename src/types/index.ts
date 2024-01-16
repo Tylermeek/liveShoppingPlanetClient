@@ -16,6 +16,9 @@ interface LiveRoomRouteProps {
   userName: string;
 }
 
+interface SearchResultListProps{
+  content: string
+}
 
 // 处理参数路由映射表
 export type RootStackParamList = {
@@ -23,11 +26,13 @@ export type RootStackParamList = {
   [Views.Live]: undefined;
   [Views.LiveRoom]: LiveRoomRouteProps;
   [Views.SearchDetail]: undefined;
-  [Views.SearchResultList]: undefined;
+  [Views.SearchResultList]: SearchResultListProps;
 };
 
+type test = Pick<RootStackParamList,Views.Home>
+
 // 定义每个子路由接受的具体参数类型，否则useRoute会丢失参数声明
-export type RootRouteType = RouteProp<RootStackParamList>;
+export type RootRouteType<T extends keyof RootStackParamList> = RouteProp<Pick<RootStackParamList,T>>;
 
 // 全局声明useNavigation的参数
 declare global {

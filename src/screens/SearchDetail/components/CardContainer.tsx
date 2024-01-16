@@ -17,10 +17,12 @@ const CardContainer: React.FC<CardContainerProps> = ({ title, contentList = [] }
 
     const navigation = useNavigation()
 
-    
+
     const handlePress = (content: string) => {
         // getSearchResultList
-        navigation.navigate(Views.SearchResultList)
+        navigation.navigate(Views.SearchResultList,{
+            content
+        })
     }
     return <>
         <Card containerStyle={styles.container}>
@@ -39,12 +41,12 @@ const CardContainer: React.FC<CardContainerProps> = ({ title, contentList = [] }
                                         color={"#f9fafb"}
                                         radius="md"
                                         containerStyle={styles.button}
-                                        titleStyle={{ 
-                                            color:"grey",
+                                        buttonStyle={{padding:scaleSizeH(2)}}
+                                        titleStyle={{
+                                            color: "grey",
                                             fontSize: scaleSizeH(10),
-                                            lineHeight:scaleSizeH(12),
-                                         }}
-                                         onPress={()=>handlePress(content)}
+                                        }}
+                                        onPress={() => handlePress(content)}
                                     ></Button>
                                 )
                             })
@@ -59,19 +61,20 @@ const CardContainer: React.FC<CardContainerProps> = ({ title, contentList = [] }
 const styles = StyleSheet.create({
     container: {
         // height: scaleSizeH(120),
-        width: "90%",
+        width: "95%",
+        marginTop:0,
         marginLeft: scaleSizeW(10),
-        borderColor:"transparent",
-        shadowColor:"transparent"
+        borderColor: "transparent",
+        shadowColor: "transparent"
     },
     listConatiner: {
         flexDirection: "row",
         flexWrap: "wrap",
     },
     button: {
-        height: scaleSizeH(28),
-        marginBottom:scaleSizeH(6),
-        marginRight:scaleSizeW(6)
+        height:scaleSizeH(28),
+        marginBottom: scaleSizeH(6),
+        marginRight: scaleSizeW(6)
     }
 })
 

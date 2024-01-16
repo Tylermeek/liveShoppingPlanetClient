@@ -1,9 +1,16 @@
+import { useRoute } from "@react-navigation/native";
+import { Text } from "@rneui/base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { RootRouteType, Views } from "types";
 
 const SearchResultList: React.FC = () => {
+    const route = useRoute<RootRouteType<Views.SearchResultList>>()
+
     return <>
-        <View></View>
+        <View>
+            <Text>{route.params?.content}</Text>
+        </View>
     </>
 }
 
