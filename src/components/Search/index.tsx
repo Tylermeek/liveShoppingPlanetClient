@@ -8,6 +8,7 @@ type SearchProps = {
     searchContent: string
     editable?: boolean
     placeholder?: string
+    bindRef?: Function
     updateSearchCb: (serachContent: string) => void
 }
 
@@ -17,12 +18,14 @@ const Search: React.FC<SearchProps> = (
         searchContent,
         editable = true,
         placeholder = "搜你想搜",
+        bindRef,
         updateSearchCb
     }) => {
     return <>
         <View style={styles.container}>
             <SearchBar
                 value={searchContent}
+                ref={(ref:any) => { bindRef && bindRef(ref) }}
                 onChangeText={updateSearchCb}
                 editable={editable}
                 placeholder={placeholder}

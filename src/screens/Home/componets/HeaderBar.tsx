@@ -1,4 +1,4 @@
-import Search from "screens/Home/componets/FakeSearchBanner";
+import FakeSearchBanner from "screens/Home/componets/FakeSearchBanner";
 import Camera from "components/Camera";
 import MessageBox from "components/MessageBox";
 import React from "react";
@@ -14,7 +14,7 @@ const HeaderBar: React.FC<HeaderBarProps> = () => {
     return <>
         <View style={styles.container}>
             <Camera></Camera>
-            <Search></Search>
+            <FakeSearchBanner></FakeSearchBanner>
             <MessageBox></MessageBox>
         </View>
     </>

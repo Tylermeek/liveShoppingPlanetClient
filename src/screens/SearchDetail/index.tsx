@@ -29,10 +29,21 @@ const SearchDetail: React.FC = () => {
             })
     }, 300)
 
+    const bindRef = (ref: any) => {
+        setSearchRef(ref)
+    }
+
+    useEffect(() => {
+        // 避免组件没有完全渲染成功，无法调用键盘
+        setTimeout(() => {
+            searchRef && searchRef?.focus()
+        }, 50)
+    })
+
     return <>
         <View style={styles.searchBanner}>
             <GoBack></GoBack>
-            <Search searchContent={search} editable={true} updateSearchCb={updateSearch}></Search>
+            <Search bindRef={bindRef} searchContent={search} editable={true} updateSearchCb={updateSearch}></Search>
             <Camera></Camera>
         </View>
         {
