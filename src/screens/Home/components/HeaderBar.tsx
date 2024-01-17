@@ -2,7 +2,7 @@ import FakeSearchBanner from "screens/Home/components/FakeSearchBanner";
 import Camera from "components/Camera";
 import MessageBox from "components/MessageBox";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 type HeaderBarProps = {
@@ -22,7 +22,8 @@ const HeaderBar: React.FC<HeaderBarProps> = () => {
 
 const styles = StyleSheet.create({
     container: {
-        width: scaleSizeW(375),
+        margin: scaleSizeW(10),
+        marginTop:StatusBar.currentHeight,
         height: scaleSizeH(52),
         backgroundColor: "white",
         display: "flex",
@@ -30,7 +31,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         alignItems: "center",
         borderBottomColor: "rgba(0, 0, 0, 0.1)",
-        borderBottomWidth: scaleSizeH(0.5)
+        borderBottomWidth: scaleSizeH(0.5),
+        borderRadius: scaleSizeW(5)
     },
 })
 
