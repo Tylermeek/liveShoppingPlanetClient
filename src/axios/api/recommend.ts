@@ -13,5 +13,22 @@ export const getRecommendlist = () => {
 export type SwiperInfoList = SwiperInfo[];
 
 export const getSiwperList = () => {
-  return request.get<SwiperInfoList>("/ad/swiperList");
+  return request.get<SwiperInfoList>("/recommend/swiperList");
 };
+
+export interface PromotionalActivityInfo {
+  /**
+   * 活动名称
+   */
+  activityName: string;
+  /**
+   * 商品列表
+   */
+  productList: ProductInfo[];
+  [property: string]: any;
+}
+
+
+export const getPromotionalActivity = () => {
+  return request.get<PromotionalActivityInfo>("/recommend/promotionalActivity")
+}

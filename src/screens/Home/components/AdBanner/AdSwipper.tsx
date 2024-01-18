@@ -13,6 +13,7 @@ const AdSwipper: React.FC = () => {
 
     const handlePress = (slide: SwiperInfo) => {
         console.log(slide.id);
+        // TODO 跳转商品详情页
         
     }
     useEffect(() => {
