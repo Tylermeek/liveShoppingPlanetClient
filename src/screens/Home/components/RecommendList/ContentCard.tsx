@@ -17,11 +17,11 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentInfo }) => {
     }
 
     return <>
-        <TouchableOpacity style={styles.container} onPress={() => handlePress(contentInfo)}>
-            <View style={{ flex: 3 }}>
-                <Image source={{ uri: contentInfo.cover }} style={{ height: scaleSizeH(isProductInfo(contentInfo) ? 147.5 : 200), width: "100%", borderTopLeftRadius: scaleSizeW(5), borderTopRightRadius: scaleSizeW(5) }} ></Image>
+        <TouchableOpacity style={[styles.container,{height:scaleSizeH(isProductInfo(contentInfo) ? 200 : 250)}]} onPress={() => handlePress(contentInfo)}>
+            <View style={{ flex: 1 }}>
+                <Image source={{ uri: contentInfo.cover }} style={{ height: "100%", width: "100%", borderTopLeftRadius: scaleSizeW(5), borderTopRightRadius: scaleSizeW(5) }} ></Image>
             </View>
-            <View style={{ flex: 1, padding: scaleSizeH(5) }}>
+            <View style={{ padding: scaleSizeH(5) }}>
                 <Text style={{ height: scaleSizeH(20), fontSize: scaleSizeH(10), lineHeight: scaleSizeH(20) }}>{contentInfo.title}</Text>
 
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>

@@ -8,7 +8,7 @@ import { scaleSizeH } from "utlis/scaleSize";
 
 function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     return (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', backgroundColor:"white" }}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label = options.title || route.name;
@@ -42,10 +42,10 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         onLongPress={onLongPress}
-                        style={{ height: scaleSizeH(50), flex: 1,justifyContent:"center", alignItems: "center" }}
+                        style={{ height: scaleSizeH(40), flex: 1, justifyContent: "center", alignItems: "center" }}
                     >
-                        <Icon name={getEnumValue(route.name, TabIconName)} color={isFocused ? '#E36255' : '#b5b7cc'}></Icon>
-                        <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc' }}>
+                        <Icon name={getEnumValue(route.name, TabIconName)} color={isFocused ? '#E36255' : '#b5b7cc'} style={{ fontSize: scaleSizeH(18) }}></Icon>
+                        <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc', fontSize: scaleSizeH(10) }}>
                             {label}
                         </Text>
                     </TouchableOpacity>
@@ -67,10 +67,7 @@ const TabBar: React.FC<TabBarParamList> = () => {
         <TabNav.Navigator
             tabBar={(props) => <MyTabBar {...props} />}
             screenOptions={{ headerShown: false }}
-            sceneContainerStyle={{
-                borderBottomColor: "rgba(0, 0, 0, 0.1)",
-                borderBottomWidth: scaleSizeH(0.5)
-            }}
+            sceneContainerStyle={{backgroundColor:"transparent"}}
         >
             {
                 tabConfig.map(({ name, options, component }) => {

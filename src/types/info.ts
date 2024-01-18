@@ -118,3 +118,25 @@ export interface ShopInfo {
     shopName: string;
     [property: string]: any;
 }
+
+
+/**
+ * 轮播图信息
+ * 
+ * SwiperInfo
+ */
+export interface SwiperInfo {
+    /**
+     * 轮播图ID
+     */
+    id: string;
+    /**
+     * 轮播图图片地址
+     */
+    image: string;
+    /**
+     * 所属商品ID
+     */
+    productId: string;
+    [property: string]: any;
+}

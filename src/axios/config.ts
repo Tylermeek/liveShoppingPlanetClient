@@ -38,6 +38,8 @@ class MyAxios {
       (response) => {
         // console.log('response.config.url', response.config.url);
         // console.log('response.data', response.data);
+        response.data.code = response.status
+        response.data.message = response.statusText
         return response.data;
       },
       (error) => {
