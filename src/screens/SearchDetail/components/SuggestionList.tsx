@@ -4,7 +4,7 @@ import { SuggestionsList } from "axios/api/search";
 import { uniqueId } from "lodash-es";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Views } from "types";
+import { Views } from "types/config";
 import { scaleSizeH } from "utlis/scaleSize";
 
 export type SuggestionListProps = {

@@ -22,9 +22,9 @@ const HeaderBar: React.FC<HeaderBarProps> = () => {
 
 const styles = StyleSheet.create({
     container: {
-        margin: scaleSizeW(10),
+        margin: scaleSizeW(5),
         marginTop:StatusBar.currentHeight,
-        height: scaleSizeH(52),
+        height: scaleSizeH(45),
         backgroundColor: "white",
         display: "flex",
         flexDirection: "row",
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderBottomColor: "rgba(0, 0, 0, 0.1)",
         borderBottomWidth: scaleSizeH(0.5),
-        borderRadius: scaleSizeW(5)
+        borderRadius: scaleSizeW(30)
     },
 })
 

@@ -18,7 +18,7 @@ const SearchRecommend: React.FC = () => {
     }, [])
     return <>
         {
-            isEmptyArr(contentList) &&
+            !isEmptyArr(contentList) &&
             <CardContainer title="猜你想搜" contentList={contentList}></CardContainer>
         }
     </>

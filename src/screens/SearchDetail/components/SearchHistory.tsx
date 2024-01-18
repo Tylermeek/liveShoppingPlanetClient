@@ -14,7 +14,7 @@ const SearchHistory: React.FC = () => {
     }, [])
     return <>
         {
-            isEmptyArr(contentList) &&
+            !isEmptyArr(contentList) &&
             <CardContainer title="搜索历史" contentList={contentList}></CardContainer>
         }
     </>

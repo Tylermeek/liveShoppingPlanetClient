@@ -1,4 +1,5 @@
 import { Icon, Image, Text } from "@rneui/base";
+import { chunk } from "lodash-es";
 import React from "react";
 import { ImageURISource, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SvgUri } from "react-native-svg";
@@ -68,25 +69,31 @@ const funcList: FuncList = [
 const FuncBlock: React.FC = () => {
 
 
-    const handlePress = (func:FuncInfo) => {
+    const handlePress = (func: FuncInfo) => {
         console.log(`todo jump to ${func.name}`);
-        
+
     }
 
-return <>
-    <View style={styles.container}>
-        {
-            funcList.map((func) => {
-                return <>
-                    <TouchableOpacity style={styles.funcContainer} key={func.name} onPress={() => handlePress(func)}>
-                        <Image style={{ width: scaleSizeH(30), height: scaleSizeH(30), }} source={{ uri: func.icon }}></Image>
-                        <Text style={{ fontSize: scaleSizeW(9), lineHeight: scaleSizeH(24), textAlign: "center" }}>{func.title}</Text>
-                    </TouchableOpacity>
-                </>
-            })
-        }
-    </View>
-</>
+    return <>
+        <View style={styles.container}>
+            {
+                chunk(funcList, 5).map((subList) => {
+                    return <View style={{display:"flex", flexDirection:"row"}}>
+                        {
+                            subList.map((func) => {
+                                return <>
+                                    <TouchableOpacity style={styles.funcContainer} key={func.name} onPress={() => handlePress(func)}>
+                                        <Image style={{ width: scaleSizeH(30), height: scaleSizeH(30), }} source={{ uri: func.icon }}></Image>
+                                        <Text style={{ fontSize: scaleSizeW(9), lineHeight: scaleSizeH(24), textAlign: "center" }}>{func.title}</Text>
+                                    </TouchableOpacity>
+                                </>
+                            })
+                        }
+                    </View>
+                })
+            }
+        </View>
+    </>
 }
 
 const styles = StyleSheet.create({
@@ -96,14 +103,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         flexWrap: "wrap",
-        marginTop: scaleSizeH(10)
+        margin: scaleSizeH(5)
     },
     funcContainer: {
         height: scaleSizeH(64),
-        width: "15%",
-        marginTop: scaleSizeH(10),
-        marginLeft: "2.5%",
-        marginRight: "2.5%",
+        flex: 1,
         alignItems: "center",
         justifyContent: "center"
     }

@@ -3,7 +3,7 @@ import { Avatar } from "@rneui/themed";
 import { followingInfo, getLivingfollowingList } from "axios/api/followList";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Views } from "types";
+import { Views } from "types/config";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 

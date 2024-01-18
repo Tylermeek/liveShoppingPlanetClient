@@ -4,7 +4,7 @@ import { Card, Text } from "@rneui/themed";
 import { uniqueId } from "lodash-es";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Views } from "types";
+import { Views } from "types/config";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
@@ -30,7 +30,7 @@ const CardContainer: React.FC<CardContainerProps> = ({ title, contentList = [] }
             <Card.Divider></Card.Divider>
             <View style={styles.listConatiner}>
                 {
-                    isEmptyArr(contentList) &&
+                    !isEmptyArr(contentList) &&
                     <>
                         {
                             contentList.map((content) => {

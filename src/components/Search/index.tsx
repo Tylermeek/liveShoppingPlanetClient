@@ -3,7 +3,7 @@ import { SearchBar, Button, SearchBarProps } from "@rneui/themed";
 import React, { PropsWithChildren, Ref, RefAttributes, RefObject, useState } from "react";
 import { TextInput } from "react-native";
 import { StyleSheet, View } from "react-native";
-import { Views } from "types";
+import { Views } from "types/config";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
 type SearchProps = {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        borderRadius: scaleSizeW(15),
+        borderRadius: scaleSizeW(35),
         borderWidth: 0,
         padding: 0,
     },
