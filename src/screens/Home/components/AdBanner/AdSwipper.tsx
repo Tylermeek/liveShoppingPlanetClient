@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Swiper, { SwiperProps } from "react-native-swiper";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SwiperInfoList, getSiwperList } from "axios/api/recommend";
 import { Image } from "@rneui/themed";
-import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { SwiperInfo } from "types/info";
+import Carousel from "react-native-reanimated-carousel";
 
 const AdSwipper: React.FC = () => {
 
     const [swiperList, setSwiperList] = useState<SwiperInfoList>([])
+    const containerWidth = (Dimensions.get('window').width - 4 * scaleSizeW(10)) / 2
 
     const handlePress = (slide: SwiperInfo) => {
         console.log(slide.id);
         // TODO 跳转商品详情页
-        
+
     }
     useEffect(() => {
         getSiwperList()
@@ -25,21 +25,20 @@ const AdSwipper: React.FC = () => {
 
     return <>
         <View style={{ flex: 1 }}>
-            <Swiper
-                showsButtons={false}
-                dotStyle={styles.dotStyle}
-                activeDotStyle={[styles.dotStyle, { backgroundColor: "#E36255" }]}
-                autoplay={true}
-            >
-                {
-                    !isEmptyArr(swiperList) && swiperList.map((slide) => {
-                        return <TouchableOpacity key={slide.id} style={{ flex: 1 }} onPress={()=>handlePress(slide)}>
-                            <Image source={{ uri: slide.image }} style={{ height: "100%", width: "100%", borderRadius: scaleSizeW(5) }}></Image>
-                        </TouchableOpacity>
-                    })
-                }
-
-            </Swiper>
+            <Carousel
+                loop
+                width={containerWidth}
+                height={scaleSizeH(200)}
+                autoPlay={true}
+                data={swiperList}
+                scrollAnimationDuration={1000}
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity key={item.id} style={{ flex: 1 }} onPress={() => handlePress(item)}>
+                        <Image source={{ uri: item.image }} style={{ height: "100%", width: "100%", borderRadius: scaleSizeW(5) }}></Image>
+                    </TouchableOpacity>
+                )}
+                style={{borderRadius: scaleSizeW(5) }}
+            />
         </View>
     </>
 }
