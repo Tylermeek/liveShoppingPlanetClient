@@ -5,6 +5,7 @@ import { SearchHistoryList, getSearchHistory } from "axios/api/search";
 import { isEmptyArr } from "utlis/method";
 
 const SearchHistory: React.FC = () => {
+    // TODO 搜索历史删除功能
     const [contentList, setContentList] = useState<SearchHistoryList>([])
     useEffect(() => {
         getSearchHistory()

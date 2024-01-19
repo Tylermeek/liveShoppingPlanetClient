@@ -12,7 +12,7 @@ export interface RecommendListProps {
 }
 
 const RecommendList: React.FC<RecommendListProps> = ({ list }) => {
-
+    // TODO 抽离瀑布流组件
     return <>
         <View style={styles.container}>
             {

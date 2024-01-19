@@ -2,6 +2,7 @@ import Home from "screens/Home"
 import Live from "screens/Live"
 
 
+// TODO Tab栏完善
 export const tabConfig = [
     {
         name:"Home",

@@ -67,7 +67,7 @@ const funcList: FuncList = [
 ]
 
 const FuncBlock: React.FC = () => {
-
+    // TODO 功能列表配置化
 
     const handlePress = (func: FuncInfo) => {
         console.log(`todo jump to ${func.name}`);

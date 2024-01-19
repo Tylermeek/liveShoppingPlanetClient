@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const MessageBox: React.FC = () => {
+    // TODO 跳转消息列表页面
     return <>
         <Button radius={"sm"} type="clear" style={styles.button}>
             <Icon name="mode-comment" color="#cccedc" />

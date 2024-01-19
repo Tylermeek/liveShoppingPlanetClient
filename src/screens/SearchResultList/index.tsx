@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { RootRouteType, Views } from "types/config";
 
 const SearchResultList: React.FC = () => {
+    // TODO 搜索结果页面
     const route = useRoute<RootRouteType<Views.SearchResultList>>()
 
     return <>

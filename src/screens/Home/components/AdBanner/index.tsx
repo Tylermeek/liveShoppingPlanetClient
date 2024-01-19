@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import AdSwipper from "./AdSwipper";
-import PromotionalActivity from "./promotionalActivity";
+import PromotionalActivity from "./PromotionalActivity";
 
 const AdBanner: React.FC = () => {
 
