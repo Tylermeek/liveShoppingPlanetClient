@@ -6,8 +6,8 @@ export interface Recommendlist {
   liveList: LiveInfo[];
 }
 
-export const getRecommendlist = () => {
-  return request.get<Recommendlist>("/recommend/recommendList");
+export const getRecommendlist = (pageNo: number) => {
+  return request.get<Recommendlist>(`/recommend/recommendList?pageNo=${pageNo}`);
 };
 
 export type SwiperInfoList = SwiperInfo[];
@@ -28,7 +28,6 @@ export interface PromotionalActivityInfo {
   [property: string]: any;
 }
 
-
 export const getPromotionalActivity = () => {
-  return request.get<PromotionalActivityInfo>("/recommend/promotionalActivity")
-}
+  return request.get<PromotionalActivityInfo>("/recommend/promotionalActivity");
+};
