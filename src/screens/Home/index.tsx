@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import HeaderBar from "./components/HeaderBar";
 import { CompositeTabScreenParamList } from "navigators/RootStack";
 import FuncBlock from "./components/FuncBlock";
@@ -10,11 +10,32 @@ import { getRecommendlist } from "axios/api/recommend";
 import { randomArr } from "utlis/method";
 import { LiveInfo, ProductInfo } from "types/info";
 import AdBanner from "./components/AdBanner";
+import { debounce } from "lodash-es";
 
 type HomeProps = CompositeTabScreenParamList<"Home">;
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
     const [list, setList] = useState<(LiveInfo | ProductInfo)[]>([])
+    const [isEndReached, setIsEndReached] = useState<boolean>(false)
+
+    const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const offsetY = event.nativeEvent.contentOffset.y;
+        const contentHeight = event.nativeEvent.contentSize.height;
+        const layoutHeight = event.nativeEvent.layoutMeasurement.height;
+        const isEndReachedNow = offsetY >= contentHeight - layoutHeight - scaleSizeH(150);
+        if (isEndReachedNow !== isEndReached) {
+            setIsEndReached(isEndReachedNow)
+        }
+    }
+
+    useEffect(() => {
+        console.log(isEndReached);
+        if(isEndReached){
+            // TODO loadMore
+        }
+
+    }, [isEndReached])
+
     useEffect(() => {
         getRecommendlist()
             .then(res => {
@@ -23,19 +44,21 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
                 setList(randomList)
             })
     }, [])
+
+
     return <>
         <View style={styles.home}>
             <LinearGradient colors={["rgba(227,98,85,1)", "rgba(227,98,85,1)", 'rgba(236,154,134,0.48)', 'rgba(236,154,134,0)']} style={styles.linearGradient}>
             </LinearGradient>
             <HeaderBar></HeaderBar>
-            <ScrollView style={styles.mainContainer} showsVerticalScrollIndicator={false}>
+            <ScrollView style={styles.mainContainer} showsVerticalScrollIndicator={false} onMomentumScrollEnd={handleMomentumScrollEnd} scrollEventThrottle={1750}>
                 <LinearGradient colors={["#ffffff", "#fff7f7", '#ebebeb', '#e3e3e3']} style={[styles.linearGradient, { borderRadius: scaleSizeW(10) }]}>
                 </LinearGradient>
                 <FuncBlock></FuncBlock>
                 <AdBanner></AdBanner>
                 <RecommendList list={list}></RecommendList>
             </ScrollView>
-        </View>
+        </View >
 
     </>
 }
@@ -53,7 +76,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         margin: scaleSizeW(5),
-        marginBottom:0,
+        marginBottom: 0,
         backgroundColor: "#e3e3e3",
         borderTopLeftRadius: scaleSizeW(10),
         borderTopRightRadius: scaleSizeW(10),

@@ -7,9 +7,10 @@ import { isProductInfo } from "utlis/type";
 
 export interface ContentCardProps {
     contentInfo: LiveInfo | ProductInfo
+    bindRef?: Function
 }
 
-const ContentCard: React.FC<ContentCardProps> = ({ contentInfo }) => {
+const ContentCard: React.FC<ContentCardProps> = ({ contentInfo, bindRef = null }) => {
 
     const handlePress = (contentInfo: LiveInfo | ProductInfo) => {
         console.log(contentInfo.title, contentInfo.type);
@@ -17,7 +18,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentInfo }) => {
     }
 
     return <>
-        <TouchableOpacity style={[styles.container,{height:scaleSizeH(isProductInfo(contentInfo) ? 200 : 250)}]} onPress={() => handlePress(contentInfo)}>
+        <TouchableOpacity ref={(ref) => bindRef && bindRef(ref)} style={[styles.container, { height: scaleSizeH(isProductInfo(contentInfo) ? 200 : 250) }]} onPress={() => handlePress(contentInfo)}>
             <View style={{ flex: 1 }}>
                 <Image source={{ uri: contentInfo.cover }} style={{ height: "100%", width: "100%", borderTopLeftRadius: scaleSizeW(5), borderTopRightRadius: scaleSizeW(5) }} ></Image>
             </View>
