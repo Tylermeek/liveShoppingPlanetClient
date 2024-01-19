@@ -10,10 +10,6 @@ import { Views } from "types/config";
 const FakeSearchBanner: React.FC = () => {
     const navigation = useNavigation();
 
-    const [search, setSearch] = useState<string>("")
-    const updateSearch = (search: string) => {
-        setSearch(search)
-    }
     const toSearch = () => {
         navigation.navigate(Views.SearchDetail)
     }
@@ -23,7 +19,7 @@ const FakeSearchBanner: React.FC = () => {
             onPress={toSearch}
             activeOpacity={1}
         >
-            <Search searchContent={search} editable={false} updateSearchCb={updateSearch}></Search>
+            <Search editable={false} ></Search>
         </TouchableOpacity>
     </>
 }

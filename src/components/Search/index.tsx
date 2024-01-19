@@ -6,23 +6,25 @@ import { StyleSheet, View } from "react-native";
 import { Views } from "types/config";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
-type SearchProps = {
-    searchContent: string
+export type SearchProps = {
+    initContent?: string
     editable?: boolean
     placeholder?: string
     bindRef?: Function
-    updateSearchCb: (serachContent: string) => void
+    updateSearchCb?: (serachContent: string) => void
 }
 
 
 const Search: React.FC<SearchProps> = (
     {
-        searchContent,
+        initContent = "",
         editable = true,
         placeholder = "搜你想搜",
         bindRef,
-        updateSearchCb
+        updateSearchCb = () => { }
     }) => {
+    const [search, setSearch] = useState<string>(initContent)
+
     const navigation = useNavigation()
 
 
@@ -35,9 +37,12 @@ const Search: React.FC<SearchProps> = (
     return <>
         <View style={styles.container}>
             <SearchBar
-                value={searchContent}
+                value={search}
                 ref={(ref: any) => { bindRef && bindRef(ref) }}
-                onChangeText={updateSearchCb}
+                onChangeText={(newContent) => {
+                    setSearch(newContent)
+                    updateSearchCb(newContent)
+                }}
                 editable={editable}
                 placeholder={placeholder}
                 containerStyle={styles.searchContainer}
@@ -46,7 +51,7 @@ const Search: React.FC<SearchProps> = (
             >
             </SearchBar>
             {
-                editable && searchContent &&
+                editable && search &&
                 <Button
                     title="搜索"
                     size="sm"
@@ -54,7 +59,7 @@ const Search: React.FC<SearchProps> = (
                     buttonStyle={{ height: scaleSizeH(25) }}
                     titleStyle={{ fontSize: scaleSizeH(10) }}
                     radius="sm"
-                    onPress={()=>handlePress(searchContent)}
+                    onPress={() => handlePress(search)}
                 ></Button>
             }
         </View>

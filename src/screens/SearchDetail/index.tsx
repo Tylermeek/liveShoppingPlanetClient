@@ -10,13 +10,12 @@ import { debounce, uniqueId } from "lodash-es"
 import SuggestionList from "./components/SuggestionList";
 import SearchHistory from "./components/SearchHistory";
 import SearchRecommend from "./components/SearchRecommend";
+import SearchBanner from "components/SearchBanner";
 
 const SearchDetail: React.FC = () => {
     const [searchRef, setSearchRef] = useState<any>(null)
-    const [search, setSearch] = useState<string>("")
     const [suggestionList, setSuggestionList] = useState<SuggestionsList>([])
     const updateSearch = debounce((search: string) => {
-        setSearch(search)
         getSuggestionsList(search)
     })
 
@@ -44,11 +43,16 @@ const SearchDetail: React.FC = () => {
     })
 
     return <>
-        <View style={styles.searchBanner}>
-            <GoBack></GoBack>
-            <Search bindRef={bindRef} searchContent={search} editable={true} updateSearchCb={updateSearch}></Search>
-            <Camera></Camera>
-        </View>
+        <SearchBanner
+            LeftIcon={GoBack}
+            RightIcon={Camera}
+            searchProps={{
+                bindRef: bindRef,
+                editable: true,
+                updateSearchCb: updateSearch
+            }}
+        />
+
         {
             Array.isArray(suggestionList) && suggestionList.length !== 0
                 ? <SuggestionList suggestionList={suggestionList}></SuggestionList>
@@ -77,9 +81,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: scaleSizeH(0.5),
         marginTop: StatusBar.currentHeight
     },
-    searchContainer:{
-        height:"100%",
-        backgroundColor:"white",
+    searchContainer: {
+        height: "100%",
+        backgroundColor: "white",
     }
 })
 
