@@ -9,6 +9,7 @@ import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const PromotionalActivity: React.FC = () => {
+    // TODO 活动商品跳转功能
     const [activity, setActivity] = useState<PromotionalActivityInfo>()
     useEffect(() => {
         getPromotionalActivity()
@@ -39,10 +40,12 @@ const PromotionalActivity: React.FC = () => {
                         return <View key={uniqueId()} style={{ flexDirection: "row", flex: 1 }}>
                             {subList.map((product, index) => {
                                 return <TouchableOpacity key={product.id} style={[styles.prodctContainer, { marginLeft: index === 1 ? 0 : scaleSizeW(10) }]} >
-                                    <View style={{ height: "75%" }}>
+                                    <View style={{ height: "100%" }}>
                                         <Image source={{ uri: product.cover }} style={styles.image}></Image>
                                     </View>
-                                    <Text style={styles.price}>￥{product.price} 史低!</Text>
+                                    <View style={styles.priceContainer}>
+                                        <Text style={styles.price}>￥{product.price} 史低!</Text>
+                                    </View>
                                 </TouchableOpacity>
                             })}
                         </View>
@@ -65,10 +68,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     title: {
+        height: scaleSizeH(20),
         color: "white",
         flex: 2,
         fontSize: scaleSizeW(12),
         textAlign: "center",
+        lineHeight: scaleSizeH(20),
         borderRightWidth: scaleSizeW(1),
         borderStyle: "dotted",
         borderColor: "#A2C5C9"
@@ -78,29 +83,35 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around",
-        height: scaleSizeH(20)
+        height: scaleSizeH(20),
+        lineHeight: scaleSizeH(20)
     },
     prodctContainer: {
         backgroundColor: "white",
         borderRadius: scaleSizeW(3),
         flex: 1,
         margin: scaleSizeW(10),
-        marginTop: 0
+        marginTop: 0,
     },
     image: {
         width: "100%",
         height: "100%",
         borderRadius: scaleSizeW(3),
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
+    },
+    priceContainer: {
+        height: "30%",
+        alignItems: "center",
+        justifyContent: "center",
+        left: 50, bottom: 25,
+        transform: [{ translateX: -50 }]
     },
     price: {
         fontSize: scaleSizeW(7),
-        color: "#F3C262",
+        color: "black",
         textAlign: "center",
-        backgroundColor: "#E36255",
-        margin:"5%",
-        borderRadius:scaleSizeW(2.5)
+        backgroundColor: "#F3C262",
+        borderRadius: scaleSizeW(2.5),
+        padding: scaleSizeW(1)
     }
 })
 
