@@ -5,7 +5,7 @@ import Camera from "components/Camera";
 import GoBack from "components/GoBack";
 import Search, { SearchProps } from "components/Search";
 import React from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View, ViewStyle } from "react-native";
 import { RootRouteType, Views } from "types/config";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
@@ -13,11 +13,12 @@ export interface SearchBannerProps {
     LeftIcon: React.FC<{}>
     RightIcon: React.FC<{}>
     searchProps: SearchProps
+    bannerStyle?: ViewStyle
 }
 
-const SearchBanner: React.FC<SearchBannerProps> = ({ LeftIcon, RightIcon, searchProps }) => {
+const SearchBanner: React.FC<SearchBannerProps> = ({ LeftIcon, RightIcon, searchProps, bannerStyle = {} }) => {
     return <>
-        <View style={styles.searchBanner}>
+        <View style={[styles.searchBanner, bannerStyle]}>
             <LeftIcon></LeftIcon>
             <Search {...searchProps}></Search>
             <RightIcon></RightIcon>

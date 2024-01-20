@@ -7,7 +7,7 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { LinearGradient } from "expo-linear-gradient";
 import RecommendList from "./components/RecommendList";
 import { getRecommendlist } from "axios/api/recommend";
-import { randomArr } from "utlis/method";
+import { handleMomentumScrollEnd, randomArr } from "utlis/method";
 import { LiveInfo, ProductInfo } from "types/info";
 import AdBanner from "./components/AdBanner";
 import { debounce } from "lodash-es";
@@ -18,15 +18,7 @@ type HomeProps = CompositeTabScreenParamList<"Home">;
 const Home: React.FC<HomeProps> = ({ navigation }) => {
     const [isEndReached, setIsEndReached] = useState<boolean>(false)
 
-    const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const offsetY = event.nativeEvent.contentOffset.y;
-        const contentHeight = event.nativeEvent.contentSize.height;
-        const layoutHeight = event.nativeEvent.layoutMeasurement.height;
-        const isEndReachedNow = offsetY >= contentHeight - layoutHeight - scaleSizeH(150);
-        if (isEndReachedNow !== isEndReached) {
-            setIsEndReached(isEndReachedNow)
-        }
-    }
+
 
 
     // const handleRefresh = React.useCallback(() => {
@@ -48,7 +40,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             <ScrollView
                 style={styles.mainContainer}
                 showsVerticalScrollIndicator={false}
-                onScroll={handleMomentumScrollEnd}
+                onScroll={(event) => handleMomentumScrollEnd(event, isEndReached, setIsEndReached)}
                 scrollEventThrottle={50}
             >
                 <LinearGradient colors={["#ffffff", "#fff7f7", '#ebebeb', '#e3e3e3']} style={[styles.linearGradient, { borderRadius: scaleSizeW(10) }]}>
