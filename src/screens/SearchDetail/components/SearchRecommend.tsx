@@ -9,17 +9,25 @@ import { isEmptyArr } from "utlis/method";
 const SearchRecommend: React.FC = () => {
 
     const [contentList, setContentList] = useState<SearchRecommendList>([])
-
-    useEffect(() => {
+    const getList = () => {
         getSearchRecommend()
             .then((res) => {
                 setContentList(res.data)
             })
+    }
+
+    useEffect(() => {
+        getList()
     }, [])
     return <>
         {
             !isEmptyArr(contentList) &&
-            <CardContainer title="猜你想搜" type={SearchCardType.SearchRecommend} contentList={contentList}></CardContainer>
+            <CardContainer
+                title="猜你想搜"
+                type={SearchCardType.SearchRecommend}
+                contentList={contentList}
+                refreshList={getList}
+            />
         }
     </>
 }

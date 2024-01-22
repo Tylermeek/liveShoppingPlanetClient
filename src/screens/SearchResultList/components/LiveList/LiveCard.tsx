@@ -54,11 +54,8 @@ const LiveCard: React.FC<CardProps> = ({
             </View>
             <TouchableOpacity style={styles.coverContainer} onPress={handlePressLive}>
                 <Image source={{ uri: contentInfo.cover }} style={{ width: "100%", height: "100%", borderRadius: scaleSizeW(10) }} />
-                <View style={styles.liveStatusContainer}>
-                    <Text style={[
-                        styles.liveStatus,
-                        { backgroundColor: contentInfo.isOnLive ? "#E36235" : "#F3C262" }
-                    ]}
+                <View style={[styles.liveStatusContainer, { backgroundColor: contentInfo.isOnLive ? "#E36235" : "#F3C262" }]}>
+                    <Text style={styles.liveStatus}
                     >
                         {contentInfo.isOnLive ? "直播中" : "未开播"}
                     </Text>
@@ -97,8 +94,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: scaleSizeW(10),
         left: scaleSizeW(10),
-        justifyContent:"center",
-        alignItems:"center",
+        justifyContent: "center",
+        alignItems: "center",
         backgroundColor: "#E36235",
         borderRadius: scaleSizeW(20)
     },

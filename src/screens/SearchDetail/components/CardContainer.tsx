@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "@rneui/base";
 import { Card, Icon, Text } from "@rneui/themed";
+import { delAllSearchHistory, delSearchHistory } from "axios/api/search";
 import { uniqueId } from "lodash-es";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,9 +23,10 @@ export interface CardContainerProps {
     title: string
     type: SearchCardType
     contentList: string[]
+    refreshList: Function
 }
 
-const CardContainer: React.FC<CardContainerProps> = ({ title, type, contentList = [] }) => {
+const CardContainer: React.FC<CardContainerProps> = ({ title, type, contentList = [], refreshList }) => {
     const [isDel, setIsDel] = useState<boolean>(false)
     const navigation = useNavigation()
 
@@ -48,10 +50,25 @@ const CardContainer: React.FC<CardContainerProps> = ({ title, type, contentList 
 
     const handleDel = (content: string) => {
         console.log("del", content);
+        delSearchHistory(content)
+            .then(res => {
+                console.log(res.data);
+                refreshList()
 
+            }).catch((err) => {
+                console.error(err);
+
+            })
     }
     const handleDelAll = () => {
         console.log("handleDelAll");
+        delAllSearchHistory()
+            .then(res => {
+                console.log(res.data);
+            }).catch((err) => {
+                console.error(err);
+
+            })
 
     }
     return <>

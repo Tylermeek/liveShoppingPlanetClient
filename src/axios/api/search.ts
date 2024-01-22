@@ -32,6 +32,14 @@ export const getSearchHistory = () => {
   return request.get<SearchHistoryList>("/search/history");
 };
 
+export const delSearchHistory = (content: string) => {
+  return request.post<string>("/search/history/del", { content });
+};
+
+export const delAllSearchHistory = () => {
+  return request.post<string>("/search/history/delAll",);
+};
+
 export const getSearchRecommend = () => {
   return request.get<SearchRecommendList>("/search/recommend");
 };

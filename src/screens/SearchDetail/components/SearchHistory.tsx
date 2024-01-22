@@ -7,16 +7,24 @@ import { isEmptyArr } from "utlis/method";
 const SearchHistory: React.FC = () => {
     // TODO 搜索历史删除功能
     const [contentList, setContentList] = useState<SearchHistoryList>([])
-    useEffect(() => {
+    const getList = () => {
         getSearchHistory()
             .then((res) => {
                 setContentList(res.data)
             })
+    }
+    useEffect(() => {
+        getList()
     }, [])
     return <>
         {
             !isEmptyArr(contentList) &&
-            <CardContainer title="搜索历史" type={SearchCardType.SearchHistory} contentList={contentList}></CardContainer>
+            <CardContainer
+                title="搜索历史"
+                type={SearchCardType.SearchHistory}
+                contentList={contentList}
+                refreshList={getList}
+            />
         }
     </>
 }
