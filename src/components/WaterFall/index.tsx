@@ -11,21 +11,23 @@ export interface ContentCardProps {
     contentInfo: any;
 }
 
-export interface RecommendListProps {
+export interface WaterFallProps {
     isEndReached: boolean
     loadingMore: boolean
     list: any[]
     ContentCard: React.FC<ContentCardProps>
+    columLen?: number
     updateListCb: (list: any[]) => void
     getMoreList: () => Promise<void>
 }
 
-const WaterFall: React.FC<RecommendListProps> = (
+const WaterFall: React.FC<WaterFallProps> = (
     {
         isEndReached,
         loadingMore,
         list,
         ContentCard,
+        columLen = 2,
         getMoreList
     }
 ) => {
@@ -42,7 +44,7 @@ const WaterFall: React.FC<RecommendListProps> = (
         <View style={styles.container}>
             {
                 !isEmptyArr(list) &&
-                (chunk(list, Math.floor(list.length / 2))).map((subList, columnIndex) => {
+                (chunk(list, Math.floor(list.length / columLen))).map((subList, columnIndex) => {
                     return (
                         <View style={[styles.column, { marginLeft: columnIndex === 1 ? 0 : scaleSizeW(10) }]} key={columnIndex} >
                             {

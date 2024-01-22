@@ -33,3 +33,17 @@ export const handleMomentumScrollEnd = (
     setIsEndReached(isEndReachedNow);
   }
 };
+
+export const numberFormat = (num: number): string | number => {
+  switch (num.toString().length) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return num;
+    case 4:
+      return `${(num / 1000).toFixed(1)}千`;
+    default:
+      return `${(num / 10000).toFixed(1)}万`;
+  }
+};

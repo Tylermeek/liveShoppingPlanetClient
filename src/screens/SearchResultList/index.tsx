@@ -10,6 +10,7 @@ import { RootRouteType, Views } from "types/config";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import ProductList from "./components/ProductList";
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import LiveList from "./components/LiveList";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -23,7 +24,7 @@ const tabConfig = [
     },
     {
         name: "Live",
-        Component: ProductList,
+        Component: LiveList,
         options: {
             title: "直播"
         }
@@ -68,7 +69,7 @@ function MyTabBar({ state, descriptors, navigation }: MaterialTopTabBarProps) {
                         onLongPress={onLongPress}
                         style={{ height: scaleSizeH(52), flex: 1, justifyContent: "center", alignItems: "center" }}
                     >
-                        <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc', fontSize: scaleSizeH(10) }}>
+                        <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc', fontSize: scaleSizeH(13) }}>
                             {label}
                         </Text>
                     </TouchableOpacity>

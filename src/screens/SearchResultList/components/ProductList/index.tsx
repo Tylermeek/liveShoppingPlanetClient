@@ -1,6 +1,6 @@
 import { Button, Tab, TabView, Text } from "@rneui/themed";
 import WaterFall from "components/WaterFall";
-import RroductCard from "screens/SearchResultList/components/RroductCard";
+import RroductCard from "screens/SearchResultList/components/ProductList/RroductCard";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { LiveInfo, ProductInfo } from "types/info";

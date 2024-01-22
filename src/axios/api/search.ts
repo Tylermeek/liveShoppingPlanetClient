@@ -7,6 +7,7 @@ export type SearchHistoryList = string[];
 export type SearchRecommendList = string[];
 
 export type SearchProductList = ProductInfo[];
+export type SearchLiveList = ProductInfo[];
 
 export enum SearchType {
   Product = "Product",
@@ -50,6 +51,23 @@ export const getSearchProductList = ({
     params: {
       searchContent,
       sortType,
+      pageNo,
+    },
+  });
+};
+
+export interface getSearchLiveListParams {
+  searchContent: string;
+  pageNo: number;
+}
+
+export const getSearchLiveList = ({
+  searchContent,
+  pageNo,
+}: getSearchLiveListParams) => {
+  return request.get<SearchLiveList>(`/search/live`, {
+    params: {
+      searchContent,
       pageNo,
     },
   });

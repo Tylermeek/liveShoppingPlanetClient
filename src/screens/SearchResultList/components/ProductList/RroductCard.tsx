@@ -1,10 +1,10 @@
 import { Avatar, Card, Image, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { LiveInfo, ProductInfo, InfoType } from "types/info";
+import { LiveInfo, ProductInfo, InfoType, ShopInfo } from "types/info";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { isProductInfo } from "utlis/type";
-import { ContentCardProps } from "../../../components/WaterFall";
+import { ContentCardProps } from "../../../../components/WaterFall";
 import { isEmptyArr } from "utlis/method";
 import { Icon } from "@rneui/base";
 
@@ -15,14 +15,21 @@ export interface CardProps extends ContentCardProps {
 
 const RroductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
 
-    const handlePress = (contentInfo: ProductInfo) => {
+    const handlePressProduct = () => {
         console.log(contentInfo.title, contentInfo.type);
+
+    }
+    const handlePressShop = () => {
+        console.log(contentInfo.shopInfo.name);
 
     }
 
     return <>
-        <TouchableOpacity ref={(ref) => bindRef && bindRef(ref)} style={[styles.container, { height: scaleSizeH(200) }]} onPress={() => handlePress(contentInfo)}>
-            <View style={{ flex: 1, marginBottom: scaleSizeW(2.5) }}>
+        <TouchableOpacity
+            ref={(ref) => bindRef && bindRef(ref)}
+            style={[styles.container, { height: scaleSizeH(250) }]}
+            onPress={handlePressProduct}>
+            <View style={{ flex: 1 }}>
                 <Image source={{ uri: contentInfo.cover }} style={styles.cover} ></Image>
             </View>
             <View style={styles.infoContainer}>
@@ -38,7 +45,7 @@ const RroductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
                         !isEmptyArr(contentInfo.specification || []) &&
                         contentInfo.specification?.map((spec, index) => {
                             return <Text key={spec} style={styles.specification}>
-                                {index !== 0 && "|"} {spec}
+                                {index !== 0 && " |"} {spec}
                             </Text>
                         })
                     }
@@ -48,8 +55,8 @@ const RroductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
                     <Text style={{ fontSize: scaleSizeW(7), color: "grey", marginLeft: scaleSizeW(10) }}>{contentInfo.sold}+人付款</Text>
                 </View>
                 <View style={styles.shopInfo}>
-                    <TouchableOpacity style={styles.shopButton}>
-                        <Text style={styles.shopTitle}>{contentInfo.shopInfo.shopName}</Text>
+                    <TouchableOpacity style={styles.shopButton} onPress={handlePressShop}>
+                        <Text style={styles.shopTitle}>{contentInfo.shopInfo.name}</Text>
                         <Icon name="chevron-right" size={scaleSizeW(8)} ></Icon>
                     </TouchableOpacity>
                 </View>
@@ -117,18 +124,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#e3e6e8",
         flexDirection: "row",
         alignItems: "center",
-        padding:scaleSizeW(1.5),
-        paddingLeft:scaleSizeW(5),
-        paddingRight:scaleSizeW(5),
-        borderRadius:scaleSizeW(10),
-        height:scaleSizeH(15)
+        padding: scaleSizeW(1.5),
+        paddingLeft: scaleSizeW(5),
+        paddingRight: scaleSizeW(5),
+        borderRadius: scaleSizeW(10),
+        height: scaleSizeH(15)
     },
-    shopTitle:{
-        fontSize:scaleSizeW(8),
-        color:"#70757a",
-        marginRight:scaleSizeW(2.5),
-        lineHeight:scaleSizeH(15),
-        height:scaleSizeH(15)
+    shopTitle: {
+        fontSize: scaleSizeW(8),
+        color: "#70757a",
+        marginRight: scaleSizeW(2.5),
+        lineHeight: scaleSizeH(15),
+        height: scaleSizeH(15)
     }
 })
 

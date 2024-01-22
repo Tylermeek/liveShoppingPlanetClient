@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import CardContainer from "./CardContainer";
+import CardContainer, { SearchCardType } from "./CardContainer";
 import { SearchHistoryList, getSearchHistory } from "axios/api/search";
 import { isEmptyArr } from "utlis/method";
 
@@ -16,7 +16,7 @@ const SearchHistory: React.FC = () => {
     return <>
         {
             !isEmptyArr(contentList) &&
-            <CardContainer title="搜索历史" contentList={contentList}></CardContainer>
+            <CardContainer title="搜索历史" type={SearchCardType.SearchHistory} contentList={contentList}></CardContainer>
         }
     </>
 }

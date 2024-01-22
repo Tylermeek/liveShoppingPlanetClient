@@ -1,6 +1,4 @@
 /**
- * 直播间信息
- * 
  * LiveInfo
  */
 export interface LiveInfo {
@@ -21,6 +19,14 @@ export interface LiveInfo {
      */
     id: number;
     /**
+     * 是否正在直播
+     */
+    isOnLive: boolean;
+    /**
+     * 店铺信息
+     */
+    shopInfo: ShopInfo;
+    /**
      * 直播间标题
      */
     title: string;
@@ -30,6 +36,7 @@ export interface LiveInfo {
     type: InfoType.LiveInfo;
     [property: string]: any;
 }
+
 
 /**
  * 主播信息
@@ -99,25 +106,28 @@ export interface ProductInfo {
 }
 
 /**
- * 商品所属店铺信息
- *
- * ShopInfo，商品所属店铺信息
+ * ShopInfo，店铺信息
  */
 export interface ShopInfo {
     /**
      * 店铺头像
      */
-    shopAvatar: string;
+    avatar: string;
+    /**
+     * 店铺关注人数
+     */
+    follower: number;
     /**
      * 店铺ID
      */
-    shopId: string;
+    id: string;
     /**
      * 店铺名
      */
-    shopName: string;
+    name: string;
     [property: string]: any;
 }
+
 
 
 /**
