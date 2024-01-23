@@ -1,5 +1,5 @@
 import { color } from "@rneui/base";
-import { Button, Card, Icon, Image } from "@rneui/themed";
+import { Button, Card, Icon, Image, Skeleton } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import { PromotionalActivityInfo, getPromotionalActivity } from "axios/api/recommend";
 import { chunk, uniqueId } from "lodash-es";
@@ -10,54 +10,67 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const PromotionalActivity: React.FC = () => {
     // TODO 活动商品跳转功能
+    const [loading, setLoading] = useState<boolean>(true)
     const [activity, setActivity] = useState<PromotionalActivityInfo>()
     useEffect(() => {
         getPromotionalActivity()
             .then((res) => {
                 setActivity(res.data)
             })
+            .finally(() => {
+                setLoading(false)
+            })
     }, [])
     return <>
-        <View style={{
-            flex: 1,
-            backgroundColor: "#A2C5C9",
-            marginLeft: scaleSizeW(10),
-            borderRadius: scaleSizeW(5)
-        }}>
-            <TouchableOpacity>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{activity?.activityName}</Text>
-                    <View style={styles.subTitle}>
-                        <Text style={{ fontSize: scaleSizeW(10), color: "white" }}>抢大额折扣</Text>
-                        <Icon name="chevron-right" color="white" size={scaleSizeW(12)} ></Icon>
+        {
+            loading
+                ?
+                <Skeleton animation="wave" style={styles.container} />
+                :
+                <View style={styles.container}>
+                    <TouchableOpacity>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>{activity?.activityName}</Text>
+                            <View style={styles.subTitle}>
+                                <Text style={{ fontSize: scaleSizeW(10), color: "white" }}>抢大额折扣</Text>
+                                <Icon name="chevron-right" color="white" size={scaleSizeW(12)} ></Icon>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{ flex: 1 }}>
+                        {
+                            !isEmptyArr(activity?.productList || []) &&
+                            chunk(activity?.productList, 2).map((subList) => {
+                                return <View key={uniqueId()} style={{ flexDirection: "row", flex: 1 }}>
+                                    {subList.map((product, index) => {
+                                        return <TouchableOpacity key={product.id} style={[styles.prodctContainer, { marginLeft: index === 1 ? 0 : scaleSizeW(10) }]} >
+                                            <View style={{ height: "100%" }}>
+                                                <Image source={{ uri: product.cover }} style={styles.image}></Image>
+                                            </View>
+                                            <View style={styles.priceContainer}>
+                                                <Text style={styles.price}>￥{product.price} 史低!</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    })}
+                                </View>
+
+                            })
+                        }
                     </View>
                 </View>
-            </TouchableOpacity>
-            <View style={{ flex: 1 }}>
-                {
-                    !isEmptyArr(activity?.productList || []) &&
-                    chunk(activity?.productList, 2).map((subList) => {
-                        return <View key={uniqueId()} style={{ flexDirection: "row", flex: 1 }}>
-                            {subList.map((product, index) => {
-                                return <TouchableOpacity key={product.id} style={[styles.prodctContainer, { marginLeft: index === 1 ? 0 : scaleSizeW(10) }]} >
-                                    <View style={{ height: "100%" }}>
-                                        <Image source={{ uri: product.cover }} style={styles.image}></Image>
-                                    </View>
-                                    <View style={styles.priceContainer}>
-                                        <Text style={styles.price}>￥{product.price} 史低!</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            })}
-                        </View>
+        }
 
-                    })
-                }
-            </View>
-        </View>
     </>
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height:scaleSizeH(200),
+        backgroundColor: "#A2C5C9",
+        marginLeft: scaleSizeW(10),
+        borderRadius: scaleSizeW(5)
+    },
     titleContainer: {
         backgroundColor: "#E36255",
         height: scaleSizeH(30),
