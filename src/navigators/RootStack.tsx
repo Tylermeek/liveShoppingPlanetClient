@@ -7,6 +7,7 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import SearchDetail from "screens/SearchDetail";
 import LiveRoom from "screens/LiveRoom";
 import SearchResultList from "screens/SearchResultList";
+import ProductDetail from "screens/ProductDetail";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> = CompositeScreenProps<
     BottomTabScreenProps<TabBarParamList, T>,
@@ -30,6 +31,10 @@ const routeConfig = [
     {
         name: "SearchResultList",
         component: SearchResultList
+    },
+    {
+        name: "ProductDetail",
+        component: ProductDetail
     }
 ]
 

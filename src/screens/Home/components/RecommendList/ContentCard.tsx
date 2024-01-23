@@ -1,6 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import { Avatar, Card, Image, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Views } from "types/config";
 import { LiveInfo, ProductInfo, InfoType } from "types/info";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { isProductInfo } from "utlis/type";
@@ -11,9 +13,12 @@ export interface ContentCardProps {
 }
 
 const ContentCard: React.FC<ContentCardProps> = ({ contentInfo, bindRef = null }) => {
-
+    const navigation = useNavigation()
     const handlePress = (contentInfo: LiveInfo | ProductInfo) => {
         console.log(contentInfo.title, contentInfo.type);
+        if (contentInfo.type === InfoType.ProductInfo) {
+            navigation.navigate(Views.ProductDetail, { productId: contentInfo.id })
+        }
 
     }
 

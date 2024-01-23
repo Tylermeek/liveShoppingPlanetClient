@@ -61,8 +61,22 @@ export enum InfoType {
 }
 
 /**
- * 商品信息
- * 
+ * ExpressInfo
+ */
+export interface ExpressInfo {
+    /**
+     * 快递费用
+     */
+    cost: number;
+    /**
+     * 快递源
+     */
+    source: string;
+    [property: string]: any;
+}
+
+
+/**
  * ProductInfo
  */
 export interface ProductInfo {
@@ -71,9 +85,17 @@ export interface ProductInfo {
      */
     activity?: string;
     /**
+     * 限购数量
+     */
+    buyLimit: number;
+    /**
      * 商品封面
      */
     cover?: string;
+    /**
+     * 快递信息
+     */
+    expressInfo: ExpressInfo;
     /**
      * 商品ID
      */
@@ -95,13 +117,17 @@ export interface ProductInfo {
      */
     specification?: string[];
     /**
+     * 支持服务信息
+     */
+    supportServices: string[];
+    /**
      * 商品名称
      */
     title: string;
     /**
      * 信息类别
      */
-    type: InfoType.ProductInfo;
+    type: InfoType;
     [property: string]: any;
 }
 

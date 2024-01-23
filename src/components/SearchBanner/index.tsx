@@ -1,12 +1,6 @@
-import { useRoute } from "@react-navigation/native";
-import { Text } from "@rneui/base";
-import { SearchResultList } from "axios/api/search";
-import Camera from "components/Camera";
-import GoBack from "components/GoBack";
 import Search, { SearchProps } from "components/Search";
 import React from "react";
 import { StatusBar, StyleSheet, View, ViewStyle } from "react-native";
-import { RootRouteType, Views } from "types/config";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
 export interface SearchBannerProps {
