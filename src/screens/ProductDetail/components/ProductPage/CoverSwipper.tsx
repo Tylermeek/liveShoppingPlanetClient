@@ -11,6 +11,7 @@ interface CoverSwipperProps {
 }
 
 const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
+    // todo 切换为手动切换且可预览的图片
     const [coverList, setCoverList] = useState<CoverList>([])
     const [coverLoading, setCoverLoading] = useState<boolean>(true)
     const containerWidth = Dimensions.get('window').width

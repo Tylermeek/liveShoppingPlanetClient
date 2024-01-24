@@ -33,7 +33,7 @@ const iconConfig: IconInfo[] = [
 const BottomBanner: React.FC<BannerProps> = ({ }) => {
 
     const handlePressIcon = (iconType: IconType) => {
-        // todo 处理不同的功能
+        // todo 处理客服、收藏、跳转店铺首页功能
         console.log("iconType", iconType);
     }
 

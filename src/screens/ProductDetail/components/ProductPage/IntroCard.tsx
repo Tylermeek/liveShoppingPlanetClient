@@ -9,6 +9,7 @@ interface IntroCardProps {
 }
 
 const IntroCard: React.FC<IntroCardProps> = ({ info }) => {
+    // todo 分享按钮
     return <View style={styles.container}>
         <View style={styles.titleContainer}>
             <Text style={{ color: "rgba(51, 51, 51, 1)", fontSize: scaleSizeW(13) }} numberOfLines={2} ellipsizeMode="clip">{info?.title}</Text>

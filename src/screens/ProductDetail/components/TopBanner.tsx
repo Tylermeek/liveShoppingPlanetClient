@@ -20,7 +20,7 @@ const tabConfig = [
 const TopBanner: React.FC<BannerProps> = ({ activeTab, setActiveTab }) => {
 
     const handlePressCart = ()=>{
-        // todo 跳转购物车
+        // todo 跳转购物车功能
         console.log("cart");
     }
     return <>

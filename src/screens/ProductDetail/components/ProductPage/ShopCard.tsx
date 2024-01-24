@@ -23,6 +23,7 @@ const RateLevel: React.FC<{ num: number }> = ({ num }) => {
 }
 
 const ShopCard: React.FC<ShopCardProps> = ({ shopInfo }) => {
+    // todo 跳转商家主页功能
     return <View style={styles.container}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Avatar size={40} source={{ uri: shopInfo?.avatar }} />

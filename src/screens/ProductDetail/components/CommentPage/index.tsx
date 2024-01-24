@@ -12,6 +12,7 @@ interface CommentPageProps {
 }
 
 const CommentPage: React.FC<CommentPageProps> = ({ productId }) => {
+    // todo 评论分享、留言、点赞功能
     const [list, setList] = useState<CommentInfo[]>([])
     const [allList, setAllList] = useState<CommentInfo[]>([])
     const [withImgList, setWithImgList] = useState<CommentInfo[]>([])
