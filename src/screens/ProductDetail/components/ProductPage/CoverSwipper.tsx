@@ -19,7 +19,7 @@ const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
 
         getProductCoverList(productId)
             .then(res => {
-                console.log(res.data);
+                console.log("setCoverList",res.data);
 
                 setCoverList(res.data)
             })

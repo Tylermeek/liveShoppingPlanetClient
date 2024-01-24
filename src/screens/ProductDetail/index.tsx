@@ -7,6 +7,8 @@ import Banner from "./components/TopBanner";
 import { Tab } from "@rneui/base";
 import BottomBanner from "./components/BottomBanner";
 import ProductPage from "./components/ProductPage";
+import DetailPage from "./components/DetailPage";
+import CommentPage from "./components/CommentPage";
 
 const ProductDetail: React.FC = () => {
     const route = useRoute<RootRouteType<Views.ProductDetail>>()
@@ -18,11 +20,11 @@ const ProductDetail: React.FC = () => {
             <TabView.Item style={{ backgroundColor: "transparent" }}>
                 <ProductPage productId={productId} />
             </TabView.Item>
-            <TabView.Item>
-                <Text>ProductDetail{productId}</Text>
+            <TabView.Item style={{ flex: 1 }}>
+                <DetailPage productId={productId}></DetailPage>
             </TabView.Item>
-            <TabView.Item>
-                <Text>Product comment{productId}</Text>
+            <TabView.Item style={{ flex: 1 }}>
+                <CommentPage  productId={productId}></CommentPage>
             </TabView.Item>
         </TabView>
         <BottomBanner></BottomBanner>

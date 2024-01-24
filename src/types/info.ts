@@ -1,4 +1,24 @@
 /**
+ * UserInfo
+ */
+export interface UserInfo {
+  /**
+   * 用户头像地址
+   */
+  avatar: string;
+  /**
+   * 用户id
+   */
+  id: number;
+  /**
+   * 用户名
+   */
+  name: string;
+  [property: string]: any;
+}
+
+
+/**
  * LiveInfo
  */
 export interface LiveInfo {
@@ -197,5 +217,37 @@ export interface SwiperInfo {
    * 所属商品ID
    */
   productId: string;
+  [property: string]: any;
+}
+
+
+/**
+ * CommentInfo
+ */
+export interface CommentInfo {
+  /**
+   * 评论内容
+   */
+  commentContent: string;
+  /**
+   * 评论ID
+   */
+  id: string;
+  /**
+   * 评论图片列表
+   */
+  imgList?: string[];
+  /**
+   * 是否匿名
+   */
+  isHide: boolean;
+  /**
+   * 评论时间
+   */
+  time: string;
+  /**
+   * 评论用户信息
+   */
+  userInfo: UserInfo;
   [property: string]: any;
 }

@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
     buttonContaniner: {
         width: scaleSizeW(180),
         flexDirection: "row",
-        marginRight: scaleSizeW(5)
+        marginRight: scaleSizeW(10)
     },
     buttonLStyle: {
-        width: scaleSizeW(90),
+        // width: scaleSizeW(90),
         borderTopLeftRadius: scaleSizeW(25),
         borderBottomLeftRadius: scaleSizeW(25),
     },

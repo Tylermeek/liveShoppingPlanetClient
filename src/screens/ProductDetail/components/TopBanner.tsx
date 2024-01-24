@@ -30,7 +30,7 @@ const TopBanner: React.FC<BannerProps> = ({ activeTab, setActiveTab }) => {
                 value={activeTab}
                 onChange={setActiveTab}
                 disableIndicator
-                style={{ flex: 1, marginLeft: scaleSizeW(85), marginRight: scaleSizeW(85), marginBottom: scaleSizeH(5) }}
+                style={{ flex: 1,  marginBottom: scaleSizeH(5) }}
                 buttonStyle={{}}
             >
                 {
@@ -38,6 +38,7 @@ const TopBanner: React.FC<BannerProps> = ({ activeTab, setActiveTab }) => {
                         return <Tab.Item
                             key={item.value}
                             title={item.title}
+                            
                             titleStyle={(active) => {
                                 return { color: active ? "#E36255" : "rgba(153, 153, 153, 1)", ...styles.tabTitle }
                             }}
@@ -64,9 +65,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: scaleSizeH(0.5),
     },
     tabTitle: {
-        height: scaleSizeH(44),
-        width: scaleSizeW(60),
+        // height: scaleSizeH(44),
         fontSize: scaleSizeW(12),
+        paddingHorizontal:0,
+        paddingVertical:0
     }
 })
 

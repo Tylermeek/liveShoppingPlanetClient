@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     },
     liveTitle: {
         position: "absolute",
+        color:"white",
         bottom: 0,
         width: "100%",
         backgroundColor: "rgba(112, 117, 122,0.3)",

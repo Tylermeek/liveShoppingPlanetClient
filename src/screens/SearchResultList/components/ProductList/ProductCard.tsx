@@ -91,12 +91,8 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         padding: scaleSizeH(5),
-        borderWidth: scaleSizeW(0.5),
-        borderRadius: scaleSizeW(5),
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: 0,
-        borderTopWidth: 0,
-        borderColor: "#c5c7c9",
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
     titleContainer: {
         flexDirection: "row",

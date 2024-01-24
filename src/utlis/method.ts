@@ -2,7 +2,7 @@ import { random } from "lodash-es";
 import { NativeSyntheticEvent, NativeScrollEvent } from "react-native";
 import { scaleSizeH } from "./scaleSize";
 
-export const isEmptyArr = (arr: any[]) => {
+export const isEmptyArr = (arr:any[]) => {
   return Array.isArray(arr) && arr.length === 0;
 };
 
