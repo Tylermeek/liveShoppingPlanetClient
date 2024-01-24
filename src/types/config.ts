@@ -1,6 +1,4 @@
 import { RouteProp } from "@react-navigation/native";
-import React from "react";
-import { View } from "react-native";
 
 // 定义路由名枚举
 export enum Views {

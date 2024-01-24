@@ -1,6 +1,6 @@
 import { Button, Tab, TabView, Text } from "@rneui/themed";
 import WaterFall from "components/WaterFall";
-import RroductCard from "screens/SearchResultList/components/ProductList/RroductCard";
+import ProductCard from "screens/SearchResultList/components/ProductList/ProductCard";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { LiveInfo, ProductInfo } from "types/info";
@@ -103,7 +103,7 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
                         list={list}
                         isEndReached={isEndReached}
                         loadingMore={loadingMore}
-                        ContentCard={RroductCard}
+                        ContentCard={ProductCard}
                         updateListCb={setList}
                         getMoreList={handleGetMoreList}
                     />

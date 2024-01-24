@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { color } from "@rneui/base";
 import { Button, Card, Icon, Image, Skeleton } from "@rneui/themed";
 import { Text } from "@rneui/themed";
@@ -5,6 +6,7 @@ import { PromotionalActivityInfo, getPromotionalActivity } from "axios/api/recom
 import { chunk, uniqueId } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Views } from "types/config";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
@@ -12,6 +14,13 @@ const PromotionalActivity: React.FC = () => {
     // TODO 活动商品跳转功能
     const [loading, setLoading] = useState<boolean>(true)
     const [activity, setActivity] = useState<PromotionalActivityInfo>()
+    const navigation = useNavigation()
+
+    const handlePressProduct = (productId: number) => {
+        // console.log(contentInfo.title, contentInfo.type);
+        navigation.navigate(Views.ProductDetail, { productId })
+
+    }
     useEffect(() => {
         getPromotionalActivity()
             .then((res) => {
@@ -43,7 +52,11 @@ const PromotionalActivity: React.FC = () => {
                             chunk(activity?.productList, 2).map((subList) => {
                                 return <View key={uniqueId()} style={{ flexDirection: "row", flex: 1 }}>
                                     {subList.map((product, index) => {
-                                        return <TouchableOpacity key={product.id} style={[styles.prodctContainer, { marginLeft: index === 1 ? 0 : scaleSizeW(10) }]} >
+                                        return <TouchableOpacity
+                                            key={product.id}
+                                            style={[styles.prodctContainer, { marginLeft: index === 1 ? 0 : scaleSizeW(10) }]}
+                                            onPress={() => handlePressProduct(product.id)}
+                                        >
                                             <View style={{ height: "100%" }}>
                                                 <Image source={{ uri: product.cover }} style={styles.image}></Image>
                                             </View>
@@ -66,7 +79,7 @@ const PromotionalActivity: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height:scaleSizeH(200),
+        height: scaleSizeH(200),
         backgroundColor: "#A2C5C9",
         marginLeft: scaleSizeW(10),
         borderRadius: scaleSizeW(5)

@@ -7,16 +7,26 @@ import { isProductInfo } from "utlis/type";
 import { ContentCardProps } from "../../../../components/WaterFall";
 import { isEmptyArr } from "utlis/method";
 import { Icon } from "@rneui/base";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { Views } from "types/config";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export interface CardProps extends ContentCardProps {
     contentInfo: ProductInfo
     bindRef?: Function
 }
 
-const RroductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
+const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
+    const route = useRoute()
+    const navigation = useNavigation<NativeStackNavigationProp<any>>()
 
     const handlePressProduct = () => {
-        console.log(contentInfo.title, contentInfo.type);
+        console.log(contentInfo.title, contentInfo.id);
+        if (route.name === Views.ProductDetail) {
+            // 如果是商品详情页点击其他商品，那么久必须要使用push，因为是在同一个screen下
+            navigation.push(Views.ProductDetail, { productId: contentInfo.id })
+        }
+        else navigation.navigate(Views.ProductDetail, { productId: contentInfo.id })
 
     }
     const handlePressShop = () => {
@@ -139,4 +149,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default RroductCard
+export default ProductCard

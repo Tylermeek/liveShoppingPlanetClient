@@ -2,41 +2,40 @@
  * LiveInfo
  */
 export interface LiveInfo {
-    /**
-     * 主播名
-     */
-    anchor: string;
-    /**
-     * 主播信息
-     */
-    anchorInfo: AnchorInfo;
-    /**
-     * 直播间封面
-     */
-    cover: string;
-    /**
-     * 直播间ID
-     */
-    id: number;
-    /**
-     * 是否正在直播
-     */
-    isOnLive: boolean;
-    /**
-     * 店铺信息
-     */
-    shopInfo: ShopInfo;
-    /**
-     * 直播间标题
-     */
-    title: string;
-    /**
-     * 信息类别
-     */
-    type: InfoType.LiveInfo;
-    [property: string]: any;
+  /**
+   * 主播名
+   */
+  anchor: string;
+  /**
+   * 主播信息
+   */
+  anchorInfo: AnchorInfo;
+  /**
+   * 直播间封面
+   */
+  cover: string;
+  /**
+   * 直播间ID
+   */
+  id: number;
+  /**
+   * 是否正在直播
+   */
+  isOnLive: boolean;
+  /**
+   * 店铺信息
+   */
+  shopInfo: ShopInfo;
+  /**
+   * 直播间标题
+   */
+  title: string;
+  /**
+   * 信息类别
+   */
+  type: InfoType.LiveInfo;
+  [property: string]: any;
 }
-
 
 /**
  * 主播信息
@@ -44,135 +43,159 @@ export interface LiveInfo {
  * AnchorInfo
  */
 export interface AnchorInfo {
-    /**
-     * 主播头像
-     */
-    avatar: string;
-    /**
-     * 主播名称
-     */
-    name: string;
-    [property: string]: any;
+  /**
+   * 主播头像
+   */
+  avatar: string;
+  /**
+   * 主播名称
+   */
+  name: string;
+  [property: string]: any;
 }
 
 export enum InfoType {
-    LiveInfo = "LiveInfo",
-    ProductInfo = "ProductInfo",
+  LiveInfo = "LiveInfo",
+  ProductInfo = "ProductInfo",
 }
 
 /**
  * ExpressInfo
  */
 export interface ExpressInfo {
-    /**
-     * 快递费用
-     */
-    cost: number;
-    /**
-     * 快递源
-     */
-    source: string;
-    [property: string]: any;
+  /**
+   * 快递费用
+   */
+  cost: number;
+  /**
+   * 快递源
+   */
+  source: string;
+  [property: string]: any;
 }
-
 
 /**
  * ProductInfo
  */
 export interface ProductInfo {
-    /**
-     * 商品参加的活动
-     */
-    activity?: string;
-    /**
-     * 限购数量
-     */
-    buyLimit: number;
-    /**
-     * 商品封面
-     */
-    cover?: string;
-    /**
-     * 快递信息
-     */
-    expressInfo: ExpressInfo;
-    /**
-     * 商品ID
-     */
-    id: number;
-    /**
-     * 商品价格
-     */
-    price: number;
-    /**
-     * 商品所属店铺信息
-     */
-    shopInfo: ShopInfo;
-    /**
-     * 商品销量
-     */
-    sold: number;
-    /**
-     * 商品规格列表
-     */
-    specification?: string[];
-    /**
-     * 支持服务信息
-     */
-    supportServices: string[];
-    /**
-     * 商品名称
-     */
-    title: string;
-    /**
-     * 信息类别
-     */
-    type: InfoType;
-    [property: string]: any;
+  /**
+   * 商品参加的活动
+   */
+  activity?: string;
+  /**
+   * 限购数量
+   */
+  buyLimit: number;
+  /**
+   * 商品封面
+   */
+  cover?: string;
+  /**
+   * 快递信息
+   */
+  expressInfo: ExpressInfo;
+  /**
+   * 商品ID
+   */
+  id: number;
+  /**
+   * 商品价格
+   */
+  price: number;
+  /**
+   * 商品所属店铺信息
+   */
+  shopInfo: ShopInfo;
+  /**
+   * 商品销量
+   */
+  sold: number;
+  /**
+   * 商品规格列表
+   */
+  specification?: string[];
+  /**
+   * 支持服务信息
+   */
+  supportServices: string[];
+  /**
+   * 商品名称
+   */
+  title: string;
+  /**
+   * 信息类别
+   */
+  type: InfoType;
+  [property: string]: any;
+}
+
+/**
+ * 店铺评分
+ */
+export interface Rate {
+  /**
+   * 物流服务
+   */
+  logisticsServices: number;
+  /**
+   * 商品描述
+   */
+  productDescription: number;
+  /**
+   * 卖家服务
+   */
+  sellerService: number;
+  [property: string]: any;
 }
 
 /**
  * ShopInfo，店铺信息
  */
 export interface ShopInfo {
-    /**
-     * 店铺头像
-     */
-    avatar: string;
-    /**
-     * 店铺关注人数
-     */
-    follower: number;
-    /**
-     * 店铺ID
-     */
-    id: string;
-    /**
-     * 店铺名
-     */
-    name: string;
-    [property: string]: any;
+  /**
+   * 店铺头像
+   */
+  avatar: string;
+  /**
+   * 店铺关注人数
+   */
+  follower: number;
+  /**
+   * 店铺ID
+   */
+  id: string;
+  /**
+   * 店铺名
+   */
+  name: string;
+  /**
+   * 店铺商品数量
+   */
+  productNum: number;
+  /**
+   * 店铺评分
+   */
+  rate: Rate;
+  [property: string]: any;
 }
-
-
 
 /**
  * 轮播图信息
- * 
+ *
  * SwiperInfo
  */
 export interface SwiperInfo {
-    /**
-     * 轮播图ID
-     */
-    id: string;
-    /**
-     * 轮播图图片地址
-     */
-    image: string;
-    /**
-     * 所属商品ID
-     */
-    productId: string;
-    [property: string]: any;
+  /**
+   * 轮播图ID
+   */
+  id: string;
+  /**
+   * 轮播图图片地址
+   */
+  image: string;
+  /**
+   * 所属商品ID
+   */
+  productId: string;
+  [property: string]: any;
 }

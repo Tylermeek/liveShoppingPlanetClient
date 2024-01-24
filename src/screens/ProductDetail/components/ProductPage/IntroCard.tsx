@@ -5,7 +5,7 @@ import { ProductInfo } from "types/info";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 interface IntroCardProps {
-    info: ProductInfo | undefined
+    info: ProductInfo
 }
 
 const IntroCard: React.FC<IntroCardProps> = ({ info }) => {
@@ -17,23 +17,23 @@ const IntroCard: React.FC<IntroCardProps> = ({ info }) => {
                 <Text style={styles.subTitle}>月销:{info?.sold}</Text>
             </View>
         </View>
-        <View style={{ backgroundColor: "transparent", marginTop:scaleSizeW(5)}}>
+        <View style={{ backgroundColor: "transparent", marginTop: scaleSizeW(10) }}>
             <View style={styles.list}>
                 <Icon name="local-shipping" style={{ marginRight: scaleSizeW(10) }} />
                 <Text style={styles.listItem}>快递邮费: {info?.expressInfo.cost}</Text>
                 <Text style={styles.listItem}>{info?.expressInfo.source}</Text>
             </View>
             {/* <Divider style={{ marginLeft: scaleSizeW(5), marginRight: scaleSizeW(5) }} /> */}
-            <View style={[styles.list, { marginTop: scaleSizeW(2.5)}]}>
+            <View style={[styles.list, { marginTop: scaleSizeW(2.5) }]}>
                 <Icon name="verified" style={{ marginRight: scaleSizeW(10) }} />
                 {
                     info?.supportServices.map((service, index) => {
-                        return <>
+                        return <View key={service} style={{flexDirection:"row", justifyContent:"space-evenly", alignItems:"center"}}>
                             {index !== 0 &&
-                                <Text key={`service${index}`} style={styles.listItem}>|</Text>
+                                <Text style={styles.listItem}>|</Text>
                             }
-                            <Text key={service} style={styles.listItem}>{service}</Text>
-                        </>
+                            <Text style={styles.listItem}>{service}</Text>
+                        </View>
                     })
                 }
             </View>

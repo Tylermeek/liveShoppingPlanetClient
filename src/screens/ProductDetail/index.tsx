@@ -15,10 +15,8 @@ const ProductDetail: React.FC = () => {
     return <>
         <Banner activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabView containerStyle={{ flex: 1 }} value={activeTab} onChange={setActiveTab}>
-            <TabView.Item style={{backgroundColor:"transparent"}}>
-                <ScrollView>
-                    <ProductPage productId={productId}/>
-                </ScrollView>
+            <TabView.Item style={{ backgroundColor: "transparent" }}>
+                <ProductPage productId={productId} />
             </TabView.Item>
             <TabView.Item>
                 <Text>ProductDetail{productId}</Text>
