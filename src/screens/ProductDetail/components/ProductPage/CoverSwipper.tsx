@@ -2,6 +2,7 @@ import { Image, Skeleton } from "@rneui/themed";
 import { CoverList, getProductCoverList } from "axios/api/product";
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
 import { scaleSizeH } from "utlis/scaleSize";
 
@@ -22,7 +23,7 @@ const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
 
                 setCoverList(res.data)
             })
-            .finally(()=>{
+            .finally(() => {
                 setCoverLoading(false)
             })
 
@@ -31,18 +32,21 @@ const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
         ?
         <Skeleton animation="pulse" width={containerWidth} height={scaleSizeH(320)} />
         :
-        <Carousel
-            loop={false}
-            width={containerWidth}
-            height={scaleSizeH(320)}
-            autoPlay={false}
-            data={coverList}
-            scrollAnimationDuration={1000}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Carousel
+                loop
+                width={containerWidth}
+                height={scaleSizeH(320)}
+                autoPlay
+                data={coverList}
+                scrollAnimationDuration={1000}
 
-            renderItem={({ item, index }) => (
-                <Image source={{ uri: item }} style={{ height: "100%", width: "100%" }} />
-            )}
-        />
+                renderItem={({ item, index }) => (
+                    <Image source={{ uri: item }} style={{ height: "100%", width: "100%" }} />
+                )}
+            />
+        </GestureHandlerRootView>
+
     )
 }
 

@@ -5,6 +5,7 @@ import { Image, Skeleton } from "@rneui/themed";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { SwiperInfo } from "types/info";
 import Carousel from "react-native-reanimated-carousel";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const AdSwipper: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)
@@ -33,20 +34,22 @@ const AdSwipper: React.FC = () => {
                 <Skeleton animation="pulse" width={containerWidth} height={scaleSizeH(200)} />
                 :
                 <View style={{ flex: 1 }}>
-                    <Carousel
-                        loop
-                        width={containerWidth}
-                        height={scaleSizeH(200)}
-                        autoPlay={true}
-                        data={swiperList}
-                        scrollAnimationDuration={1000}
-                        renderItem={({ item, index }) => (
-                            <TouchableOpacity key={item.id} style={{ flex: 1 }} onPress={() => handlePress(item)}>
-                                <Image source={{ uri: item.image }} style={{ height: "100%", width: "100%", borderRadius: scaleSizeW(5) }}></Image>
-                            </TouchableOpacity>
-                        )}
-                        style={{ borderRadius: scaleSizeW(5) }}
-                    />
+                    <GestureHandlerRootView style={{ flex: 1 }}>
+                        <Carousel
+                            loop
+                            width={containerWidth}
+                            height={scaleSizeH(200)}
+                            autoPlay={true}
+                            data={swiperList}
+                            scrollAnimationDuration={1000}
+                            renderItem={({ item, index }) => (
+                                <TouchableOpacity key={item.id} style={{ flex: 1 }} onPress={() => handlePress(item)}>
+                                    <Image source={{ uri: item.image }} style={{ height: "100%", width: "100%", borderRadius: scaleSizeW(5) }}></Image>
+                                </TouchableOpacity>
+                            )}
+                            style={{ borderRadius: scaleSizeW(5) }}
+                        />
+                    </GestureHandlerRootView>
                 </View>
         }
     </>
