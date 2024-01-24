@@ -41,7 +41,7 @@ const AdSwipper: React.FC = () => {
                             height={scaleSizeH(200)}
                             autoPlay={true}
                             data={swiperList}
-                            scrollAnimationDuration={1000}
+                            scrollAnimationDuration={1500}
                             renderItem={({ item, index }) => (
                                 <TouchableOpacity key={item.id} style={{ flex: 1 }} onPress={() => handlePress(item)}>
                                     <Image source={{ uri: item.image }} style={{ height: "100%", width: "100%", borderRadius: scaleSizeW(5) }}></Image>

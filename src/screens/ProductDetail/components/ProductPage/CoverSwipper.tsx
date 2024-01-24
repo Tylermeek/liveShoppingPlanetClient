@@ -39,7 +39,7 @@ const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
                 height={scaleSizeH(320)}
                 autoPlay
                 data={coverList}
-                scrollAnimationDuration={1000}
+                scrollAnimationDuration={2000}
 
                 renderItem={({ item, index }) => (
                     <Image source={{ uri: item }} style={{ height: "100%", width: "100%" }} />
