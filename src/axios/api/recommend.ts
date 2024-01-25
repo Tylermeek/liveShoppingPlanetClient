@@ -1,5 +1,5 @@
 import { request } from "axios/config";
-import { ProductInfo, LiveInfo, SwiperInfo } from "types/info";
+import { ProductInfo, LiveInfo, ProductSwiperInfo } from "types/info";
 
 export interface Recommendlist {
   productList: ProductInfo[];
@@ -10,7 +10,7 @@ export const getRecommendlist = (pageNo: number) => {
   return request.get<Recommendlist>(`/recommend/recommendList?pageNo=${pageNo}`);
 };
 
-export type SwiperInfoList = SwiperInfo[];
+export type SwiperInfoList = ProductSwiperInfo[];
 
 export const getSiwperList = () => {
   return request.get<SwiperInfoList>("/recommend/swiperList");

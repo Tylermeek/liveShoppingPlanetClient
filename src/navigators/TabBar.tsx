@@ -65,6 +65,7 @@ export type TabBarParamList = {
 const TabBar: React.FC<TabBarParamList> = () => {
     return <>
         <TabNav.Navigator
+            initialRouteName="Live"
             tabBar={(props) => <MyTabBar {...props} />}
             screenOptions={{ headerShown: false }}
             sceneContainerStyle={{backgroundColor:"transparent"}}

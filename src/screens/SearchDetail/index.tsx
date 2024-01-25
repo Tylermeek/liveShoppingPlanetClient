@@ -11,6 +11,7 @@ import SuggestionList from "./components/SuggestionList";
 import SearchHistory from "./components/SearchHistory";
 import SearchRecommend from "./components/SearchRecommend";
 import SearchBanner from "components/SearchBanner";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const SearchDetail: React.FC = () => {
     const [searchRef, setSearchRef] = useState<any>(null)
@@ -42,7 +43,7 @@ const SearchDetail: React.FC = () => {
         }, 50)
     })
 
-    return <>
+    return <GestureHandlerRootView style={{ flex: 1 }}>
         <SearchBanner
             LeftIcon={GoBack}
             RightIcon={Camera}
@@ -65,7 +66,7 @@ const SearchDetail: React.FC = () => {
 
         }
 
-    </>
+    </GestureHandlerRootView>
 }
 
 const styles = StyleSheet.create({

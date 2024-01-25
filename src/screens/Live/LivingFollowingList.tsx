@@ -39,7 +39,8 @@ const LivingFollowingList: React.FC = () => {
         Array.isArray(list) && list?.length !== 0
             ?
             <View style={styles.container}>
-                <Text style={styles.title}>正在直播</Text>
+                <Text style={styles.title}>关注主播直播中</Text>
+                {/* <Text style={{ fontSize: scaleSizeW(10), color:"#E36235",paddingLeft: scaleSizeW(20), }}>正在直播中...</Text> */}
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -70,9 +71,10 @@ const LivingFollowingList: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         height: scaleSizeH(100),
-        width: "100%",
         backgroundColor: "white",
-        marginTop: scaleSizeH(10)
+        marginLeft: scaleSizeW(10),
+        marginRight: scaleSizeW(10),
+        borderRadius: scaleSizeW(15)
     },
     title: {
         height: scaleSizeH(30),
@@ -83,6 +85,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: scaleSizeH(0.5),
         lineHeight: scaleSizeH(30),
         fontWeight: "400",
+
+        // backgroundColor:""
     },
     listConatiner: {
         display: "flex",

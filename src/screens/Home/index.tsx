@@ -12,6 +12,7 @@ import { LiveInfo, ProductInfo } from "types/info";
 import AdBanner from "./components/AdBanner";
 import { debounce } from "lodash-es";
 import { Button } from "@rneui/themed";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 type HomeProps = CompositeTabScreenParamList<"Home">;
 
@@ -33,7 +34,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
 
     return <>
-        <View style={styles.home}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
             <LinearGradient colors={["rgba(227,98,85,1)", "rgba(227,98,85,1)", 'rgba(236,154,134,0.48)', 'rgba(236,154,134,0)']} style={styles.linearGradient}>
             </LinearGradient>
             <HeaderBar></HeaderBar>
@@ -49,16 +50,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
                 <AdBanner></AdBanner>
                 <RecommendList isEndReached={isEndReached}></RecommendList>
             </ScrollView>
-        </View >
-
+        </GestureHandlerRootView>
     </>
 }
 
 const styles = StyleSheet.create({
-    home: {
-        display: "flex",
-        height: "100%"
-    },
     linearGradient: {
         height: scaleSizeH(260),
         width: "100%",

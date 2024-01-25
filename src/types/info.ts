@@ -202,13 +202,13 @@ export interface ShopInfo {
 /**
  * 轮播图信息
  *
- * SwiperInfo
+ * SwiProductSwiperInfoperInfo
  */
-export interface SwiperInfo {
+export interface ProductSwiperInfo {
   /**
    * 轮播图ID
    */
-  id: string;
+  id: number;
   /**
    * 轮播图图片地址
    */
@@ -249,5 +249,25 @@ export interface CommentInfo {
    * 评论用户信息
    */
   userInfo: UserInfo;
+  [property: string]: any;
+}
+
+
+/**
+ * LiveSwiperInfo
+ */
+export interface LiveSwiperInfo {
+  /**
+   * 轮播图ID
+   */
+  id: string;
+  /**
+   * 轮播图图片地址
+   */
+  image: string;
+  /**
+   * 所属直播ID
+   */
+  liveId: string;
   [property: string]: any;
 }

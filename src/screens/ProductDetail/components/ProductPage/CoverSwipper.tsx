@@ -38,7 +38,7 @@ const CoverSwipper: React.FC<CoverSwipperProps> = ({ productId }) => {
                 loop
                 width={containerWidth}
                 height={scaleSizeH(320)}
-                autoPlay
+                autoPlay={false}
                 data={coverList}
                 scrollAnimationDuration={2000}
 

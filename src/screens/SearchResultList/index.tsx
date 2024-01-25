@@ -11,6 +11,7 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import ProductList from "./components/ProductList";
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import LiveList from "./components/LiveList";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -90,7 +91,7 @@ const SearchTabs = ({ searchContent }: { searchContent: string }) => {
                             name={name}
                             component={Component as any}
                             options={options}
-                            initialParams={{ searchContent:searchContent }}
+                            initialParams={{ searchContent: searchContent }}
                         >
                         </Tab.Screen>
                     )
@@ -108,7 +109,7 @@ const SearchResultList: React.FC = () => {
 
     useEffect(() => {
     }, [])
-    return <View style={{ height: "100%", display: "flex" }}>
+    return <GestureHandlerRootView style={{ flex: 1 }}>
         <SearchBanner
             LeftIcon={GoBack}
             RightIcon={Camera}
@@ -119,7 +120,7 @@ const SearchResultList: React.FC = () => {
             }}
         />
         <SearchTabs searchContent={searchContent} />
-    </View>
+    </GestureHandlerRootView>
 }
 
 const styles = StyleSheet.create({
