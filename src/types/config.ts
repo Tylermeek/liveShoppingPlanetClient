@@ -4,6 +4,7 @@ import { RouteProp } from "@react-navigation/native";
 export enum Views {
   Home = "Home",
   Live = "Live",
+  Cart = "Cart",
   LiveRoom = "LiveRoom",
   SearchDetail = "SearchDetail",
   SearchResultList = "SearchResultList",
@@ -28,6 +29,7 @@ interface ProductDetailProps{
 export type RootStackParamList = {
   [Views.Home]: undefined;
   [Views.Live]: undefined;
+  [Views.Cart]: undefined;
   [Views.LiveRoom]: LiveRoomRouteProps;
   [Views.SearchDetail]: undefined;
   [Views.SearchResultList]: SearchResultListProps;

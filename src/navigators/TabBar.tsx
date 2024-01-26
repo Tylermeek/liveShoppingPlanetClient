@@ -59,13 +59,14 @@ const TabNav = createBottomTabNavigator()
 
 export type TabBarParamList = {
     Home: undefined,
-    Live: undefined
+    Live: undefined,
+    Cart: undefined
 }
 
 const TabBar: React.FC<TabBarParamList> = () => {
     return <>
         <TabNav.Navigator
-            initialRouteName="Live"
+            initialRouteName="Cart"
             tabBar={(props) => <MyTabBar {...props} />}
             screenOptions={{ headerShown: false }}
             sceneContainerStyle={{backgroundColor:"transparent"}}

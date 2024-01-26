@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import RootStack from "navigators/RootStack";
 import { StyleSheet, View } from "react-native";
 import { createTheme, ThemeProvider } from "@rneui/themed";
+import { Provider } from "react-redux";
+import { store } from "store";
 
 export default function App() {
   const theme = createTheme({
@@ -24,7 +26,7 @@ export default function App() {
     },
   });
   return (
-    <>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <StatusBar
           animated={true}
@@ -37,7 +39,7 @@ export default function App() {
         />
         <RootStack></RootStack>
       </ThemeProvider>
-    </>
+    </Provider>
   );
 }
 
