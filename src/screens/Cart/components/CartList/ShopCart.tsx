@@ -13,8 +13,6 @@ const ShopCart: React.FC = () => {
     const { shops, products } = useAppSelector((state) => state.cartInfo)
     const dispatch = useAppDispatch()
     const handlePressShop = (shop: ShopsInfo) => {
-        // todo 更改店铺勾选状态 更新商品勾选状态
-        // setCheckedShop(!checkedShop)
         dispatch(changeShopStatus(shop))
     }
     const handleEdit = (shopId: string) => {

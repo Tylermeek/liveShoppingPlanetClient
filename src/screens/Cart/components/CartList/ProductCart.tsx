@@ -17,12 +17,10 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
     const dispatch = useDispatch()
 
     const handleCheck = () => {
-        // todo 更改商品勾选状态
         dispatch(changeProductStatus(product))
     }
 
     const handleEditCount = (number: number) => {
-        // todo 更改商品数量
         dispatch(changeProductBuyCount({ number, productID: product.id }))
     }
 

@@ -210,6 +210,7 @@ const updateTotalByChangeCount = (pro: ProductsInfo, state: any, newCount: numbe
     }
     // 更新购买数量
     pro.buyCount = newCount
+    // todo 更新购物车信息，发送请求
 }
 
 const cartInfoSlice = createSlice(
