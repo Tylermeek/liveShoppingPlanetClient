@@ -13,10 +13,7 @@ const CartList: React.FC = () => {
 const styles = StyleSheet.create({
     contanier: {
         flex: 1,
-        backgroundColor: "white",
-        borderTopLeftRadius: scaleSizeW(15),
-        borderTopRightRadius: scaleSizeW(15),
-        padding: scaleSizeW(5),
+        padding: scaleSizeW(10),
     }
 })
 

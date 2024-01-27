@@ -4,17 +4,18 @@ import { StyleSheet, View } from "react-native";
 import ProductCart from "./ProductCart";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import { useAppSelector } from "store/hooks";
+import { useAppDispatch, useAppSelector } from "store/hooks";
 import { Button, Icon } from "@rneui/base";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
+import { ShopsInfo, changeShopStatus } from "slice/cart/cartSlice";
 
 const ShopCart: React.FC = () => {
     const { shops, products } = useAppSelector((state) => state.cartInfo)
-    const [checkedShop, setCheckedShop] = useState(false);
-    const count = useSelector((state: RootState) => state.counter.value)
-    const handlePressShop = () => {
+    const dispatch = useAppDispatch()
+    const handlePressShop = (shop: ShopsInfo) => {
         // todo 更改店铺勾选状态 更新商品勾选状态
-        setCheckedShop(!checkedShop)
+        // setCheckedShop(!checkedShop)
+        dispatch(changeShopStatus(shop))
     }
     const handleEdit = (shopId: string) => {
         // todo 编辑店铺商品
@@ -22,17 +23,13 @@ const ShopCart: React.FC = () => {
 
     }
 
-    useEffect(() => {
-        // console.log(shops);
-
-    }, [shops])
     return <>
         {
             shops && Object.keys(shops.byId).map((shopId) => {
                 // console.log(shopId);
-
+                const shop = shops.byId[shopId]
                 return (
-                    <View style={{marginBottom:scaleSizeW(10)}}>
+                    <View key={shopId} style={{ marginBottom: scaleSizeW(10), borderRadius: scaleSizeW(10), overflow: "hidden", backgroundColor: "white" }}>
                         <ListItem.Accordion
                             isExpanded
                             noIcon
@@ -44,13 +41,14 @@ const ShopCart: React.FC = () => {
                                         iconType="material-community"
                                         checkedIcon="checkbox-marked"
                                         uncheckedIcon="checkbox-blank-outline"
-                                        checked={checkedShop}
-                                        onPress={handlePressShop}
+                                        checked={shop.buyProducts && shop.buyProducts.length === shop.buyProducts.filter((proID) => {
+                                            return products?.byId[proID].checked
+                                        }).length}
+                                        onPress={() => handlePressShop(shop)}
                                     />
                                     <ListItem.Content>
-                                        {/* <ListItem.Title style={{marginLeft:scaleSizeW(10)}}>{shops.byId[shopId].name}</ListItem.Title> */}
                                         <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
-                                            <Text style={{ marginLeft: scaleSizeW(10), fontWeight: "700", fontSize: scaleSizeW(13) }}>{shops.byId[shopId].name}</Text>
+                                            <Text style={{ marginLeft: scaleSizeW(10), fontWeight: "700", fontSize: scaleSizeW(13) }}>{shop.name}</Text>
                                             <Button
                                                 title={"编辑"}
                                                 color={"transparent"}

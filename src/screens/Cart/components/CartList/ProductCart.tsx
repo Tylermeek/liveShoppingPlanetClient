@@ -5,7 +5,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
-import { ProductsInfo } from "slice/cart/cartSlice";
+import { ProductsInfo, changeProductStatus } from "slice/cart/cartSlice";
 import { Button } from "@rneui/base";
 
 interface ProductCartProps {
@@ -13,12 +13,11 @@ interface ProductCartProps {
 }
 
 const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
-    const [checked, setChecked] = React.useState(false);
-    const count = useSelector((state: RootState) => state.counter.value)
     const dispatch = useDispatch()
 
     const handleCheck = () => {
         // todo 更改商品勾选状态
+        dispatch(changeProductStatus(product))
     }
 
     const handleEditCount = () => {
@@ -32,12 +31,12 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
                 iconType="material-community"
                 checkedIcon="checkbox-marked"
                 uncheckedIcon="checkbox-blank-outline"
-                checked={checked}
+                checked={!!product.checked}
                 onPress={handleCheck}
             />
             <ListItem.Content>
                 <View style={styles.contanier}>
-                    <View style={{ width: scaleSizeW(85), height: scaleSizeH(85) }}>
+                    <View style={{ width: scaleSizeW(60), height: scaleSizeH(60) }}>
                         <Image source={{ uri: product.cover }} style={{ width: "100%", height: "100%", borderRadius: scaleSizeW(5) }} />
                     </View>
                     <View style={{ flex: 1, marginLeft: scaleSizeW(10) }}>

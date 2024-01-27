@@ -1,12 +1,16 @@
 import { ListItem, Text, Button } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { changeCheckAllStatus } from "slice/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "store/hooks";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const BottomBanner: React.FC = () => {
-
+    const { shops, products } = useAppSelector((state) => state.cartInfo)
+    const dispatch = useAppDispatch()
     const handleCheckAll = () => {
         // todo 勾选全部
+        dispatch(changeCheckAllStatus())
     }
 
     const handleSettleCart = () => {
@@ -15,7 +19,15 @@ const BottomBanner: React.FC = () => {
     return (
         <View style={styles.contanier}>
             <ListItem>
-                <ListItem.CheckBox checked={false} title={"全选"} onPress={handleCheckAll} textStyle={{color:"#acacad"}}/>
+                <ListItem.CheckBox
+                    title={"全选"}
+                    textStyle={{ color: "#acacad" }}
+                    checked={!!shops?.allIds && (shops.allIds.filter((shopId) => {
+                        return shops.byId[shopId].buyProducts.filter(proId => {
+                            return products?.byId[proId].checked
+                        }).length === shops.byId[shopId].buyProducts.length
+                    }).length === shops.allIds.length)}
+                    onPress={handleCheckAll} />
                 <ListItem.Content>
                     <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
                         <Text style={{ fontSize: scaleSizeW(10), marginRight: scaleSizeW(10) }}>

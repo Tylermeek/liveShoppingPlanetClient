@@ -11,7 +11,7 @@ const Cart: React.FC = () => {
     const cartInfo = useAppSelector((state) => { state.cartInfo })
     const dispatch = useAppDispatch()
     useEffect(() => {
-        dispatch(getCartlistThunk())
+        // dispatch(getCartlistThunk())
     }, [])
     return <GestureHandlerRootView style={{ flex: 1 }}>
         <TopBanner />
