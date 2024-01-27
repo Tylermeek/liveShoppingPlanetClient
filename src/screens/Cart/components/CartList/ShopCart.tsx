@@ -13,9 +13,11 @@ const ShopCart: React.FC = () => {
     const [checkedShop, setCheckedShop] = useState(false);
     const count = useSelector((state: RootState) => state.counter.value)
     const handlePressShop = () => {
+        // todo 更改店铺勾选状态 更新商品勾选状态
         setCheckedShop(!checkedShop)
     }
     const handleEdit = (shopId: string) => {
+        // todo 编辑店铺商品
         console.log(shopId);
 
     }

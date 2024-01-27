@@ -16,6 +16,15 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
     const [checked, setChecked] = React.useState(false);
     const count = useSelector((state: RootState) => state.counter.value)
     const dispatch = useDispatch()
+
+    const handleCheck = () => {
+        // todo 更改商品勾选状态
+    }
+
+    const handleEditCount = () => {
+        // todo 更改商品数量
+    }
+
     return <>
         <ListItem>
             <ListItem.CheckBox
@@ -24,7 +33,7 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
                 checkedIcon="checkbox-marked"
                 uncheckedIcon="checkbox-blank-outline"
                 checked={checked}
-                onPress={() => setChecked(!checked)}
+                onPress={handleCheck}
             />
             <ListItem.Content>
                 <View style={styles.contanier}>
@@ -37,7 +46,13 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
                         <Text style={{ color: "#E36235", marginTop: scaleSizeW(5) }}>￥{product.price}</Text>
                     </View>
                     <View style={{ marginLeft: scaleSizeW(10), justifyContent: "center" }}>
-                        <Button color={"rgba(128, 128, 128, 0.1)"} radius={"md"}><Text>x{product.buyCount}</Text></Button>
+                        <Button
+                            color={"rgba(128, 128, 128, 0.1)"}
+                            radius={"md"}
+                            onPress={handleEditCount}
+                        >
+                            <Text>x{product.buyCount}</Text>
+                        </Button>
                     </View>
                 </View>
             </ListItem.Content>
