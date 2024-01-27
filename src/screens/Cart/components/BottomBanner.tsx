@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const BottomBanner: React.FC = () => {
-    const { shops, products } = useAppSelector((state) => state.cartInfo)
+    const { shops, products, totalMoney } = useAppSelector((state) => state.cartInfo)
     const dispatch = useAppDispatch()
     const handleCheckAll = () => {
         // todo 勾选全部
@@ -31,7 +31,7 @@ const BottomBanner: React.FC = () => {
                 <ListItem.Content>
                     <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
                         <Text style={{ fontSize: scaleSizeW(10), marginRight: scaleSizeW(10) }}>
-                            合计:<Text style={{ color: "#E36235", fontSize: scaleSizeW(13) }}>￥{11}</Text>
+                            合计:<Text style={{ color: "#E36235", fontSize: scaleSizeW(13) }}>￥{totalMoney}</Text>
                         </Text>
                         <Button
                             color={"primary"}

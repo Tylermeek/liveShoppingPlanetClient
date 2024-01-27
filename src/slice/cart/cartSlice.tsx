@@ -66,7 +66,8 @@ export interface ProductsState {
 
 export interface CartState {
     shops: ShopsState | null,
-    products: ProductsState | null
+    products: ProductsState | null,
+    totalMoney: number
 }
 
 const initialState: CartState = {
@@ -163,7 +164,8 @@ const initialState: CartState = {
             "3",
             "4"
         ]
-    }
+    },
+    totalMoney: 0
 }
 
 export const getCartlistThunk = createAsyncThunk("cartInfo/getCartlistThunk", async () => {
@@ -172,6 +174,15 @@ export const getCartlistThunk = createAsyncThunk("cartInfo/getCartlistThunk", as
     return res.data
 })
 
+const updateTotal = (pro: ProductsInfo, state: any) => {
+    if (pro?.checked) {
+        state.totalMoney -= (pro.price * pro.buyCount)
+    } else if (!pro?.checked) {
+        state.totalMoney += (pro.price * pro.buyCount)
+    }
+    pro.checked = !pro.checked
+}
+
 const cartInfoSlice = createSlice(
     {
         name: "cartInfo",
@@ -179,7 +190,7 @@ const cartInfoSlice = createSlice(
         reducers: {
             changeProductStatus: (state, { payload }: PayloadAction<ProductsInfo>) => {
                 const curPro = state.products?.byId[payload.id]
-                curPro && (curPro.checked = !curPro.checked)
+                if (curPro) updateTotal(curPro, state)
             },
             changeShopStatus: (state, { payload }: PayloadAction<ShopsInfo>) => {
                 const curShop = state.shops?.byId[payload.id]
@@ -191,12 +202,12 @@ const cartInfoSlice = createSlice(
                 if (curCheckedPros?.length === curShop?.buyProducts.length) {
                     curShop?.buyProducts.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        curPro && (curPro.checked = !curPro.checked)
+                        if (curPro) updateTotal(curPro, state)
                     })
                 } else {
                     curShop?.buyProducts.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        curPro && !curPro.checked && (curPro.checked = !curPro.checked)
+                        if (curPro && !curPro.checked) updateTotal(curPro, state)
                     })
                 }
             },
@@ -210,12 +221,12 @@ const cartInfoSlice = createSlice(
                 if (curCheckedPros?.length === productIds.length) {
                     productIds.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        curPro && (curPro.checked = !curPro.checked)
+                        if (curPro) updateTotal(curPro, state)
                     })
                 } else {
                     productIds.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        curPro && !curPro.checked && (curPro.checked = !curPro.checked)
+                        if (curPro && !curPro.checked) updateTotal(curPro, state)
                     })
                 }
             }
