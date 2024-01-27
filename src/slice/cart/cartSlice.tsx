@@ -67,7 +67,8 @@ export interface ProductsState {
 export interface CartState {
     shops: ShopsState | null,
     products: ProductsState | null,
-    totalMoney: number
+    totalMoney: number,
+    submitList: string[]
 }
 
 const initialState: CartState = {
@@ -123,6 +124,7 @@ const initialState: CartState = {
                 "shopId": "1",
                 "buyLimit": 78,
                 "buyCount": 9,
+                checked: false
             },
             "2": {
                 "type": InfoType.ProductInfo,
@@ -133,7 +135,9 @@ const initialState: CartState = {
                 "sold": 2000,
                 "shopId": "1",
                 "buyLimit": 47,
-                "buyCount": 2
+                "buyCount": 2,
+                checked: false
+
             },
             "3": {
                 "type": InfoType.ProductInfo,
@@ -144,7 +148,9 @@ const initialState: CartState = {
                 "sold": 100,
                 "shopId": "2",
                 "buyLimit": 20,
-                "buyCount": 5
+                "buyCount": 5,
+                checked: false
+
             },
             "4": {
                 "type": InfoType.ProductInfo,
@@ -155,7 +161,9 @@ const initialState: CartState = {
                 "sold": 500,
                 "shopId": "2",
                 "buyLimit": 30,
-                "buyCount": 10
+                "buyCount": 10,
+                checked: false
+
             }
         },
         "allIds": [
@@ -165,7 +173,8 @@ const initialState: CartState = {
             "4"
         ]
     },
-    totalMoney: 0
+    totalMoney: 0,
+    submitList: []
 }
 
 export const getCartlistThunk = createAsyncThunk("cartInfo/getCartlistThunk", async () => {
@@ -174,13 +183,33 @@ export const getCartlistThunk = createAsyncThunk("cartInfo/getCartlistThunk", as
     return res.data
 })
 
-const updateTotal = (pro: ProductsInfo, state: any) => {
-    if (pro?.checked) {
+const updateTotalByChangeStatus = (pro: ProductsInfo, state: any) => {
+    const proIndex = state.submitList.indexOf(pro.id)
+    console.log(state.submitList, pro?.checked);
+
+    // 首先查看是否在结算列表内
+    if (proIndex !== -1 && pro?.checked) {
+        state.submitList.splice(proIndex, 1)
         state.totalMoney -= (pro.price * pro.buyCount)
-    } else if (!pro?.checked) {
+    }
+    else if (proIndex === -1 && !pro?.checked) {
+        state.submitList.push(pro.id)
         state.totalMoney += (pro.price * pro.buyCount)
     }
+    // 更新勾选状态
     pro.checked = !pro.checked
+}
+
+const updateTotalByChangeCount = (pro: ProductsInfo, state: any, newCount: number) => {
+    const proIndex = state.submitList.indexOf(pro.id)
+    console.log(state.submitList, pro?.checked);
+
+    // 首先查看是否在结算列表内
+    if (proIndex !== -1 && pro?.checked) {
+        state.totalMoney += (pro.price * (newCount - pro.buyCount))
+    }
+    // 更新购买数量
+    pro.buyCount = newCount
 }
 
 const cartInfoSlice = createSlice(
@@ -190,7 +219,9 @@ const cartInfoSlice = createSlice(
         reducers: {
             changeProductStatus: (state, { payload }: PayloadAction<ProductsInfo>) => {
                 const curPro = state.products?.byId[payload.id]
-                if (curPro) updateTotal(curPro, state)
+                if (curPro) {
+                    updateTotalByChangeStatus(curPro, state)
+                }
             },
             changeShopStatus: (state, { payload }: PayloadAction<ShopsInfo>) => {
                 const curShop = state.shops?.byId[payload.id]
@@ -202,12 +233,16 @@ const cartInfoSlice = createSlice(
                 if (curCheckedPros?.length === curShop?.buyProducts.length) {
                     curShop?.buyProducts.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        if (curPro) updateTotal(curPro, state)
+                        if (curPro) {
+                            updateTotalByChangeStatus(curPro, state)
+                        }
                     })
                 } else {
                     curShop?.buyProducts.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        if (curPro && !curPro.checked) updateTotal(curPro, state)
+                        if (curPro && !curPro.checked) {
+                            updateTotalByChangeStatus(curPro, state)
+                        }
                     })
                 }
             },
@@ -221,24 +256,34 @@ const cartInfoSlice = createSlice(
                 if (curCheckedPros?.length === productIds.length) {
                     productIds.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        if (curPro) updateTotal(curPro, state)
+                        if (curPro) {
+                            updateTotalByChangeStatus(curPro, state)
+                        }
                     })
                 } else {
                     productIds.map(proID => {
                         const curPro = state.products?.byId[proID]
-                        if (curPro && !curPro.checked) updateTotal(curPro, state)
+                        if (curPro && !curPro.checked) {
+                            updateTotalByChangeStatus(curPro, state)
+                        }
                     })
+                }
+            },
+            changeProductBuyCount: (state, { payload }: PayloadAction<{ number: number, productID: string }>) => {
+                const curPro = state.products?.byId[payload.productID]
+                if (curPro) {
+                    updateTotalByChangeCount(curPro, state, payload.number)
                 }
             }
         },
         extraReducers(builder) {
             builder
                 .addCase(getCartlistThunk.pending, () => {
-                    // console.log("获取中");
+                    console.log("获取中");
                 })
                 .addCase(getCartlistThunk.fulfilled, (state, { payload }) => {
                     state.shops = payload.shops
-                    payload.products && Object.keys(payload.products.byId).map(proId => {
+                    payload.products && payload.products.allIds.map(proId => {
                         payload.products && (payload.products.byId[proId].checked = false)
                     })
                     state.products = payload.products
@@ -250,6 +295,6 @@ const cartInfoSlice = createSlice(
     }
 )
 
-export const { changeProductStatus, changeShopStatus, changeCheckAllStatus } = cartInfoSlice.actions
+export const { changeProductStatus, changeShopStatus, changeCheckAllStatus, changeProductBuyCount } = cartInfoSlice.actions
 
 export default cartInfoSlice.reducer

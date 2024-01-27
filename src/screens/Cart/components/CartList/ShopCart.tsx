@@ -34,6 +34,7 @@ const ShopCart: React.FC = () => {
                             isExpanded
                             noIcon
                             noRotation
+                            containerStyle={{padding:scaleSizeW(10)}}
                             content={
                                 <>
                                     <ListItem.CheckBox
