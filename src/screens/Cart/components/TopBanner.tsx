@@ -14,6 +14,7 @@ const TopBanner: React.FC = () => {
     }
 
     const handleFinishEdit = () => {
+        // todo 提交信息
         dispatch(changeCartStatus(CartStatus.Fetched))
     }
 
