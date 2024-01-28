@@ -18,12 +18,12 @@ const TopBanner: React.FC = () => {
     }
 
     const handleDelAll = () => {
-        console.warn("del all")
+        // console.warn("del all")
         dispatch(delAllProducts())
     }
 
     const handleDel = () => {
-        console.warn("del")
+        // console.warn("del")
         dispatch(delProducts())
     }
 
@@ -36,14 +36,14 @@ const TopBanner: React.FC = () => {
                         <>
                             <Button
                                 title={"删除全部"}
-                                color={"warning"}
+                                color={"#E36235"}
                                 titleStyle={[styles.controlTitle, { color: "black" }]}
                                 onPress={handleDelAll}
                                 buttonStyle={styles.controlButton}
                             />
                             <Button
                                 title={"删除"}
-                                color={"warning"}
+                                color={"#EC9A86"}
                                 titleStyle={[styles.controlTitle, { color: "black" }]}
                                 onPress={handleDel}
                                 buttonStyle={styles.controlButton}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         marginRight: scaleSizeW(10)
     },
-    controlTitle: { fontSize: scaleSizeW(11), color: "rgba(80, 80, 80, 1)", fontWeight: "700" },
+    controlTitle: { fontSize: scaleSizeW(11), color: "rgba(80, 80, 80, 1)", fontWeight: "600" },
     controlButton: { marginRight: scaleSizeW(5), padding: scaleSizeH(2), }
 })
 

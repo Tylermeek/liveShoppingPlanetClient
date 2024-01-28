@@ -20,11 +20,6 @@ const ShopCart: React.FC<ShopCartProps> = ({ shop }) => {
     const handlePressShop = (shop: ShopsInfo) => {
         dispatch(changeShopStatus(shop))
     }
-    const handleEdit = (shopId: string) => {
-        // todo 编辑店铺商品
-        console.log(shopId);
-
-    }
 
     return <>
 
@@ -49,13 +44,6 @@ const ShopCart: React.FC<ShopCartProps> = ({ shop }) => {
                         <ListItem.Content>
                             <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
                                 <Text style={{ marginLeft: scaleSizeW(10), fontWeight: "700", fontSize: scaleSizeW(13) }}>{shop.name}</Text>
-                                <Button
-                                    title={"编辑"}
-                                    color={"transparent"}
-                                    buttonStyle={{ height: scaleSizeH(20), padding: 0 }}
-                                    titleStyle={{ fontSize: scaleSizeW(12), color: "rgba(128, 128, 128, 1)" }}
-                                    onPress={() => handleEdit(shopId)}
-                                />
                             </View>
                         </ListItem.Content>
                     </>
