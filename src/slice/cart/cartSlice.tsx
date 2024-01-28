@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { getCartList } from "axios/api/cart"
-import { assign } from "lodash-es"
+import { assign, cloneDeep, omit } from "lodash-es"
 import { InfoType, ProductInfo, ShopInfo } from "types/info"
 
 export interface ShopsInfo extends ShopInfo {
@@ -64,11 +64,19 @@ export interface ProductsState {
     allIds: string[]
 }
 
+export enum CartStatus {
+    Loading,
+    Fetched,
+    Calculating,
+    Editing
+}
+
 export interface CartState {
     shops: ShopsState | null,
     products: ProductsState | null,
     totalMoney: number,
-    submitList: string[]
+    submitList: string[],
+    cartStatus: CartStatus
 }
 
 const initialState: CartState = {
@@ -174,7 +182,9 @@ const initialState: CartState = {
         ]
     },
     totalMoney: 0,
-    submitList: []
+    submitList: [],
+    // todo 修改默认值
+    cartStatus: CartStatus.Fetched
 }
 
 export const getCartlistThunk = createAsyncThunk("cartInfo/getCartlistThunk", async () => {
@@ -206,11 +216,21 @@ const updateTotalByChangeCount = (pro: ProductsInfo, state: any, newCount: numbe
 
     // 首先查看是否在结算列表内
     if (proIndex !== -1 && pro?.checked) {
+        state.cartStatus = CartStatus.Calculating
         state.totalMoney += (pro.price * (newCount - pro.buyCount))
+        state.cartStatus = CartStatus.Fetched
     }
     // 更新购买数量
     pro.buyCount = newCount
     // todo 更新购物车信息，发送请求
+}
+
+const fliterCheckedProducts = (state: any): string[] => {
+    const productIds = state.products?.allIds || []
+    // 处理已有勾选状态的情况
+    return productIds.filter((proId: string) => {
+        return state.products?.byId[proId].checked
+    })
 }
 
 const cartInfoSlice = createSlice(
@@ -220,8 +240,18 @@ const cartInfoSlice = createSlice(
         reducers: {
             changeProductStatus: (state, { payload }: PayloadAction<ProductsInfo>) => {
                 const curPro = state.products?.byId[payload.id]
-                if (curPro) {
-                    updateTotalByChangeStatus(curPro, state)
+                console.log(state.cartStatus);
+
+                if (state.cartStatus === CartStatus.Fetched) {
+                    state.cartStatus = CartStatus.Calculating
+                    if (curPro) {
+                        updateTotalByChangeStatus(curPro, state)
+                    }
+                    state.cartStatus = CartStatus.Fetched
+                }
+                if (state.cartStatus === CartStatus.Editing && curPro) {
+                    // 更新勾选状态
+                    curPro.checked = !curPro.checked
                 }
             },
             changeShopStatus: (state, { payload }: PayloadAction<ShopsInfo>) => {
@@ -230,44 +260,87 @@ const cartInfoSlice = createSlice(
                 const curCheckedPros = curShop?.buyProducts.filter(proId => {
                     return state.products?.byId[proId].checked
                 })
-
-                if (curCheckedPros?.length === curShop?.buyProducts.length) {
-                    curShop?.buyProducts.map(proID => {
-                        const curPro = state.products?.byId[proID]
-                        if (curPro) {
-                            updateTotalByChangeStatus(curPro, state)
-                        }
-                    })
-                } else {
-                    curShop?.buyProducts.map(proID => {
-                        const curPro = state.products?.byId[proID]
-                        if (curPro && !curPro.checked) {
-                            updateTotalByChangeStatus(curPro, state)
-                        }
-                    })
+                if (state.cartStatus === CartStatus.Fetched) {
+                    state.cartStatus = CartStatus.Calculating
+                    if (curCheckedPros?.length === curShop?.buyProducts.length) {
+                        curShop?.buyProducts.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro) {
+                                updateTotalByChangeStatus(curPro, state)
+                            }
+                        })
+                    } else {
+                        curShop?.buyProducts.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro && !curPro.checked) {
+                                updateTotalByChangeStatus(curPro, state)
+                            }
+                        })
+                    }
+                    state.cartStatus = CartStatus.Fetched
                 }
+                if (state.cartStatus === CartStatus.Editing) {
+                    if (curCheckedPros?.length === curShop?.buyProducts.length) {
+                        curShop?.buyProducts.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro) {
+                                // 更新勾选状态
+                                curPro.checked = !curPro.checked
+                            }
+                        })
+                    } else {
+                        curShop?.buyProducts.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro && !curPro.checked) {
+                                // 更新勾选状态
+                                curPro.checked = !curPro.checked
+                            }
+                        })
+                    }
+                }
+
             },
             changeCheckAllStatus: (state) => {
                 const productIds = state.products?.allIds || []
                 // 处理已有勾选状态的情况
-                const curCheckedPros = productIds.filter(proId => {
-                    return state.products?.byId[proId].checked
-                })
-
-                if (curCheckedPros?.length === productIds.length) {
-                    productIds.map(proID => {
-                        const curPro = state.products?.byId[proID]
-                        if (curPro) {
-                            updateTotalByChangeStatus(curPro, state)
-                        }
-                    })
-                } else {
-                    productIds.map(proID => {
-                        const curPro = state.products?.byId[proID]
-                        if (curPro && !curPro.checked) {
-                            updateTotalByChangeStatus(curPro, state)
-                        }
-                    })
+                const curCheckedPros = fliterCheckedProducts(state)
+                if (state.cartStatus === CartStatus.Fetched) {
+                    state.cartStatus = CartStatus.Calculating
+                    if (curCheckedPros?.length === productIds.length) {
+                        productIds.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro) {
+                                updateTotalByChangeStatus(curPro, state)
+                            }
+                        })
+                    } else {
+                        productIds.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro && !curPro.checked) {
+                                updateTotalByChangeStatus(curPro, state)
+                            }
+                        })
+                    }
+                    state.cartStatus = CartStatus.Fetched
+                }
+                if (state.cartStatus === CartStatus.Editing) {
+                    if (curCheckedPros?.length === productIds.length) {
+                        productIds.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro) {
+                                // 更新勾选状态
+                                curPro.checked = !curPro.checked
+                            }
+                        })
+                    } else {
+                        productIds.map(proID => {
+                            const curPro = state.products?.byId[proID]
+                            if (curPro && !curPro.checked) {
+                                // 更新勾选状态
+                                curPro.checked = !curPro.checked
+                            }
+                        })
+                    }
                 }
             },
             changeProductBuyCount: (state, { payload }: PayloadAction<{ number: number, productID: string }>) => {
@@ -275,12 +348,54 @@ const cartInfoSlice = createSlice(
                 if (curPro) {
                     updateTotalByChangeCount(curPro, state, payload.number)
                 }
+            },
+            changeCartStatus: (state, { payload }: PayloadAction<CartStatus>) => {
+                state.cartStatus = payload
+            },
+            delProducts: (state) => {
+                state.cartStatus = CartStatus.Loading
+                const checkedPros = fliterCheckedProducts(state)
+                checkedPros.map(proId => {
+                    if (state.products) {
+                        const shopId = state.products.byId[proId].shopId
+                        const shopPros = state.shops?.byId[shopId].buyProducts || []
+                        // 更新计算金额
+                        if (state.submitList.includes(proId)) {
+                            state.submitList.splice(state.submitList.indexOf(proId), 1)
+                            state.totalMoney -= (state.products.byId[proId].price * state.products.byId[proId].buyCount)
+                        }
+                        shopPros.splice(shopPros.indexOf(proId), 1)
+                        state.products.allIds.splice(state.products.allIds.indexOf(proId), 1)
+                        state.products && (state.products.byId = omit(state.products.byId, [proId]))
+                        // 处理已经删光了店铺的商品,需要删掉商店
+                        if (shopPros.length === 0) {
+                            state.shops?.allIds.splice(state.shops.allIds.indexOf(shopId), 1)
+                            state.shops && (state.shops.byId = omit(state.shops.byId, [shopId]))
+                        }
+                    }
+                })
+                state.cartStatus = CartStatus.Editing
+            },
+            delAllProducts: (state) => {
+                state.cartStatus = CartStatus.Loading
+                if (state.products) {
+                    state.products.allIds = []
+                    state.products.byId = {}
+                }
+                if (state.shops) {
+                    state.shops.allIds = []
+                    state.shops.byId = {}
+                }
+                state.totalMoney = 0
+                state.submitList = []
+                state.cartStatus = CartStatus.Fetched
             }
         },
         extraReducers(builder) {
             builder
-                .addCase(getCartlistThunk.pending, () => {
+                .addCase(getCartlistThunk.pending, (state) => {
                     console.log("获取中");
+                    state.cartStatus = CartStatus.Loading
                 })
                 .addCase(getCartlistThunk.fulfilled, (state, { payload }) => {
                     state.shops = payload.shops
@@ -288,6 +403,7 @@ const cartInfoSlice = createSlice(
                         payload.products && (payload.products.byId[proId].checked = false)
                     })
                     state.products = payload.products
+                    state.cartStatus = CartStatus.Fetched
                 })
                 .addCase(getCartlistThunk.rejected, () => {
                     // console.log("失败");
@@ -296,6 +412,6 @@ const cartInfoSlice = createSlice(
     }
 )
 
-export const { changeProductStatus, changeShopStatus, changeCheckAllStatus, changeProductBuyCount } = cartInfoSlice.actions
+export const { changeProductStatus, changeShopStatus, changeCheckAllStatus, changeProductBuyCount, changeCartStatus, delProducts, delAllProducts } = cartInfoSlice.actions
 
 export default cartInfoSlice.reducer

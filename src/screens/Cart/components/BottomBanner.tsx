@@ -1,15 +1,14 @@
 import { ListItem, Text, Button } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { changeCheckAllStatus } from "slice/cart/cartSlice";
+import { CartStatus, changeCheckAllStatus } from "slice/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const BottomBanner: React.FC = () => {
-    const { shops, products, totalMoney } = useAppSelector((state) => state.cartInfo)
+    const { shops, products, totalMoney, cartStatus } = useAppSelector((state) => state.cartInfo)
     const dispatch = useAppDispatch()
     const handleCheckAll = () => {
-        // todo 勾选全部
         dispatch(changeCheckAllStatus())
     }
 
@@ -22,7 +21,7 @@ const BottomBanner: React.FC = () => {
                 <ListItem.CheckBox
                     title={"全选"}
                     textStyle={{ color: "#acacad" }}
-                    checked={!!shops?.allIds && (shops.allIds.filter((shopId) => {
+                    checked={!!shops?.allIds.length && (shops.allIds.filter((shopId) => {
                         return shops.byId[shopId].buyProducts.filter(proId => {
                             return products?.byId[proId].checked
                         }).length === shops.byId[shopId].buyProducts.length
@@ -30,15 +29,35 @@ const BottomBanner: React.FC = () => {
                     onPress={handleCheckAll} />
                 <ListItem.Content>
                     <View style={{ width: "100%", flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
-                        <Text style={{ fontSize: scaleSizeW(10), marginRight: scaleSizeW(10) }}>
-                            合计:<Text style={{ color: "#E36235", fontSize: scaleSizeW(13) }}>￥{totalMoney}</Text>
-                        </Text>
+                        {
+                            cartStatus === CartStatus.Calculating
+                                ?
+                                <>
+                                    <Text style={{ fontSize: scaleSizeW(10),color:"#E36235" }}>
+                                        计算中...
+                                    </Text>
+                                    <Button
+                                        loading
+                                        type="clear"
+                                        radius={"lg"}
+                                        color={"#E36235"}
+                                        buttonStyle={{ padding: 0 }}
+                                        titleStyle={{ fontSize: scaleSizeW(10) }}
+                                    />
+                                </>
+                                :
+                                <Text style={{ fontSize: scaleSizeW(12), marginRight: scaleSizeW(10) }}>
+                                    合计:<Text style={{ color: "#E36235", fontSize: scaleSizeW(13) }}>￥{totalMoney}</Text>
+                                </Text>
+                        }
+
                         <Button
                             color={"primary"}
                             radius={"lg"}
                             buttonStyle={{ paddingLeft: scaleSizeW(20), paddingRight: scaleSizeW(20) }}
                             titleStyle={{ fontSize: scaleSizeW(13) }}
                             onPress={handleSettleCart}
+                            disabled={cartStatus !== CartStatus.Fetched}
                         >
                             结算
                         </Button>

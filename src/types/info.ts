@@ -17,7 +17,6 @@ export interface UserInfo {
   [property: string]: any;
 }
 
-
 /**
  * LiveInfo
  */
@@ -220,7 +219,6 @@ export interface ProductSwiperInfo {
   [property: string]: any;
 }
 
-
 /**
  * CommentInfo
  */
@@ -252,7 +250,6 @@ export interface CommentInfo {
   [property: string]: any;
 }
 
-
 /**
  * LiveSwiperInfo
  */
@@ -271,3 +268,4 @@ export interface LiveSwiperInfo {
   liveId: string;
   [property: string]: any;
 }
+
