@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import ShopCart from "./ShopCart";
@@ -6,18 +6,27 @@ import { ListItem, Skeleton, Text } from "@rneui/themed";
 import { useAppSelector } from "store/hooks";
 import { CartStatus } from "slice/cart/cartSlice";
 import { Button } from "@rneui/base";
+import RecommendList from "components/RecommendList";
+import { handleMomentumScrollEnd } from "utlis/method";
 
 const CartList: React.FC = () => {
     const { shops, cartStatus } = useAppSelector((state) => state.cartInfo)
+    const [isEndReached, setIsEndReached] = useState<boolean>(false)
+
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView style={styles.contanier}>
-
+            <ScrollView 
+            style={styles.contanier}
+            showsVerticalScrollIndicator={false}
+            onScroll={(event) => handleMomentumScrollEnd(event, isEndReached, setIsEndReached)}
+            scrollEventThrottle={50}
+            >
                 {
                     shops && shops.allIds.map((shopId) => {
                         return <ShopCart key={shopId} shop={shops.byId[shopId]} />
                     })
                 }
+                <RecommendList isEndReached={isEndReached} ></RecommendList>
             </ScrollView>
             {
                 cartStatus === CartStatus.Loading
