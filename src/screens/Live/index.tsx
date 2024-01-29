@@ -1,7 +1,8 @@
+import { useIsFocused } from "@react-navigation/native";
 import { Image, Text } from "@rneui/themed";
-import { getLiveSwiperBanner } from "axios/api/live";
+import { getLiveList, getLiveSwiperBanner } from "axios/api/live";
 import { Video } from "expo-av";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Carousel from "react-native-reanimated-carousel";
@@ -10,42 +11,61 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const Live: React.FC = () => {
     const containerWidth = Dimensions.get('window').width
-    const containerHeight = Dimensions.get('window').height -scaleSizeH(40)
+    const containerHeight = Dimensions.get('window').height - scaleSizeH(40)
     const [liveList, setLiveList] = useState<any[]>([])
+    const liveRoom = useRef<Video>();
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const isFocused = useIsFocused();
     function handlePress(item: LiveSwiperInfo): void {
         // throw new Error("Function not implemented.");
         console.log(item.liveId);
 
     }
-    const test1 = require("../../../assets/test1.mp4")
-    const test2 = require("../../../assets/test2.mp4")
-    const test3 = require("../../../assets/test3.mp4")
-    const test4 = require("../../../assets/test4.mp4")
+
+    const getList = async () => {
+        const res = await getLiveList({ orderBy: 'desc', orderName: 'created_at' })
+        setLiveList(res.data.rows)
+    }
+
+    async function delVideo() {
+        if (liveRoom.current) {
+            await liveRoom.current.unloadAsync();
+        }
+    }
+    async function startVideo(index: number) {
+        if (liveRoom.current) {
+            await liveRoom.current.unloadAsync();
+            await liveRoom.current.loadAsync(
+                { uri: liveList[index].live_room.hls_url },
+                {},
+                false
+            );
+            await liveRoom.current.playAsync();
+        }
+    }
+
+    async function handleOnSnapToItem(index: number) {
+        setCurrentIndex(index);
+    }
+
+    useEffect(() => {
+        if (!isFocused) {
+            delVideo();
+        } else {
+            startVideo(currentIndex);
+        }
+    }, [isFocused]);
 
     useEffect(() => {
         // getLiveSwiperBanner()
         //     .then((res) => {
         //         setSwiperList(res.data)
         //     })
-        setLiveList([
-            {
-                source: test1,
-                cover: "https://source.unsplash.com/random?sig=1"
-            },
-            {
-                source: test2,
-                cover: "https://source.unsplash.com/random?sig=2"
-            },
-            {
-                source: test3,
-                cover: "https://source.unsplash.com/random?sig=3"
-            },
-            {
-                source: test4,
-                cover: "https://source.unsplash.com/random?sig=4"
-            },
-        ])
+
+        // getList()
     }, [])
+
+
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -56,9 +76,8 @@ const Live: React.FC = () => {
                     vertical
                     autoPlay={false}
                     pagingEnabled={false}
-                    snapEnabled
                     data={liveList}
-                    scrollAnimationDuration={1500}
+                    scrollAnimationDuration={500}
                     renderItem={({ item, index }) => (
                         <Video
                             source={item.source}
@@ -67,6 +86,7 @@ const Live: React.FC = () => {
                             style={{ width: "100%", height: "100%", backgroundColor: "grey" }}
                         />
                     )}
+                    onSnapToItem={(index) => handleOnSnapToItem(index)}
                 />
 
             </ScrollView>
