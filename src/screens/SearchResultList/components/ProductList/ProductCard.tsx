@@ -52,9 +52,9 @@ const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
                 </View>
                 <View style={{ flexDirection: "row", marginBottom: scaleSizeW(2.5) }}>
                     {
-                        !isEmptyArr(contentInfo.specification || []) &&
-                        contentInfo.specification?.map((spec, index) => {
-                            return <Text key={spec} style={styles.specification}>
+                        !isEmptyArr(contentInfo.features || []) &&
+                        contentInfo.features?.map((spec, index) => {
+                            return <Text key={spec} style={styles.features}>
                                 {index !== 0 && " |"} {spec}
                             </Text>
                         })
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         lineHeight: scaleSizeH(15),
         fontWeight: "400",
     },
-    specification: {
+    features: {
         height: scaleSizeH(10),
         fontSize: scaleSizeW(7),
         color: "grey",

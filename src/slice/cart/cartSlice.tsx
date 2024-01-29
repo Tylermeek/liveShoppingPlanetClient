@@ -389,6 +389,15 @@ const cartInfoSlice = createSlice(
                 state.totalMoney = 0
                 state.submitList = []
                 state.cartStatus = CartStatus.Fetched
+            },
+            addCart: (state, { payload }: PayloadAction<ProductsInfo>) => {
+                // 处理已经在购物车内的情况
+                const proId = payload.id
+                if(state.products?.allIds.includes(proId)){
+                    state.products.byId[proId].buyCount += 1
+                }else{
+                    // todo 新增商品
+                }
             }
         },
         extraReducers(builder) {

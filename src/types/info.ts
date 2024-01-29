@@ -95,6 +95,7 @@ export interface ExpressInfo {
 
 /**
  * ProductInfo
+ * 商品信息
  */
 export interface ProductInfo {
   /**
@@ -130,9 +131,9 @@ export interface ProductInfo {
    */
   sold: number;
   /**
-   * 商品规格列表
+   * 商品特点列表
    */
-  specification?: string[];
+  features?: string[];
   /**
    * 支持服务信息
    */
@@ -268,4 +269,3 @@ export interface LiveSwiperInfo {
   liveId: string;
   [property: string]: any;
 }
-
