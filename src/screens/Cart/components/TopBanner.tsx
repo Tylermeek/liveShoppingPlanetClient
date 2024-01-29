@@ -13,51 +13,12 @@ const TopBanner: React.FC = () => {
         dispatch(changeCartStatus(CartStatus.Editing))
     }
 
-    const handleFinishEdit = () => {
-        // todo 提交信息
-        dispatch(changeCartStatus(CartStatus.Fetched))
-    }
-
-    const handleDelAll = () => {
-        // console.warn("del all")
-        dispatch(delAllProducts())
-    }
-
-    const handleDel = () => {
-        // console.warn("del")
-        dispatch(delProducts())
-    }
-
     return (
         <View style={styles.contanier}>
             <Text style={{ fontSize: scaleSizeW(16), marginLeft: scaleSizeW(10), fontWeight: "bold" }}>购物车</Text>
             <View style={styles.controlContanier}>
                 {
-                    cartStatus === CartStatus.Editing ?
-                        <>
-                            <Button
-                                title={"删除全部"}
-                                color={"#E36235"}
-                                titleStyle={[styles.controlTitle, { color: "black" }]}
-                                onPress={handleDelAll}
-                                buttonStyle={styles.controlButton}
-                            />
-                            <Button
-                                title={"删除"}
-                                color={"#EC9A86"}
-                                titleStyle={[styles.controlTitle, { color: "black" }]}
-                                onPress={handleDel}
-                                buttonStyle={styles.controlButton}
-                            />
-                            <Button
-                                title={"完成"}
-                                color={"#e3e3e3"}
-                                titleStyle={styles.controlTitle}
-                                onPress={handleFinishEdit}
-                                buttonStyle={[styles.controlButton, { marginRight: 0 }]}
-                            />
-                        </>
-                        :
+                    cartStatus !== CartStatus.Editing &&
                         <>
                             <Button
                                 title={"编辑"}
