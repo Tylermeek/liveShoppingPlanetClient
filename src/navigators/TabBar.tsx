@@ -8,7 +8,7 @@ import { scaleSizeH } from "utlis/scaleSize";
 
 function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     return (
-        <View style={{ flexDirection: 'row', backgroundColor:"white" }}>
+        <View style={{ flexDirection: 'row', backgroundColor: "white", height: scaleSizeH(40), }}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label = options.title || route.name;
@@ -42,7 +42,7 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         onLongPress={onLongPress}
-                        style={{ height: scaleSizeH(40), flex: 1, justifyContent: "center", alignItems: "center" }}
+                        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
                     >
                         <Icon name={getEnumValue(route.name, TabIconName)} color={isFocused ? '#E36255' : '#b5b7cc'} style={{ fontSize: scaleSizeH(18) }}></Icon>
                         <Text style={{ color: isFocused ? '#E36255' : '#b5b7cc', fontSize: scaleSizeH(10) }}>
@@ -66,10 +66,10 @@ export type TabBarParamList = {
 const TabBar: React.FC<TabBarParamList> = () => {
     return <>
         <TabNav.Navigator
-            initialRouteName="Cart"
+            initialRouteName="Live"
             tabBar={(props) => <MyTabBar {...props} />}
             screenOptions={{ headerShown: false }}
-            sceneContainerStyle={{backgroundColor:"transparent"}}
+            sceneContainerStyle={{ backgroundColor: "transparent" }}
         >
             {
                 tabConfig.map(({ name, options, component }) => {
