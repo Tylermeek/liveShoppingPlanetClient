@@ -9,6 +9,9 @@ export enum Views {
   SearchDetail = "SearchDetail",
   SearchResultList = "SearchResultList",
   ProductDetail = "ProductDetail",
+  SignUp = "SignUp",
+  Mine = "Mine",
+  LogIn = "LogIn"
 }
 
 // 设置每个路由需要接受的参数列表 注意与组件的参数不同
@@ -36,6 +39,9 @@ export type RootStackParamList = {
   [Views.SearchDetail]: undefined;
   [Views.SearchResultList]: SearchResultListProps;
   [Views.ProductDetail]: ProductDetailProps;
+  [Views.SignUp]: undefined,
+  [Views.Mine]: undefined,
+  [Views.LogIn]: undefined,
 };
 
 // 定义每个子路由接受的具体参数类型，否则useRoute会丢失参数声明

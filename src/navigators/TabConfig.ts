@@ -2,6 +2,8 @@ import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Cart from "screens/Cart";
 import Home from "screens/Home";
 import Live from "screens/Live";
+import LogIn from "screens/LogIn";
+import Mine from "screens/Mine";
 
 // TODO Tab栏完善
 export const tabConfig = [
@@ -26,10 +28,26 @@ export const tabConfig = [
       title: "购物车",
     },
   },
+  {
+    name: "Mine",
+    component: Mine,
+    options: {
+      title: "我的",
+    },
+  },
+  {
+    name: "LogIn",
+    component: LogIn,
+    options: {
+      title: "注册",
+    },
+  },
 ];
 
 export enum TabIconName {
   Home = "home",
   Live = "cast",
-  Cart = "shopping-cart"
+  Cart = "shopping-cart",
+  Mine = "home",
+  LogIn = "home"
 }

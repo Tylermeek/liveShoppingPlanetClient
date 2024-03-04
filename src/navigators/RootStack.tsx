@@ -8,6 +8,9 @@ import SearchDetail from "screens/SearchDetail";
 import LiveRoom from "screens/LiveRoom";
 import SearchResultList from "screens/SearchResultList";
 import ProductDetail from "screens/ProductDetail";
+import Mine from "screens/Mine";
+import LogIn from "screens/LogIn";
+import SignUp from "screens/SignUp";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> = CompositeScreenProps<
     BottomTabScreenProps<TabBarParamList, T>,
@@ -35,6 +38,18 @@ const routeConfig = [
     {
         name: "ProductDetail",
         component: ProductDetail
+    },
+    {
+        name:"Mine",
+        component: Mine
+    },
+    {
+        name:"LogIn",
+        component: LogIn
+    },
+    {
+        name:"SignUp",
+        component: SignUp
     }
 ]
 
