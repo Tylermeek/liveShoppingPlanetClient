@@ -35,19 +35,26 @@ const LogIn: React.FC<LogInProps> = () => {
                 await storage.save({
                     key: 'userInfo', // 注意:请不要在key中使用_下划线符号!
                     data: {
-                        info: {
-                            nickName: res.data.userInfo.nickName,
-                            avatar: res.data.userInfo.avatarUrl
-                        },
-                        token: res.data.token,
+                        nickName: res.data.userInfo.nickName,
+                        avatar: res.data.userInfo.avatarUrl
                     },
 
                     // 如果不指定过期时间，则会使用defaultExpires参数
                     // 如果设为null，则永不过期
-                    expires: 1000 * 3600,
+                    expires: null,
+                });
+                await storage.save({
+                    key: 'token', // 注意:请不要在key中使用_下划线符号!
+                    data: {
+                        token: res.data.token
+                    },
+
+                    // 如果不指定过期时间，则会使用defaultExpires参数
+                    // 如果设为null，则永不过期
+                    expires: null,
                 });
                 setLoading(false)
-                navigation.navigate(Views.Home)
+                navigation.navigate(Views.Mine)
             } catch (error) {
                 setLoading(false)
             }
@@ -104,12 +111,12 @@ const LogIn: React.FC<LogInProps> = () => {
                         <Button
                             title={"忘记密码"}
                             type="clear"
-                            titleStyle={{fontSize: scaleSizeW(15)}}
+                            titleStyle={{ fontSize: scaleSizeW(15) }}
                         />
                         <Button
                             title={"注册"}
                             type="clear"
-                            titleStyle={{fontSize: scaleSizeW(15)}}
+                            titleStyle={{ fontSize: scaleSizeW(15) }}
                             onPress={handleRegister}
                         />
                     </View>
@@ -123,7 +130,7 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: scaleSizeW(15),
-        marginLeft:scaleSizeW(10)
+        marginLeft: scaleSizeW(10)
     }
 
 })
