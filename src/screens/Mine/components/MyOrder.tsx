@@ -1,8 +1,10 @@
 import { Icon } from '@rneui/base'
-import { Button, Text } from '@rneui/themed'
+import { Badge, Button, Text } from '@rneui/themed'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { scaleSizeH, scaleSizeW } from 'utlis/scaleSize'
+import { scaleSizeW } from 'utlis/scaleSize'
+import Title from './Title'
+import RecentOrder from './RecentOrder'
 
 export default function MyOrder() {
 
@@ -31,38 +33,39 @@ export default function MyOrder() {
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between",alignItems:"center" }}>
-                <Text>我的订单</Text>
-                <Button
-                    size="sm"
-                    type='clear'
-                    title="全部"
-                    titleStyle={{ color: "grey", fontSize: scaleSizeW(11) }}
-                    icon={<Icon name='settings' color="grey" size={15} />} />
-            </View>
+            <Title title='我的订单' />
             <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
                 {
                     orderTypeList.map(({ title, icon }) => (
-                        <Button
-                            title={title}
-                            icon={<Icon name={icon} color='grey' size={27} />}
-                            iconPosition='top'
-                            type='clear'
-                            titleStyle={{ fontSize: scaleSizeW(13), marginTop: scaleSizeW(5), color:'grey' }}
-                        />
+                        <View key={title}>
+                            <Button
+                                title={title}
+                                icon={<Icon name={icon} color='grey' size={27} />}
+                                iconPosition='top'
+                                type='clear'
+                                titleStyle={{ fontSize: scaleSizeW(12), marginTop: scaleSizeW(5), color: 'grey' }}
+                            />
+                            <Badge
+                                status="primary"
+                                value={9}
+                                containerStyle={{ position: 'absolute', top: 5, right: 10 }}
+                            />
+                        </View>
                     ))
                 }
             </View>
+            <RecentOrder />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        borderTopLeftRadius: scaleSizeW(15),
-        borderTopRightRadius: scaleSizeW(15),
-        backgroundColor: "#f99",
+        borderRadius: scaleSizeW(15),
+        backgroundColor: "white",
+        marginHorizontal:scaleSizeW(10),
         paddingVertical: scaleSizeW(10),
-        paddingHorizontal: scaleSizeW(10)
+        paddingHorizontal: scaleSizeW(10),
+        marginTop:scaleSizeW(10)
     }
 })

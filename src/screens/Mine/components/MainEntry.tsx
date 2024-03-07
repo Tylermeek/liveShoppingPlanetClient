@@ -2,7 +2,7 @@ import { Icon } from '@rneui/base'
 import { Button } from '@rneui/themed'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { scaleSizeH, scaleSizeW } from 'utlis/scaleSize'
+import { scaleSizeW } from 'utlis/scaleSize'
 
 export default function MainEntry() {
 
@@ -30,6 +30,7 @@ export default function MainEntry() {
             {
                 entryConfig.map((entry) => (
                     <Button
+                        key={entry.title}
                         title={entry.title}
                         icon={<Icon name={entry.icon} color='grey' size={20} />}
                         iconPosition='top'
@@ -44,12 +45,10 @@ export default function MainEntry() {
 
 const styles = StyleSheet.create({
     container: {
-        borderTopLeftRadius: scaleSizeW(10),
-        borderTopRightRadius: scaleSizeW(10),
-        backgroundColor: "#ff9",
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",
-        paddingVertical: scaleSizeW(5)
-    }
+        paddingTop: scaleSizeW(10),
+    },
+
 })

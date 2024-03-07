@@ -81,8 +81,6 @@ const styles = StyleSheet.create({
         width: "100%",
         fontSize: scaleSizeH(13),
         paddingLeft: scaleSizeW(20),
-        borderBottomColor: "rgba(0, 0, 0, 0.1)",
-        borderBottomWidth: scaleSizeH(0.5),
         lineHeight: scaleSizeH(30),
         fontWeight: "400",
 
