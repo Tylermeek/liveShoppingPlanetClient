@@ -47,7 +47,7 @@ export default function MyOrder() {
                             />
                             <Badge
                                 status="primary"
-                                value={9}
+                                value={9}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                                 containerStyle={{ position: 'absolute', top: 5, right: 10 }}
                             />
                         </View>

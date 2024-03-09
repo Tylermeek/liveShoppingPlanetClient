@@ -11,6 +11,7 @@ import ProductDetail from "screens/ProductDetail";
 import Mine from "screens/Mine";
 import LogIn from "screens/LogIn";
 import SignUp from "screens/SignUp";
+import Playground from "screens/Playground";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> = CompositeScreenProps<
     BottomTabScreenProps<TabBarParamList, T>,
@@ -19,6 +20,10 @@ export type CompositeTabScreenParamList<T extends keyof TabBarParamList> = Compo
 
 
 const routeConfig = [
+    {
+        name:"Playground",
+        component: Playground
+    },
     {
         name: "Tab",
         component: TabBar

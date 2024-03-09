@@ -4,9 +4,17 @@ import Home from "screens/Home";
 import Live from "screens/Live";
 import LogIn from "screens/LogIn";
 import Mine from "screens/Mine";
+import Playground from "screens/Playground";
 
 // TODO Tab栏完善
 export const tabConfig = [
+  {
+    name: "Playground",
+    component: Playground,
+    options: {
+      title: "首页",
+    },
+  },
   {
     name: "Home",
     component: Home,
@@ -45,6 +53,7 @@ export const tabConfig = [
 ];
 
 export enum TabIconName {
+  Playground = "home",
   Home = "home",
   Live = "cast",
   Cart = "shopping-cart",

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderBottomColor: "rgba(0, 0, 0, 0.1)",
         borderBottomWidth: scaleSizeH(0.5),
-        marginTop: StatusBar.currentHeight
+        paddingTop: StatusBar.currentHeight
     },
 })
 

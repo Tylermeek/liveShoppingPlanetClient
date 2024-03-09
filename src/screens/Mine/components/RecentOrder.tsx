@@ -32,7 +32,7 @@ export default function RecentOrder() {
             },
             {
                 id: "2",
-                cover: "https://randomuser.me/api/portraits/men/36.jpg",
+                cover: "https://randomuser.me/api/portraits/men/3.jpg",
                 productName: "test2",
                 status: "已到达杭州中转站",
                 updateTime: `18:10:17`
