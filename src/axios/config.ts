@@ -157,6 +157,6 @@ class MyAxios {
 }
 
 export const request = new MyAxios({
-  baseURL: 'http://10.251.11.173:4523/m1/3898833-0-default',
+  baseURL: 'http://192.168.218.150:4523/m1/3898833-0-default',
   timeout: 1000 * 5,
 });

@@ -1,21 +1,14 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import SearchBanner from 'components/SearchBanner'
-import GoBack from 'components/GoBack'
-import SearchResList from './components/SearchResList';
-import { useState } from 'react';
+import Header from './components/Header';
+import InputBar from './components/InputBar';
+import { ScrollView } from 'react-native';
 
 export default function Playground() {
-    const [searchContent, setSearchContent] = useState("")
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
-            <SearchBanner
-                LeftIcon={GoBack}
-                RightIcon={() => <></>}
-                searchProps={{
-                    handlePressSearch:setSearchContent
-                }}
-            />
-            <SearchResList searchContent={searchContent} />
+            <Header />
+            <ScrollView style={{ flex: 1 }}></ScrollView>
+            <InputBar />
         </GestureHandlerRootView>
     )
 }
