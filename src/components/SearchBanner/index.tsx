@@ -23,7 +23,6 @@ const SearchBanner: React.FC<SearchBannerProps> = ({ LeftIcon, RightIcon, search
 const styles = StyleSheet.create({
     searchBanner: {
         width: scaleSizeW(375),
-        height: scaleSizeH(52),
         backgroundColor: "white",
         display: "flex",
         flexDirection: "row",
@@ -31,7 +30,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderBottomColor: "rgba(0, 0, 0, 0.1)",
         borderBottomWidth: scaleSizeH(0.5),
-        paddingTop: StatusBar.currentHeight
+        paddingTop: StatusBar.currentHeight! + scaleSizeW(10),
+        paddingBottom:scaleSizeW(10)
     },
 })
 

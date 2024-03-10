@@ -12,7 +12,7 @@ export const tabConfig = [
     name: "Playground",
     component: Playground,
     options: {
-      title: "首页",
+      title: "Playground",
     },
   },
   {
@@ -41,13 +41,6 @@ export const tabConfig = [
     component: Mine,
     options: {
       title: "我的",
-    },
-  },
-  {
-    name: "LogIn",
-    component: LogIn,
-    options: {
-      title: "注册",
     },
   },
 ];

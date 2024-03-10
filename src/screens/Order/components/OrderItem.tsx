@@ -1,4 +1,4 @@
-import { Avatar, Button, Image, Text } from '@rneui/themed'
+import { Avatar, Button, Icon, Image, Text } from '@rneui/themed'
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { scaleSizeW } from 'utlis/scaleSize'
@@ -20,7 +20,8 @@ export default function OrderItem({ order }: any) {
             <View style={[styles.flexRowBox, { justifyContent: "space-between" }]}>
                 <View style={[styles.flexRowBox]}>
                     <Avatar source={{ uri: order.shopInfo.avatar }} rounded />
-                    <Text style={{ marginLeft: scaleSizeW(5), fontWeight:"bold" }}>{order.shopInfo.name}</Text>
+                    <Text style={{ marginLeft: scaleSizeW(5), fontWeight: "bold" }}>{order.shopInfo.name}</Text>
+                    <Icon style={{ marginLeft: scaleSizeW(5) }} color="grey" size={15} name='arrow-forward-ios' />
                 </View>
                 <Text style={{ color: "#E36235" }}>{order.order_status}</Text>
             </View>
@@ -30,7 +31,7 @@ export default function OrderItem({ order }: any) {
                     { marginTop: scaleSizeW(10), justifyContent: "space-between" }
                 ]}
                 onPress={handleCheckDetail}
-                
+
             >
                 <View style={{ height: scaleSizeW(70), width: scaleSizeW(70) }} >
                     <Image

@@ -1,12 +1,16 @@
 import { Avatar, Image, Text } from '@rneui/themed'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { isEmptyArr } from 'utlis/method'
 import { scaleSizeW } from 'utlis/scaleSize'
 import OrderItem from './OrderItem'
 import Empty from './Empty'
 
-export default function OrderLIst() {
+export default function OrderList({ tabIndex }: { tabIndex: number }) {
+    useEffect(() => {
+        console.log(tabIndex);
+    }, [tabIndex])
+
     const list = [
         {
             "order_id": "ORD123456",
@@ -71,7 +75,7 @@ export default function OrderLIst() {
     ]
 
     return (
-        isEmptyArr(list) ?
+        !isEmptyArr(list) ?
             (
                 <ScrollView style={{ flex: 1 }}>
                     {list.map((order) => (

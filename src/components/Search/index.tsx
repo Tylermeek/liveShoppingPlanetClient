@@ -12,6 +12,7 @@ export type SearchProps = {
     placeholder?: string
     bindRef?: Function
     updateSearchCb?: (serachContent: string) => void
+    handlePressSearch?: Function
 }
 
 
@@ -21,7 +22,8 @@ const Search: React.FC<SearchProps> = (
         editable = true,
         placeholder = "搜你想搜",
         bindRef,
-        updateSearchCb = () => { }
+        updateSearchCb = () => { },
+        handlePressSearch
     }) => {
     const [search, setSearch] = useState<string>(initContent)
 
@@ -59,7 +61,7 @@ const Search: React.FC<SearchProps> = (
                     buttonStyle={{ height: scaleSizeH(25) }}
                     titleStyle={{ fontSize: scaleSizeH(10) }}
                     radius="sm"
-                    onPress={() => handlePress(search)}
+                    onPress={() => handlePressSearch ? handlePressSearch(search) : handlePress(search)}
                 ></Button>
             }
         </View>
