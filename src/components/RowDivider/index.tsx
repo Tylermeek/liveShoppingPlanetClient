@@ -18,5 +18,7 @@ const styles = StyleSheet.create({
         height: "50%",
         borderBottomWidth: 1,
         borderColor: "#E36235",
+        marginVertical:scaleSizeW(10),
+        marginHorizontal:scaleSizeW(10)
     }
 })
