@@ -5,6 +5,7 @@ import { getSearchInitConten } from "axios/api/search";
 import { isEmptyArr } from "utlis/method";
 import { useRequest } from "ahooks";
 import { HistoryKeywordList } from "types/search";
+import { Skeleton } from "@rneui/themed";
 
 const SearchHistory: React.FC = () => {
   // TODO 搜索历史删除功能
@@ -15,14 +16,13 @@ const SearchHistory: React.FC = () => {
 
   return (
     <>
-      {!isEmptyArr(contentList) && (
-        <CardContainer
-          title="搜索历史"
-          type={SearchCardType.SearchHistory}
-          contentList={contentList}
-          refreshList={refresh}
-        />
-      )}
+      <CardContainer
+        title="搜索历史"
+        type={SearchCardType.SearchHistory}
+        contentList={contentList}
+        loading={loading}
+        refreshList={refresh}
+      />
     </>
   );
 };

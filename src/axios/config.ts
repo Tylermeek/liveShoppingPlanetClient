@@ -67,74 +67,26 @@ class MyAxios {
     // 响应拦截器
     this.instance.interceptors.response.use(
       (response) => {
-        // console.log('response.config.url', response.config.url);
-        // console.log('response.data', response.data);
-        response.data.code = response.status;
-        response.data.message = response.statusText;
-        // if (response.data.code == 200) {
+        if (response.status === 200) {
+          if (response.data.errno === 501) {
+            // 清除登录相关内容
+            try {
+              storage.remove({ key: "userInfo" });
+              storage.remove({ key: "Token" });
+            } catch (e) {
+              // Do something when catch error
+            }
+            // todo 切换到登录页面
+            console.error("need login");
+          } else {
+            return response.data;
+          }
+        }
 
-        //   if (response.data.errno == 501) {
-        //     // 清除登录相关内容
-        //     try {
-        //       storage.remove({ key: "userInfo" })
-        //     } catch (e) {
-        //       // Do something when catch error
-        //     }
-        //     // 切换到登录页面
-        //     console.error("need login");
-
-        //   } else {
-        //     return response.data;
-        //   }
-        // }
         return response.data;
       },
       (error) => {
-        console.log("响应拦截到错误", error);
-        if (error.message.indexOf("timeout") !== -1) {
-          console.error(error.message);
-          // window.$message.error('请求超时，请重试');
-        }
-        const statusCode = error.response.status as number;
-        const errorResponse = error.response;
-        const errorResponseData = errorResponse.data;
-        const whiteList = ["400", "401", "403", "404", "500"];
-        if (error.response) {
-          if (!whiteList.includes(`${statusCode}`)) {
-            // window.$message.error(error.message);
-            return Promise.reject(error.message);
-          }
-          if (statusCode === 400) {
-            console.error(errorResponseData.message);
-            // window.$message.error(errorResponseData.message);
-            return Promise.reject(errorResponseData);
-          }
-          if (statusCode === 401) {
-            console.error(errorResponseData.message);
-            // window.$message.error(errorResponseData.message);
-            return Promise.reject(errorResponseData);
-          }
-          if (statusCode === 403) {
-            console.error(errorResponseData.message);
-            // window.$message.error(errorResponseData.message);
-            return Promise.reject(errorResponseData);
-          }
-          if (statusCode === 404) {
-            console.error(errorResponseData.message);
-            // window.$message.error(errorResponseData.message);
-            return Promise.reject(errorResponseData);
-          }
-          if (statusCode === 500) {
-            console.error(errorResponseData.error);
-            // window.$message.error(errorResponseData.error);
-            return Promise.reject(errorResponseData);
-          }
-        } else {
-          // 请求超时没有response
-          console.error(error.message);
-          // window.$message.error(error.message);
-          return Promise.reject(error.message);
-        }
+        console.error("响应拦截到错误", error);
       }
     );
   }

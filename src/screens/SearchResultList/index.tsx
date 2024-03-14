@@ -23,13 +23,13 @@ const tabConfig = [
             title: "商品"
         }
     },
-    {
-        name: "Live",
-        Component: LiveList,
-        options: {
-            title: "直播"
-        }
-    }
+    // {
+    //     name: "Live",
+    //     Component: LiveList,
+    //     options: {
+    //         title: "直播"
+    //     }
+    // }
 ]
 
 function MyTabBar({ state, descriptors, navigation }: MaterialTopTabBarProps) {

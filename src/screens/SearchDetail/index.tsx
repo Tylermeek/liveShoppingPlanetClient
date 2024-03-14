@@ -17,7 +17,7 @@ const SearchDetail: React.FC = () => {
   const [searchRef, setSearchRef] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
   const [suggestionList, setSuggestionList] = useState<SuggestionsList>([]);
-  const { run } = useRequest(
+  const { run, loading } = useRequest(
     (keyword: string) => getSearchSuggesttion(keyword),
     {
       debounceMaxWait: 200,
@@ -26,16 +26,12 @@ const SearchDetail: React.FC = () => {
     }
   );
 
-  const bindRef = (ref: any) => {
-    setSearchRef(ref);
-  };
-
   useEffect(() => {
     // 避免组件没有完全渲染成功，无法调用键盘
     setTimeout(() => {
       searchRef && searchRef?.focus();
     }, 50);
-  });
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -43,9 +39,10 @@ const SearchDetail: React.FC = () => {
         LeftIcon={GoBack}
         RightIcon={Camera}
         searchProps={{
-          bindRef: bindRef,
+          bindRef: setSearchRef,
           editable: true,
-          updateSearchCb: (keyword: string) => run(keyword),
+          // todo 检查是否可以正常渲染
+          updateSearchCb: setKeyword,
         }}
       />
 

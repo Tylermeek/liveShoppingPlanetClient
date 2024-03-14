@@ -1,28 +1,18 @@
 import { request } from "axios/config";
 import {
   ISearchInitContent,
+  ISearchParams,
+  ISearchRes,
   SearchLiveList,
-  SearchProductList,
   SuggestionsList,
-  getSearchProductListParams,
 } from "types/search";
 
 export const delAllSearchHistory = () => {
   return request.post<string>("/search/history/delAll");
 };
 
-export const getSearchProductList = ({
-  searchContent,
-  sortType,
-  pageNo,
-}: getSearchProductListParams) => {
-  return request.get<SearchProductList>(`/search/product`, {
-    params: {
-      searchContent,
-      sortType,
-      pageNo,
-    },
-  });
+export const getSearchProductList = (params: ISearchParams) => {
+  return request.get<ISearchRes>(`/search/product`, { params });
 };
 
 export interface getSearchLiveListParams {

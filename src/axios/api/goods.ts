@@ -1,9 +1,15 @@
 import { request } from "axios/config";
+import { IGoodDetail, IRelatedGoodsList } from "types/goods";
 import { CommentInfo, ProductInfo } from "types/info";
 
 export const getGoodsList = () => {
-  return request.get("/goods/list", {})
-}
+  return request.get("/goods/list", {});
+};
+
+export const getGoodsCategory = () => request.get("/goods/category");
+
+export const getGoodsDetail = ({ id }: { id: number }) =>
+  request.get<IGoodDetail>("/goods/detail");
 
 export const getProductInfo = (productId: number) => {
   return request.get<ProductInfo>("/product/info", { params: { productId } });
@@ -28,10 +34,11 @@ export enum FliterType {
   WithImg = "withImg",
 }
 
-export const getProductCommentList = (
-  productId: number,
-) => {
+export const getProductCommentList = (productId: number) => {
   return request.get<CommentInfo[]>("/product/comment", {
     params: { productId },
   });
 };
+
+export const getRelateGoods = (id: number) =>
+  request.get<IRelatedGoodsList>("/goods/related", { params: { id } });

@@ -16,14 +16,13 @@ const SearchRecommend: React.FC = () => {
 
   return (
     <>
-      {!isEmptyArr(contentList) && (
-        <CardContainer
-          title="猜你想搜"
-          type={SearchCardType.SearchRecommend}
-          contentList={contentList}
-          refreshList={refresh}
-        />
-      )}
+      <CardContainer
+        title="猜你想搜"
+        type={SearchCardType.SearchRecommend}
+        loading={loading}
+        contentList={contentList}
+        refreshList={refresh}
+      />
     </>
   );
 };
