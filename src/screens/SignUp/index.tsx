@@ -4,7 +4,7 @@ import { CompositeTabScreenParamList } from "navigators/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Icon, Input, Text, Button } from "@rneui/themed";
 import { StatusBar } from "react-native";
-import { authRegisterCaptcha, login, signUp } from "axios/api/account";
+import { authRegisterCaptcha, login, signUp } from "axios/api/auth";
 import storage from "storage";
 import { scaleSizeW } from "utlis/scaleSize";
 import { useNavigation } from "@react-navigation/native";

@@ -1,6 +1,6 @@
 import { Avatar, Button, Icon } from "@rneui/base";
 import { Divider, Image, Text } from "@rneui/themed";
-import { FliterType, getProductCommentList } from "axios/api/product";
+import { FliterType, getProductCommentList } from "axios/api/goods";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { CommentInfo } from "types/info";

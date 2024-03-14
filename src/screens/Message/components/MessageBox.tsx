@@ -1,4 +1,6 @@
 import { Badge, Divider, Image, Text } from "@rneui/themed";
+import dayjs from "dayjs";
+import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { scaleSizeW } from "utlis/scaleSize";
 
@@ -18,12 +20,6 @@ export interface MsgData {
     lastChatRecord: LastChatRecord;
 }
 
-const formatWeek = (dataStr: string) => {
-    const date = new Date(dataStr)
-    const chineseWeekdays = ['日', '一', '二', '三', '四', '五', '六'];
-    return `星期${chineseWeekdays[date.getDay()]}`
-}
-
 export default function MessageBox({ msg }: { msg: MsgData }) {
     function handleMsgDetail(): void {
         console.log("handleMsgDetail.");
@@ -41,7 +37,7 @@ export default function MessageBox({ msg }: { msg: MsgData }) {
                         <Text style={{ color: "grey", marginTop: scaleSizeW(5), fontSize:scaleSizeW(11) }}>{msg.lastChatRecord.message}</Text>
                     </View>
                 </View>
-                <Text>{formatWeek(msg.lastChatRecord.time)}</Text>
+                <Text>{dayjs(msg.lastChatRecord.time).format("dddd")}</Text>
                 {
                     !msg.lastChatRecord.read
                     &&

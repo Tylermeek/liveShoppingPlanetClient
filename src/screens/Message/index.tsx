@@ -2,6 +2,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import Header from './components/Header'
 import { ScrollView } from 'react-native'
 import MessageBox, { MsgData } from './components/MessageBox'
+import React from 'react'
 
 export default function Playground() {
     const msgList: MsgData[] = [

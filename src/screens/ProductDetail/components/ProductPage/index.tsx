@@ -1,5 +1,5 @@
 import { Image, Skeleton } from "@rneui/themed";
-import { CoverList, getProductCoverList, getProductInfo } from "axios/api/product";
+import { CoverList, getProductCoverList, getProductInfo } from "axios/api/goods";
 import React, { useEffect, useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";

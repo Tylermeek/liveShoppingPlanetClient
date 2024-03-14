@@ -1,5 +1,5 @@
 import { Image } from "@rneui/themed";
-import { DetailList, getProductDetailList } from "axios/api/product";
+import { DetailList, getProductDetailList } from "axios/api/goods";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { scaleSizeH } from "utlis/scaleSize";

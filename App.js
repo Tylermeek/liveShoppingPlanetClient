@@ -5,6 +5,10 @@ import { createTheme, ThemeProvider } from "@rneui/themed";
 import { Provider } from "react-redux";
 import { store } from "store";
 import { scaleSizeW } from "utlis/scaleSize";
+import 'dayjs/locale/zh-cn'
+import * as dayjs from 'dayjs'
+
+dayjs.locale('zh-cn')
 
 export default function App() {
   const theme = createTheme({

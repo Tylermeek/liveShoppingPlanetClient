@@ -1,6 +1,10 @@
 import { request } from "axios/config";
 import { CommentInfo, ProductInfo } from "types/info";
 
+export const getGoodsList = () => {
+  return request.get("/goods/list", {})
+}
+
 export const getProductInfo = (productId: number) => {
   return request.get<ProductInfo>("/product/info", { params: { productId } });
 };

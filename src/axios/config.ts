@@ -1,12 +1,12 @@
-import axios, { Axios, AxiosRequestConfig } from 'axios';
-import storage from 'storage';
+import axios, { Axios, AxiosRequestConfig } from "axios";
+import storage from "storage";
 
 export interface IResponse<T = any>
   extends Promise<{
     code: number;
     data: T;
     message: string;
-  }> { }
+  }> {}
 
 interface MyAxiosInstance extends Axios {
   // eslint-disable-next-line
@@ -25,39 +25,38 @@ class MyAxios {
 
     // 请求拦截器
     this.instance.interceptors.request.use(
-      (cfg) => {
+      async (cfg) => {
         // 读取
-        // try {
-        //   const ret = await storage
-        //     .load({
-        //       key: 'usreInfo',
-        //       // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
-        //       autoSync: true, // 设置为false的话，则等待sync方法提供的最新数据(当然会需要更多时间)。
-        //       // syncInBackground(默认为true)意味着如果数据过期，
-        //       // 在调用sync方法的同时先返回已经过期的数据。
-        //       syncInBackground: true,
-        //     })
-        //   if (!cfg.headers['X-Litemall-Token']) {
-        //     cfg.headers['X-Litemall-Token'] = `${ret.token || ''}`;
-        //   }
-        //   return cfg
-        // } catch (err: any) {
-        //   //如果没有找到数据且没有sync方法，
-        //   //或者有其他异常，则在catch中返回
-        //   if (cfg.url === "/wx/auth/login") return cfg;
+        try {
+          const ret = await storage.load({
+            key: "token",
+            // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
+            autoSync: false, // 设置为false的话，则等待sync方法提供的最新数据(当然会需要更多时间)。
+            // syncInBackground(默认为true)意味着如果数据过期，
+            // 在调用sync方法的同时先返回已经过期的数据。
+            syncInBackground: false,
+          });
+          if (!cfg.headers["X-Litemall-Token"]) {
+            cfg.headers["X-Litemall-Token"] = `${ret.token || ""}`;
+          }
+          return cfg;
+        } catch (err: any) {
+          //如果没有找到数据且没有sync方法，
+          //或者有其他异常，则在catch中返回
+          if (cfg.url === "/wx/auth/login") return cfg;
 
-        //   console.warn(err.message);
-        //   switch (err.name) {
-        //     case 'NotFoundError':
-        //       // TODO;
-        //       break;
-        //     case 'ExpiredError':
-        //       // TODO
-        //       break;
-        //   }
-        //   return cfg;
-        // }
-        return cfg
+          switch (err.name) {
+            case "NotFoundError":
+              // TODO;
+              console.warn("NotFoundError", err.message);
+              break;
+            case "ExpiredError":
+              // TODO
+              console.warn("ExpiredError", err.message);
+              break;
+          }
+          return cfg;
+        }
       },
       (error) => {
         console.log(error);
@@ -70,8 +69,8 @@ class MyAxios {
       (response) => {
         // console.log('response.config.url', response.config.url);
         // console.log('response.data', response.data);
-        response.data.code = response.status
-        response.data.message = response.statusText
+        response.data.code = response.status;
+        response.data.message = response.statusText;
         // if (response.data.code == 200) {
 
         //   if (response.data.errno == 501) {
@@ -88,18 +87,18 @@ class MyAxios {
         //     return response.data;
         //   }
         // }
-            return response.data;
+        return response.data;
       },
       (error) => {
-        console.log('响应拦截到错误', error);
-        if (error.message.indexOf('timeout') !== -1) {
+        console.log("响应拦截到错误", error);
+        if (error.message.indexOf("timeout") !== -1) {
           console.error(error.message);
           // window.$message.error('请求超时，请重试');
         }
         const statusCode = error.response.status as number;
         const errorResponse = error.response;
         const errorResponseData = errorResponse.data;
-        const whiteList = ['400', '401', '403', '404', '500'];
+        const whiteList = ["400", "401", "403", "404", "500"];
         if (error.response) {
           if (!whiteList.includes(`${statusCode}`)) {
             // window.$message.error(error.message);
@@ -157,6 +156,6 @@ class MyAxios {
 }
 
 export const request = new MyAxios({
-  baseURL: 'http://192.168.218.150:4523/m1/3898833-0-default',
+  baseURL: "http://192.168.0.10:8080/wx",
   timeout: 1000 * 5,
 });

@@ -1,5 +1,5 @@
 import { Image, Skeleton } from "@rneui/themed";
-import { CoverList, getProductCoverList } from "axios/api/product";
+import { CoverList, getProductCoverList } from "axios/api/goods";
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

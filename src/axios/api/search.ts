@@ -1,54 +1,15 @@
 import { request } from "axios/config";
-import { keysIn } from "lodash-es";
-import { LiveInfo, ProductInfo } from "types/info";
-
-export type SuggestionsList = string[];
-export type SearchHistoryList = string[];
-export type SearchRecommendList = string[];
-
-export type SearchProductList = ProductInfo[];
-export type SearchLiveList = ProductInfo[];
-
-export enum SearchType {
-  Product = "Product",
-  Anchor = "Anchor",
-}
-
-export enum SortTypes {
-  Default = "default",
-  Sold = "sold",
-  AscendingPrice = "ascendingPrice",
-  DescendingPrice = "descendingPrice",
-}
-
-export const getSearchSuggestions = (searchContent: string) => {
-  // TODO
-  return request.get<SuggestionsList>("/search/suggestions", {
-    params: { searchContent },
-  });
-};
-
-export const getSearchHistory = () => {
-  return request.get<SearchHistoryList>("/search/history");
-};
-
-export const delSearchHistory = (content: string) => {
-  return request.post<string>("/search/history/del", { content });
-};
+import {
+  ISearchInitContent,
+  SearchLiveList,
+  SearchProductList,
+  SuggestionsList,
+  getSearchProductListParams,
+} from "types/search";
 
 export const delAllSearchHistory = () => {
-  return request.post<string>("/search/history/delAll",);
+  return request.post<string>("/search/history/delAll");
 };
-
-export const getSearchRecommend = () => {
-  return request.get<SearchRecommendList>("/search/recommend");
-};
-
-export interface getSearchProductListParams {
-  searchContent: string;
-  sortType: SortTypes;
-  pageNo: number;
-}
 
 export const getSearchProductList = ({
   searchContent,
@@ -80,3 +41,9 @@ export const getSearchLiveList = ({
     },
   });
 };
+
+export const getSearchInitConten = () =>
+  request.get<ISearchInitContent>("/search/index");
+
+export const getSearchSuggesttion = (keyword: string) =>
+  request.get<SuggestionsList>("/search/helper", { params: { keyword } });
