@@ -6,6 +6,7 @@ import { uniqueId } from "lodash-es";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Views } from "types/config";
+import { HotkeywordList, HistoryKeywordList } from "types/search";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
@@ -23,7 +24,7 @@ export interface CardContainerProps {
   title: string;
   type: SearchCardType;
   loading: boolean;
-  contentList: string[];
+  contentList: HotkeywordList | HistoryKeywordList;
   refreshList: Function;
 }
 
@@ -35,7 +36,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
   refreshList,
 }) => {
   const navigation = useNavigation();
-
+  console.log(type, contentList);
   const handlePress = (content: string) => {
     // getSearchResultList
     navigation.navigate(Views.SearchResultList, {
@@ -65,6 +66,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
         console.error(err);
       });
   };
+
   return (
     <>
       <Card containerStyle={styles.container}>
@@ -105,11 +107,11 @@ const CardContainer: React.FC<CardContainerProps> = ({
                       color: "grey",
                       fontSize: scaleSizeH(10),
                     }}
-                    onPress={() => handlePress(content)}
+                    onPress={() => handlePress(content.keyword)}
                   >
-                    {content.length <= 5
-                      ? content
-                      : `${content.slice(0, 6)}...`}
+                    {content.keyword.length <= 5 && content
+                      ? content.keyword
+                      : `${content.keyword.slice(0, 6)}...`}
                   </Button>
                 );
               })}

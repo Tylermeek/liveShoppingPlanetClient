@@ -1,9 +1,20 @@
-import { IGoodInfo } from "./goods";
 import { ProductInfo } from "./info";
 
 export type SuggestionsList = string[];
-export type HistoryKeywordList = string[];
-export type HotkeywordList = string[];
+interface IKeyWordItem {
+  addTime: string;
+  deleted: boolean;
+  id: number;
+  isDefault: boolean;
+  isHot: boolean;
+  keyword: string;
+  sortOrder: number;
+  updateTime: string;
+  url: string;
+}
+
+export type HistoryKeywordList = IKeyWordItem[];
+export type HotkeywordList = IKeyWordItem[];
 
 export type SearchProductList = ProductInfo[];
 export type SearchLiveList = ProductInfo[];

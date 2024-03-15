@@ -11,7 +11,9 @@ const SearchHistory: React.FC = () => {
   // TODO 搜索历史删除功能
   const [contentList, setContentList] = useState<HistoryKeywordList>([]);
   const { loading, refresh } = useRequest(getSearchInitConten, {
-    onSuccess: (res) => setContentList(res.data.historyKeywordList),
+    onSuccess: (res) => {
+      setContentList(res.data.historyKeywordList);
+    },
   });
 
   return (

@@ -13,7 +13,7 @@ import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-na
 import LiveList from "./components/LiveList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createMaterialTopTabNavigator();    
 
 const tabConfig = [
     {
@@ -82,7 +82,7 @@ function MyTabBar({ state, descriptors, navigation }: MaterialTopTabBarProps) {
 
 const SearchTabs = ({ searchContent }: { searchContent: string }) => {
     return (
-        <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
+        <Tab.Navigator tabBar={(props: any) => <MyTabBar {...props} />}>
             {
                 tabConfig.map(({ name, options, Component }) => {
                     return (

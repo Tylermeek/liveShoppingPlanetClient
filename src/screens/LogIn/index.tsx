@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { CompositeTabScreenParamList } from "navigators/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Text, Button } from "@rneui/themed";
+import { Text, Button, Icon } from "@rneui/themed";
 import { StatusBar } from "react-native";
 import { login } from "axios/api/auth";
 import storage from "storage";
@@ -33,22 +33,19 @@ const LogIn: React.FC<LogInProps> = () => {
   });
 
   const onLogin: SubmitHandler<FormData> = async ({ username, password }) => {
-    // // 处理登录逻辑
-    // if (!username) {
-    //   setErrorAccMessage("请输入账号");
-    // }
-    // if (!password) {
-    //   setErrorPassMessage("请输入密码");
-    // }
     if (username && password) {
       try {
         setLoading(true);
+        console.log("post");
         const res = await login({ username, password });
+        console.log(res);
         await storage.save({
           key: "userInfo", // 注意:请不要在key中使用_下划线符号!
           data: {
-            nickName: res.data.userInfo.nickName,
-            avatar: res.data.userInfo.avatarUrl,
+            nickName: res.data.userInfo.nickname,
+            avatar: res.data.userInfo.avatar,
+            gender: res.data.userInfo.gender,
+            mobile: res.data.userInfo.mobile,
           },
 
           // 如果不指定过期时间，则会使用defaultExpires参数
@@ -68,6 +65,8 @@ const LogIn: React.FC<LogInProps> = () => {
         setLoading(false);
         navigation.navigate(Views.Mine);
       } catch (error) {
+        console.log(error);
+        
         setLoading(false);
       }
     }
@@ -88,7 +87,9 @@ const LogIn: React.FC<LogInProps> = () => {
           }}
         >
           <View style={{ marginTop: "30%" }}>
-            <Text h3>欢迎登录</Text>
+            <Text style={{ fontSize: scaleSizeW(25), fontWeight: "bold" }}>
+              欢迎登录
+            </Text>
             <View
               style={{
                 flexDirection: "row",
@@ -106,61 +107,43 @@ const LogIn: React.FC<LogInProps> = () => {
               />
             </View>
           </View>
-          <View
-            style={{
-              paddingTop: StatusBar.currentHeight,
-              paddingLeft: scaleSizeW(40),
-              paddingRight: scaleSizeW(40),
-            }}
-          >
-            <View style={{ marginTop: "30%" }}>
-              <Text h3>欢迎登录</Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontSize: scaleSizeW(15), color: "grey" }}>
-                  还没有账号
-                </Text>
-                <Button
-                  type="clear"
-                  title="立即注册"
-                  titleStyle={{ fontSize: scaleSizeW(16) }}
-                />
-              </View>
-            </View>
+          <View style={{ height: "60%", marginVertical: scaleSizeW(20) }}>
             <Controller
               control={control}
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="请输入账号/手机号"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+                <View style={styles.inputContainer}>
+                  <Icon name="person" />
+                  <TextInput
+                    placeholder="请输入账号/手机号"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={styles.input}
+                  />
+                </View>
               )}
               name="username"
             />
             {errors.username && <Text>请输入账号</Text>}
-
             <Controller
               control={control}
               rules={{
                 maxLength: 100,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  placeholder="请输入密码"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
+                <View style={styles.inputContainer}>
+                  <Icon name="lock" />
+                  <TextInput
+                    placeholder="请输入密码"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    style={styles.input}
+                  />
+                </View>
               )}
               name="password"
             />
@@ -172,26 +155,27 @@ const LogIn: React.FC<LogInProps> = () => {
               loading={loading}
               radius={"lg"}
               onPress={handleSubmit(onLogin)}
+              containerStyle={{ marginTop: scaleSizeW(60) }}
             />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                marginTop: scaleSizeW(20),
-              }}
-            >
-              <Button
-                title={"忘记密码"}
-                type="clear"
-                titleStyle={{ fontSize: scaleSizeW(15) }}
-              />
-              <Button
-                title={"注册"}
-                type="clear"
-                titleStyle={{ fontSize: scaleSizeW(15) }}
-                onPress={handleRegister}
-              />
-            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              marginTop: scaleSizeW(20),
+            }}
+          >
+            <Button
+              title={"忘记密码"}
+              type="clear"
+              titleStyle={{ fontSize: scaleSizeW(15) }}
+            />
+            <Button
+              title={"注册"}
+              type="clear"
+              titleStyle={{ fontSize: scaleSizeW(15) }}
+              onPress={handleRegister}
+            />
           </View>
         </View>
       </GestureHandlerRootView>
@@ -200,9 +184,18 @@ const LogIn: React.FC<LogInProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: "row",
+    margin: scaleSizeW(10),
+    alignItems: "center",
+  },
   input: {
+    flex: 1,
     fontSize: scaleSizeW(15),
-    marginLeft: scaleSizeW(10),
+    paddingLeft: scaleSizeW(10),
+    paddingVertical: scaleSizeW(10),
+    borderBottomWidth: 1,
+    borderRadius: 10,
   },
 });
 

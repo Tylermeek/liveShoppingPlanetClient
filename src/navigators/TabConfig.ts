@@ -10,7 +10,7 @@ import Playground from "screens/Playground";
 export const tabConfig = [
   {
     name: "Playground",
-    component: Playground,
+    component: LogIn,
     options: {
       title: "Playground",
     },

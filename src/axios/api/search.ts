@@ -12,7 +12,7 @@ export const delAllSearchHistory = () => {
 };
 
 export const getSearchProductList = (params: ISearchParams) => {
-  return request.get<ISearchRes>(`/search/product`, { params });
+  return request.get<ISearchRes>(`/goods/list/`, { params });
 };
 
 export interface getSearchLiveListParams {

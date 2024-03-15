@@ -12,17 +12,22 @@ import SearchBanner from "components/SearchBanner";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useRequest } from "ahooks";
 import { SuggestionsList } from "types/search";
+import { isEmptyArr } from "utlis/method";
 
 const SearchDetail: React.FC = () => {
   const [searchRef, setSearchRef] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
   const [suggestionList, setSuggestionList] = useState<SuggestionsList>([]);
   const { run, loading } = useRequest(
-    (keyword: string) => getSearchSuggesttion(keyword),
+    () => {
+      return getSearchSuggesttion(keyword);
+    },
     {
-      debounceMaxWait: 200,
+      debounceMaxWait: 500,
       refreshDeps: [keyword],
-      onSuccess: (res) => setSuggestionList(res.data),
+      onSuccess: (res) => {
+        setSuggestionList(res.data);
+      },
     }
   );
 
@@ -42,18 +47,26 @@ const SearchDetail: React.FC = () => {
           bindRef: setSearchRef,
           editable: true,
           // todo 检查是否可以正常渲染
-          updateSearchCb: setKeyword,
+          updateSearchCb: (keyword) => {
+            console.log(keyword);
+            setKeyword(keyword);
+          },
         }}
       />
 
-      {Array.isArray(suggestionList) && suggestionList.length !== 0 ? (
+      {/* {isEmptyArr(suggestionList) ? (
         <SuggestionList suggestionList={suggestionList}></SuggestionList>
       ) : (
         <View style={styles.searchContainer}>
           <SearchHistory></SearchHistory>
           <SearchRecommend></SearchRecommend>
         </View>
-      )}
+      )} */}
+      <SuggestionList suggestionList={suggestionList}></SuggestionList>
+      <View style={styles.searchContainer}>
+        <SearchHistory></SearchHistory>
+        <SearchRecommend></SearchRecommend>
+      </View>
     </GestureHandlerRootView>
   );
 };
