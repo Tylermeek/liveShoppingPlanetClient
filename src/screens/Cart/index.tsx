@@ -6,22 +6,33 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getCartlistThunk } from "slice/cart/cartSlice";
 import BottomBanner from "./components/BottomBanner";
+import { Views } from "types/navigation";
+import { useAuth } from "hook/useAuth";
+import { useNavigation } from "@react-navigation/native";
 
 const Cart: React.FC = () => {
-    const cartInfo = useAppSelector((state) => { state.cartInfo })
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        // dispatch(getCartlistThunk())
-    }, [])
-    return <GestureHandlerRootView style={{ flex: 1 }}>
-        <TopBanner />
-        <CartList />
-        <BottomBanner />
+  const navigation = useNavigation();
+
+  const cartInfo = useAppSelector((state) => {
+    state.cartInfo;
+  });
+  const dispatch = useAppDispatch();
+  const { canVisit } = useAuth(Views.Cart);
+
+  useEffect(() => {
+    console.log(canVisit);
+    // dispatch(getCartlistThunk())
+    if (!canVisit) navigation.navigate(Views.LogIn);
+  }, [canVisit]);
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <TopBanner />
+      <CartList />
+      <BottomBanner />
     </GestureHandlerRootView>
-}
+  );
+};
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({});
 
-})
-
-export default Cart
+export default Cart;

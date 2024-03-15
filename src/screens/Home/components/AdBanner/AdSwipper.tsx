@@ -7,7 +7,7 @@ import { ProductSwiperInfo } from "types/info";
 import Carousel from "react-native-reanimated-carousel";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 
 const AdSwipper: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true)

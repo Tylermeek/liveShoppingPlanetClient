@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 import { useNavigation } from "@react-navigation/native";
 import Search from "components/Search";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 
 
 const FakeSearchBanner: React.FC = () => {

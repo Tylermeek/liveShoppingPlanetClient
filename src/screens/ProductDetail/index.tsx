@@ -2,7 +2,7 @@ import { useRoute } from "@react-navigation/native";
 import { TabView, Text } from "@rneui/themed";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Views, RootRouteType } from "types/config";
+import { Views, RootRouteType } from "types/navigation";
 import Banner from "./components/TopBanner";
 import { Tab } from "@rneui/base";
 import BottomBanner from "./components/BottomBanner";

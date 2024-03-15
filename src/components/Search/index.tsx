@@ -3,7 +3,7 @@ import { SearchBar, Button, SearchBarProps } from "@rneui/themed";
 import React, { PropsWithChildren, Ref, RefAttributes, RefObject, useState } from "react";
 import { TextInput } from "react-native";
 import { StyleSheet, View } from "react-native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { scaleSizeW, scaleSizeH } from "utlis/scaleSize";
 
 export type SearchProps = {

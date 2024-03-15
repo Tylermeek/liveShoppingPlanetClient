@@ -8,7 +8,7 @@ import { authRegisterCaptcha, login, signUp } from "axios/api/auth";
 import storage from "storage";
 import { scaleSizeW } from "utlis/scaleSize";
 import { useNavigation } from "@react-navigation/native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { useCountdown } from "hook/useCountDown";
 
 

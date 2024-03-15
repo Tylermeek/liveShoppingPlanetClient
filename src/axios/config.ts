@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios, { Axios, AxiosRequestConfig } from "axios";
 import storage from "storage";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 
 export interface IResponse<T = any>
   extends Promise<{

@@ -3,7 +3,7 @@ import { ListItem } from "@rneui/themed";
 import { uniqueId } from "lodash-es";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { SuggestionsList } from "types/search";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH } from "utlis/scaleSize";

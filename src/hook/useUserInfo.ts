@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import storage from "storage"
+import { IUserInfo } from "types/auth"
 
 export const useUserInfo = () => {
-    const [userInfo, setUserInfo] = useState({})
+    const [userInfo, setUserInfo] = useState<IUserInfo>()
     const getUserInfo = () => {
         storage
             .load({
@@ -15,7 +16,6 @@ export const useUserInfo = () => {
             })
             .then((res) => {
                 console.log(res);
-
                 setUserInfo(res);
             }).catch(err => console.warn(err)
             )

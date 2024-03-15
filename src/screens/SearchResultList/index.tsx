@@ -6,7 +6,7 @@ import SearchBanner from "components/SearchBanner";
 import { assign, merge, trim } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { RootRouteType, Views } from "types/config";
+import { RootRouteType, Views } from "types/navigation";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import ProductList from "./components/ProductList";
 import { MaterialTopTabBarProps, createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";

@@ -7,9 +7,12 @@ import { StatusBar } from "react-native";
 import { login } from "axios/api/auth";
 import storage from "storage";
 import { scaleSizeW } from "utlis/scaleSize";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { isLogin } from "hook/useAuth";
+import { useAppDispatch } from "store/hooks";
+import { setToken, setUserInfo } from "slice/user";
 
 type LogInProps = CompositeTabScreenParamList<"LogIn">;
 
@@ -20,6 +23,7 @@ interface FormData {
 
 const LogIn: React.FC<LogInProps> = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const {
     control,
@@ -36,16 +40,17 @@ const LogIn: React.FC<LogInProps> = () => {
     if (username && password) {
       try {
         setLoading(true);
-        console.log("post");
-        const res = await login({ username, password });
-        console.log(res);
+        const { data } = await login({ username, password });
+        console.log(data);
+        dispatch(setToken(data.token));
+        dispatch(setUserInfo(data.userInfo));
         await storage.save({
           key: "userInfo", // 注意:请不要在key中使用_下划线符号!
           data: {
-            nickName: res.data.userInfo.nickname,
-            avatar: res.data.userInfo.avatar,
-            gender: res.data.userInfo.gender,
-            mobile: res.data.userInfo.mobile,
+            nickName: data.userInfo.nickName,
+            avatar: data.userInfo.avatarUrl,
+            gender: data.userInfo?.gender,
+            mobile: data.userInfo?.mobile,
           },
 
           // 如果不指定过期时间，则会使用defaultExpires参数
@@ -55,7 +60,7 @@ const LogIn: React.FC<LogInProps> = () => {
         await storage.save({
           key: "Token", // 注意:请不要在key中使用_下划线符号!
           data: {
-            token: res.data.token,
+            token: data.token,
           },
 
           // 如果不指定过期时间，则会使用defaultExpires参数
@@ -63,10 +68,12 @@ const LogIn: React.FC<LogInProps> = () => {
           expires: null,
         });
         setLoading(false);
-        navigation.navigate(Views.Mine);
+        navigation.canGoBack()
+          ? navigation.goBack()
+          : navigation.navigate(Views.Mine);
       } catch (error) {
         console.log(error);
-        
+
         setLoading(false);
       }
     }
@@ -76,6 +83,17 @@ const LogIn: React.FC<LogInProps> = () => {
     // 处理注册逻辑
     navigation.navigate(Views.SignUp);
   };
+  async function handleLogOut() {
+    try {
+      await storage.remove({ key: "userInfo" });
+      await storage.remove({ key: "Token" });
+      dispatch(setToken(null));
+      dispatch(setUserInfo(null));
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -155,6 +173,14 @@ const LogIn: React.FC<LogInProps> = () => {
               loading={loading}
               radius={"lg"}
               onPress={handleSubmit(onLogin)}
+              containerStyle={{ marginTop: scaleSizeW(60) }}
+            />
+            <Button
+              title="登出"
+              size="md"
+              loading={loading}
+              radius={"lg"}
+              onPress={handleLogOut}
               containerStyle={{ marginTop: scaleSizeW(60) }}
             />
           </View>

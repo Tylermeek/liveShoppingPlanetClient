@@ -3,7 +3,7 @@ import { Text } from "@rneui/themed";
 import { AVPlaybackStatus, ResizeMode, Video } from "expo-av";
 import React, { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { RootRouteType, Views } from "types/config";
+import { RootRouteType, Views } from "types/navigation";
 
 const LiveRoom: React.FC = () => {
     const route = useRoute<RootRouteType<Views.LiveRoom>>()

@@ -11,7 +11,7 @@ import { LiveSwiperInfo } from "types/info";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import LiveTitle from "./components/LiveTitle";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 
 const Live: React.FC = () => {
     const containerWidth = Dimensions.get('window').width

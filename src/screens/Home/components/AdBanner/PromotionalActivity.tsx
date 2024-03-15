@@ -6,7 +6,7 @@ import { PromotionalActivityInfo, getPromotionalActivity } from "axios/api/recom
 import { chunk, uniqueId } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 

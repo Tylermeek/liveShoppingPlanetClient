@@ -6,7 +6,7 @@ import { ContentCardProps } from "../../../../components/WaterFall";
 import { isEmptyArr } from "utlis/method";
 import { Icon } from "@rneui/base";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ISearchGood } from "types/search";
 

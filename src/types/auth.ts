@@ -1,6 +1,6 @@
 export interface IUserInfo {
-  nickname: string;
-  avatar?: string;
+  nickName: string;
+  avatarUrl?: string;
   gender?: string;
   mobile?: string;
 }

@@ -5,7 +5,7 @@ import { delAllSearchHistory } from "axios/api/search";
 import { uniqueId } from "lodash-es";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { HotkeywordList, HistoryKeywordList } from "types/search";
 import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";

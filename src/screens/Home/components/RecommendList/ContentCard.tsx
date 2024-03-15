@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar, Card, Image, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Views } from "types/config";
+import { Views } from "types/navigation";
 import { LiveInfo, ProductInfo, InfoType } from "types/info";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { isProductInfo } from "utlis/type";
