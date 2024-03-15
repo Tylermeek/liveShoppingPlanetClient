@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import TopBanner from "./components/TopBanner";
 import CartList from "./components/CartList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useAppDispatch, useAppSelector } from "store/hooks";
-import { getCartlistThunk } from "slice/cart/cartSlice";
 import BottomBanner from "./components/BottomBanner";
 import { Views } from "types/navigation";
 import { useAuth } from "hook/useAuth";
@@ -12,11 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const Cart: React.FC = () => {
   const navigation = useNavigation();
-
-  const cartInfo = useAppSelector((state) => {
-    state.cartInfo;
-  });
-  const dispatch = useAppDispatch();
   const { canVisit } = useAuth(Views.Cart);
 
   useEffect(() => {

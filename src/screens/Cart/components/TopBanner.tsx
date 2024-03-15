@@ -2,8 +2,9 @@ import { Button, Icon } from "@rneui/base";
 import { Divider, Text } from "@rneui/themed";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
-import { CartStatus, changeCartStatus, delAllProducts, delProducts } from "slice/cart/cartSlice";
+import {  changeCartStatus, delAllProducts, delProducts } from "slice/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "store/hooks";
+import { CartStatus } from "types/cart";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 const TopBanner: React.FC = () => {
