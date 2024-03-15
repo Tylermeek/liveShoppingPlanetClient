@@ -4,17 +4,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const GoBack: React.FC = () => {
-    const { goBack } = useNavigation()
+  const { goBack, canGoBack } = useNavigation();
 
-    return <>
-        <Button onPress={() => goBack()} type="clear" >
-            <Icon name="arrow-back" ></Icon>
-        </Button>
+  return (
+    <>
+      <Button onPress={() => canGoBack() && goBack()} type="clear">
+        <Icon name="arrow-back"></Icon>
+      </Button>
     </>
-}
+  );
+};
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({});
 
-})
-
-export default GoBack
+export default GoBack;
