@@ -14,7 +14,7 @@ export interface ContentCardProps {
 export interface WaterFallProps {
     isEndReached: boolean
     loadingMore: boolean
-    list: any[]
+    coloumLists: any[][]
     ContentCard: React.FC<ContentCardProps>
     columLen?: number
     updateListCb: (list: any[]) => void
@@ -25,7 +25,7 @@ const WaterFall: React.FC<WaterFallProps> = (
     {
         isEndReached,
         loadingMore,
-        list,
+        coloumLists,
         ContentCard,
         columLen = 2,
         getMoreList
@@ -43,14 +43,14 @@ const WaterFall: React.FC<WaterFallProps> = (
     return <>
         <View style={styles.container}>
             {
-                !isEmptyArr(list) &&
-                (chunk(list, Math.floor(list.length / columLen))).map((subList, columnIndex) => {
+                !isEmptyArr(coloumLists) &&
+                coloumLists.map((subList, columnIndex) => {
                     return (
                         <View style={[styles.column, { marginLeft: columnIndex === 1 ? 0 : scaleSizeW(10) }]} key={columnIndex} >
                             {
                                 subList.map((content, index) => {
                                     return content &&
-                                        <ContentCard key={content.id} contentInfo={content}></ContentCard>
+                                        <ContentCard key={index} contentInfo={content}></ContentCard>
                                 })
                             }
                         </View>

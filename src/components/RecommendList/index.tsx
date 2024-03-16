@@ -1,6 +1,7 @@
 import { Button, Divider, Text } from "@rneui/themed";
 import { getSearchProductList } from "axios/api/search";
 import WaterFall from "components/WaterFall";
+import { chunk } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ProductCard from "screens/SearchResultList/components/ProductList/ProductCard";
@@ -16,7 +17,7 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
   productName,
   isEndReached,
 }) => {
-  const [list, setList] = useState<ISearchGood[]>([]);
+  const [coloumLists, setColoumLists] = useState<ISearchGood[][]>([[], []]);
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,7 +26,8 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
     setLoading(true);
     // todo 迁移接口到统一的获取推荐商品列表
     const res = await getSearchProductList({ keyword: "秋冬" });
-    setList(res.data.list);
+    const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
+    setColoumLists([tempList[0], tempList[1]]);
     setLoading(false);
   };
 
@@ -36,7 +38,11 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
       keyword: "秋冬",
       page: pageNo + 1,
     });
-    setList(list.concat(res.data.list));
+    const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
+    setColoumLists((prevData) => [
+      [...prevData[0], ...tempList[0]],
+      [...prevData[1], ...tempList[1]],
+    ]);
     setLoadingMore(false);
   };
 
@@ -56,10 +62,10 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
         <Button type="clear" loading size="sm" />
       ) : (
         <WaterFall
-          list={list}
+          coloumLists={coloumLists}
           isEndReached={isEndReached}
           loadingMore={loadingMore}
-          updateListCb={setList}
+          updateListCb={setColoumLists}
           getMoreList={getMoreList}
           ContentCard={ProductCard}
         />
