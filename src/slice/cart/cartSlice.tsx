@@ -6,16 +6,13 @@ import {
   getCartList,
   updateProNum,
 } from "axios/api/cart";
-import { err } from "react-native-svg";
 import {
-  CartProductInfo,
   CartState,
   CartStatus,
   IAddProData,
   ICheckProsData,
   IDelProsData,
   IUpdateProData,
-  ProductsInfo,
 } from "types/cart";
 
 const initialState: CartState = {
@@ -29,6 +26,7 @@ const initialState: CartState = {
     checkedGoodsAmount: 0,
     goodsAmount: 0,
   },
+  preCartStatus: CartStatus.Fetched,
 };
 
 export const getCartlistThunk = createAsyncThunk(
@@ -74,11 +72,8 @@ export const delProsThunk = createAsyncThunk(
 export const addProThunk = createAsyncThunk(
   "cartInfo/addProThunk",
   async (data: IAddProData) => {
-    console.log(data);
-    
     const res = await addPro(data);
     console.log(res);
-    
   }
 );
 
@@ -94,6 +89,7 @@ const cartInfoSlice = createSlice({
     builder
       .addCase(getCartlistThunk.pending, (state) => {
         console.log("获取中");
+        state.preCartStatus = state.cartStatus;
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(getCartlistThunk.fulfilled, (state, { payload }) => {
@@ -110,22 +106,23 @@ const cartInfoSlice = createSlice({
       })
       .addCase(updateProNumThunk.pending, (state) => {
         console.log("更新num中");
+        state.preCartStatus = state.cartStatus;
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(updateProNumThunk.fulfilled, (state, { payload }) => {
-        state.cartStatus = CartStatus.Fetched;
+        state.cartStatus = state.preCartStatus;
       })
       .addCase(updateProNumThunk.rejected, (state) => {
         console.log("更新num失败");
         state.cartStatus = CartStatus.Fetched;
       })
       .addCase(checkProsThunk.pending, (state) => {
-        console.log("更新勾选状态中");
+        console.log("更新勾选状态中", state.cartStatus);
+        state.preCartStatus = state.cartStatus;
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(checkProsThunk.fulfilled, (state, { payload }) => {
-        state.cartStatus = CartStatus.Fetched;
-        state.cartStatus = CartStatus.Fetched;
+        state.cartStatus = state.preCartStatus;
         state.cartList = payload.cartList;
         state.cartTotal = payload.cartTotal;
         state.submitList = payload.cartList
@@ -134,14 +131,14 @@ const cartInfoSlice = createSlice({
       })
       .addCase(checkProsThunk.rejected, (state) => {
         console.log("更新勾选状态失败");
-        state.cartStatus = CartStatus.Fetched;
       })
       .addCase(delProsThunk.pending, (state, { payload }) => {
         console.log("删除商品中");
+        state.preCartStatus = state.cartStatus;
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(delProsThunk.fulfilled, (state) => {
-        state.cartStatus = CartStatus.Editing;
+        state.cartStatus = state.preCartStatus;
         console.log("删除成功");
       })
       .addCase(delProsThunk.rejected, (state) => {

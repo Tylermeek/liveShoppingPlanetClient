@@ -5,6 +5,7 @@ import {
   changeCartStatus,
   checkProsThunk,
   delProsThunk,
+  getCartlistThunk,
 } from "slice/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { CartProductInfo, CartState, CartStatus } from "types/cart";
@@ -49,7 +50,7 @@ const BottomBanner: React.FC = () => {
   const handleDelAll = () => {
     dispatch(
       delProsThunk({ productIds: cartList.map((pro) => pro.productId) })
-    );
+    )
   };
 
   const handleDel = () => {
@@ -59,7 +60,9 @@ const BottomBanner: React.FC = () => {
           .filter((pro) => pro.checked)
           .map((pro) => pro.productId),
       })
-    );
+    ).then(()=>{
+      dispatch(getCartlistThunk());
+    })
   };
 
   return (

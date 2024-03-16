@@ -1,18 +1,5 @@
-import { InfoType, ShopInfo } from "./info";
+import { InfoType } from "./info";
 
-export interface ShopsInfo extends ShopInfo {
-  /**
-   * 在该店铺购买的商品id数组
-   */
-  buyProducts: string[];
-}
-
-export interface ShopsState {
-  byId: {
-    [property: string]: ShopsInfo;
-  };
-  allIds: string[];
-}
 
 export interface ProductsInfo {
   /**
@@ -73,6 +60,7 @@ export interface CartState {
   cartStatus: CartStatus;
   cartList: CartProductInfo[];
   cartTotal: CartTotal;
+  preCartStatus: CartStatus;
 }
 
 export interface CartProductInfo {
