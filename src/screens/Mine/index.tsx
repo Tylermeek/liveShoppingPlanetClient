@@ -46,7 +46,7 @@ const Mine: React.FC<MineProps> = ({ navigation }) => {
             {/* <View style={{ marginTop: scaleSizeW(10) }}>
                         <LivingFollowingList />
                     </View> */}
-            {/* <RecommendProductList isEndReached /> */}
+            <RecommendProductList isEndReached />
           </View>
         </ScrollView>
       </GestureHandlerRootView>

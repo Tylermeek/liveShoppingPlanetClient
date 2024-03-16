@@ -42,7 +42,10 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
           ></LinearGradient>
           <FuncBlock></FuncBlock>
           <AdBanner></AdBanner>
-          <RecommendList isEndReached={isEndReached}></RecommendList>
+          <RecommendList
+            isEndReached={isEndReached}
+            CustomDivider={() => <></>}
+          ></RecommendList>
         </ScrollView>
       </GestureHandlerRootView>
     </>

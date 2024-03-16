@@ -11,11 +11,24 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 interface RecommendProductListProps {
   productName?: string;
   isEndReached: boolean;
+  CustomDivider?: () => React.JSX.Element;
 }
+
+const DefaultDivider = () => (
+  <>
+    <View style={{ alignItems: "center", marginTop: scaleSizeH(10) }}>
+      <Text style={{ fontSize: scaleSizeW(13), fontWeight: "700" }}>
+        更多推荐
+      </Text>
+    </View>
+    <Divider style={{ marginTop: scaleSizeH(10) }} />
+  </>
+);
 
 const RecommendProductList: React.FC<RecommendProductListProps> = ({
   productName,
   isEndReached,
+  CustomDivider = DefaultDivider,
 }) => {
   const [coloumLists, setColoumLists] = useState<ISearchGood[][]>([[], []]);
   const [pageNo, setPageNo] = useState<number>(1);
@@ -25,7 +38,7 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
   const getList = async () => {
     setLoading(true);
     // todo 迁移接口到统一的获取推荐商品列表
-    const res = await getSearchProductList({ keyword: "秋冬" });
+    const res = await getSearchProductList({ keyword: productName || "秋冬" });
     const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
     setColoumLists([tempList[0], tempList[1]]);
     setLoading(false);
@@ -35,7 +48,7 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
     setLoadingMore(true);
     setPageNo(pageNo + 1);
     const res = await getSearchProductList({
-      keyword: "秋冬",
+      keyword: productName || "秋冬",
       page: pageNo + 1,
     });
     const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
@@ -51,13 +64,7 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
   }, []);
   return (
     <>
-      <View style={{ alignItems: "center", marginTop: scaleSizeH(10) }}>
-        <Text style={{ fontSize: scaleSizeW(13), fontWeight: "700" }}>
-          更多推荐
-        </Text>
-      </View>
-      <Divider style={{ marginTop: scaleSizeH(10) }} />
-
+      <CustomDivider />
       {loading ? (
         <Button type="clear" loading size="sm" />
       ) : (
