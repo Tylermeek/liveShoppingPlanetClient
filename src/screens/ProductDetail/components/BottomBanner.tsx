@@ -8,6 +8,9 @@ import { ColorValue, StatusBar, StyleSheet, View } from "react-native";
 import { addProThunk } from "slice/cart/cartSlice";
 import { useAppDispatch } from "store/hooks";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
+import BuyAddButtonGroup from "./BuyAddButtonGroup";
+import BuyBottomSheet from "./ProductPage/BuyBottomSheet";
+import AddBottomSheet from "./ProductPage/AddBottomSheet";
 
 export interface BannerProps {
   goodsId: number;
@@ -38,31 +41,18 @@ const iconConfig: IconInfo[] = [
 ];
 
 const BottomBanner: React.FC<BannerProps> = ({ goodsId }) => {
-  const dispatch = useAppDispatch();
   const [userHasCollect, setUserHasCollect] = useState(0);
-  const [productId, setProductId] = useState<number>();
-  useRequest(() => getGoodsDetail({ id: goodsId }), {
+  const [isBuyVisible, setIsBuyVisible] = useState(false);
+  const [isAddVisible, setIsAddVisible] = useState(false);
+  const { data } = useRequest(() => getGoodsDetail({ id: goodsId }), {
     onSuccess: (res) => {
       console.log(res);
       setUserHasCollect(res.data.userHasCollect);
-      setProductId(res.data.productList[0].id || 0);
     },
   });
   const handlePressIcon = (iconType: IconType) => {
     // todo 处理客服、收藏、跳转店铺首页功能
     console.log("iconType", iconType);
-  };
-
-  const handleAddCart = () => {
-    if (productId) {
-      console.log("加入购物车", goodsId, productId);
-        dispatch(addProThunk({ productId, goodsId, number: 1 }));
-    }
-  };
-
-  const handleBuyNow = () => {
-    // todo 立即购买功能
-    console.log("立即购买");
   };
 
   return (
@@ -88,24 +78,46 @@ const BottomBanner: React.FC<BannerProps> = ({ goodsId }) => {
             );
           })}
         </View>
-        <View style={styles.buttonContaniner}>
-          <Button
-            color="#EC9A86"
-            title={"加入购物车"}
-            radius={0}
-            buttonStyle={styles.buttonLStyle}
-            titleStyle={{ fontSize: scaleSizeW(13) }}
-            onPress={handleAddCart}
-          />
-          <Button
-            color="#E36255"
-            title={"立即购买"}
-            radius={0}
-            buttonStyle={styles.buttonRStyle}
-            titleStyle={{ fontSize: scaleSizeW(13) }}
-            onPress={handleBuyNow}
-          />
+        <View
+          style={{
+            ...styles.buttonContaniner,
+          }}
+        >
+          <View style={styles.buttonWrap}>
+            <Button
+              color="#EC9A86"
+              title={"加入购物车"}
+              radius={0}
+              buttonStyle={styles.buttonLStyle}
+              titleStyle={{ fontSize: scaleSizeW(13) }}
+              onPress={() => setIsAddVisible(true)}
+            />
+          </View>
+          <View style={styles.buttonWrap}>
+            <Button
+              color="#E36255"
+              title={"立即购买"}
+              radius={0}
+              buttonStyle={styles.buttonRStyle}
+              titleStyle={{ fontSize: scaleSizeW(13) }}
+              onPress={() => setIsBuyVisible(true)}
+            />
+          </View>
         </View>
+        {data?.data && (
+          <>
+            <BuyBottomSheet
+              isVisible={isBuyVisible}
+              onIsVisible={setIsBuyVisible}
+              goodDetail={data?.data!}
+            />
+            <AddBottomSheet
+              isVisible={isAddVisible}
+              onIsVisible={setIsAddVisible}
+              goodDetail={data?.data!}
+            />
+          </>
+        )}
       </View>
     </>
   );
@@ -127,6 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
   },
+  buttonWrap: { flex: 1, justifyContent: "center" },
   buttonContaniner: {
     width: scaleSizeW(180),
     flexDirection: "row",

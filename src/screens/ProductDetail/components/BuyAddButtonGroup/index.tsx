@@ -11,8 +11,10 @@ export default function BuyAddButtonGroup({
   goodsId,
   num = 1,
   containerStyle = { width: scaleSizeW(180) },
+  type = "default",
 }: {
   num?: number;
+  type?: string;
   goodsId: number;
   containerStyle: {};
 }) {
@@ -41,26 +43,28 @@ export default function BuyAddButtonGroup({
         ...containerStyle,
       }}
     >
-      <View style={styles.buttonWrap}>
-        <Button
-          color="#EC9A86"
-          title={"加入购物车"}
-          radius={0}
-          buttonStyle={styles.buttonLStyle}
-          titleStyle={{ fontSize: scaleSizeW(13) }}
-          onPress={handleAddCart}
-        />
-      </View>
-      <View style={styles.buttonWrap}>
-        <Button
-          color="#E36255"
-          title={"立即购买"}
-          radius={0}
-          buttonStyle={styles.buttonRStyle}
-          titleStyle={{ fontSize: scaleSizeW(13) }}
-          onPress={handleBuyNow}
-        />
-      </View>
+      <>
+        <View style={styles.buttonWrap}>
+          <Button
+            color="#EC9A86"
+            title={"加入购物车"}
+            radius={0}
+            buttonStyle={styles.buttonLStyle}
+            titleStyle={{ fontSize: scaleSizeW(13) }}
+            onPress={handleAddCart}
+          />
+        </View>
+        <View style={styles.buttonWrap}>
+          <Button
+            color="#E36255"
+            title={"立即购买"}
+            radius={0}
+            buttonStyle={styles.buttonRStyle}
+            titleStyle={{ fontSize: scaleSizeW(13) }}
+            onPress={handleBuyNow}
+          />
+        </View>
+      </>
     </View>
   );
 }

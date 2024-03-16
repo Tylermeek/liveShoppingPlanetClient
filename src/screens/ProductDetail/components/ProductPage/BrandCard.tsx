@@ -28,24 +28,26 @@ const RateLevel: React.FC<{ num: number }> = ({ num }) => {
 const BrandCard: React.FC<BrandCardProps> = ({ brandInfo }) => {
   // todo 跳转商家主页功能
   return (
-    <View style={styles.container}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Avatar
-          size={40}
-          source={{ uri: brandInfo?.picUrl }}
-          avatarStyle={{ borderRadius: scaleSizeW(10) }}
-        />
-        <Text
-          h2
-          style={{ marginLeft: scaleSizeW(5), fontSize: scaleSizeW(13) }}
-        >
-          {brandInfo.name}
+    brandInfo.desc && (
+      <View style={styles.container}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Avatar
+            size={40}
+            source={{ uri: brandInfo?.picUrl }}
+            avatarStyle={{ borderRadius: scaleSizeW(10) }}
+          />
+          <Text
+            h2
+            style={{ marginLeft: scaleSizeW(5), fontSize: scaleSizeW(13) }}
+          >
+            {brandInfo.name}
+          </Text>
+        </View>
+        <Text h3 style={{ marginTop: scaleSizeW(10), textAlign: "center" }}>
+          {brandInfo.desc}
         </Text>
       </View>
-      <Text h3 style={{ marginTop: scaleSizeW(10),textAlign:"center" }}>
-        {brandInfo.desc}
-      </Text>
-    </View>
+    )
   );
 };
 
