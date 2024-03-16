@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { CompositeTabScreenParamList } from "navigators/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -16,7 +16,6 @@ type MineProps = CompositeTabScreenParamList<"Mine">;
 
 const Mine: React.FC<MineProps> = ({ navigation }) => {
   const [isEndReached, setIsEndReached] = useState<boolean>(false);
-
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>

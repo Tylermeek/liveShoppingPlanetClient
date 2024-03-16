@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { isLogin } from "hook/useAuth";
 import { useAppDispatch } from "store/hooks";
-import { setToken, setUserInfo } from "slice/user";
+import { setToken, setUserInfo } from "slice/userInfo";
 
 type LogInProps = CompositeTabScreenParamList<"LogIn">;
 
@@ -73,7 +73,6 @@ const LogIn: React.FC<LogInProps> = () => {
           : navigation.navigate(Views.Mine);
       } catch (error) {
         console.log(error);
-
         setLoading(false);
       }
     }

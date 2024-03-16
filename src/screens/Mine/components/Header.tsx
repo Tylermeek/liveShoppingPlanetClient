@@ -6,7 +6,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useAppSelector } from "store/hooks";
 
 export default function Header() {
-  const { userInfo } = useAppSelector((state) => state.user);
+  const { userInfo, Token } = useAppSelector((state) => state.user);
+  console.log(userInfo, Token);
+
   return (
     <View style={styles.container}>
       <LinearGradient

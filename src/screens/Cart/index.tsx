@@ -4,19 +4,9 @@ import TopBanner from "./components/TopBanner";
 import CartList from "./components/CartList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomBanner from "./components/BottomBanner";
-import { Views } from "types/navigation";
-import { useAuth } from "hook/useAuth";
-import { useNavigation } from "@react-navigation/native";
 
 const Cart: React.FC = () => {
-  const { navigate } = useNavigation();
-  const { canVisit } = useAuth(Views.Cart);
 
-  useEffect(() => {
-    console.log(canVisit);
-    // dispatch(getCartlistThunk())
-    if (!canVisit) navigate(Views.LogIn);
-  }, [canVisit]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <TopBanner />
