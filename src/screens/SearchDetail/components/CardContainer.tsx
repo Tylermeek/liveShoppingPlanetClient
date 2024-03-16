@@ -60,7 +60,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
     console.log("handleDelAll");
     delAllSearchHistory()
       .then((res) => {
-        console.log(res.data);
+        refreshList()
       })
       .catch((err) => {
         console.error(err);

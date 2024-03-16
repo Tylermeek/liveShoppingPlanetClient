@@ -9,12 +9,13 @@ import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { IGoodInfo } from "types/goods";
 import { ISearchGood, SortTypes } from "types/search";
 import { getSearchProductList } from "axios/api/search";
+import { chunk } from "lodash-es";
 export interface ProductListProps {
   searchContent: string;
 }
 
 const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
-  const [list, setList] = useState<ISearchGood[]>([]);
+  const [coloumLists, setColoumLists] = useState<ISearchGood[][]>([[], []]);
   const [pageNo, setPageNo] = useState<number>(1);
   const [activeSubTab, setSubActiveTab] = useState<number>(0);
   const [sortType, setSortType] = useState<SortTypes>(SortTypes.Default);
@@ -46,7 +47,11 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
       sort: sortType,
       page: newPageNo,
     });
-    setList(list.concat(res.data.list));
+    const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
+    setColoumLists((preLists) => [
+      [...preLists[0], ...tempList[0]],
+      [...preLists[1], ...tempList[1]],
+    ]);
     setLoadingMore(false);
   };
 
@@ -58,7 +63,7 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
       page: pageNo,
     });
     setRefreshing(false);
-    setList(res.data.list);
+    setColoumLists(chunk(res.data.list, Math.floor(res.data.list.length / 2)));
   };
 
   useEffect(() => {
@@ -108,11 +113,11 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
           <Button type="clear" loading size="sm" />
         ) : (
           <WaterFall
-            list={list}
+            coloumLists={coloumLists}
             isEndReached={isEndReached}
             loadingMore={loadingMore}
             ContentCard={ProductCard}
-            updateListCb={setList}
+            updateListCb={setColoumLists}
             getMoreList={handleGetMoreList}
           />
         )}
@@ -129,8 +134,8 @@ const styles = StyleSheet.create({
   },
   tabConatiner: {
     height: scaleSizeW(30),
-    backgroundColor:"white",
-    alignItems:"center",
+    backgroundColor: "white",
+    alignItems: "center",
   },
   TabItemConatiner: {
     height: scaleSizeH(25),

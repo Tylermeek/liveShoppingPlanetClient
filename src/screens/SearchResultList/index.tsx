@@ -6,7 +6,6 @@ import SearchBanner from "components/SearchBanner";
 import { assign, merge, trim } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { RootRouteType, Views } from "types/config";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import ProductList from "./components/ProductList";
 import {
@@ -15,6 +14,7 @@ import {
 } from "@react-navigation/material-top-tabs";
 import LiveList from "./components/LiveList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { RootRouteType, Views } from "types/navigation";
 
 const Tab = createMaterialTopTabNavigator();
 

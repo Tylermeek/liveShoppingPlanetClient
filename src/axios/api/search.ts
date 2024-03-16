@@ -8,7 +8,7 @@ import {
 } from "types/search";
 
 export const delAllSearchHistory = () => {
-  return request.post<string>("/search/history/delAll");
+  return request.post<string>("/search/clearhistory");
 };
 
 export const getSearchProductList = (params: ISearchParams) => {
