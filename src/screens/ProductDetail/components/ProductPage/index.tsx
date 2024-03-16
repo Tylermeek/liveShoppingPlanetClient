@@ -7,6 +7,8 @@ import RecommendProduct from "./RecommendProduct";
 import { handleMomentumScrollEnd } from "utlis/method";
 import { useRequest } from "ahooks";
 import BrandCard from "./BrandCard";
+import AttrCard from "./AttrCard";
+import SpecCart from "./SpecCart";
 
 interface ProductInfoProps {
   goodsId: number;
@@ -29,6 +31,8 @@ const ProductPage: React.FC<ProductInfoProps> = ({ goodsId }) => {
           <>
             <IntroCard goodDetail={data.data} />
             <BrandCard brandInfo={data.data.brand} />
+            <SpecCart goodDetail={data.data} />
+            <AttrCard attributeList={data.data.attribute} />
             <RecommendProduct
               goodId={data.data.info.id}
               isEndReached={isEndReached}

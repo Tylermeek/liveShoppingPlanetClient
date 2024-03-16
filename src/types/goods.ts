@@ -1,7 +1,7 @@
 import { BrandInfo } from "./info";
 
 export interface IGoodDetail {
-  attribute: string[];
+  attribute: IAttributeInfo[];
   brand: BrandInfo;
   comment: IGoodComment;
   groupon: string[];
@@ -12,6 +12,16 @@ export interface IGoodDetail {
   shareImage: string;
   specificationList: ISpecification[];
   userHasCollect: number;
+}
+
+export interface IAttributeInfo {
+  id: number;
+  goodsId: number;
+  attribute: string;
+  value: string;
+  addTime: string;
+  updateTime: string;
+  deleted: boolean;
 }
 
 export interface IGoodComment {
