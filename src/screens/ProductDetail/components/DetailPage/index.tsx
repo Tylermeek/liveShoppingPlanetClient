@@ -1,7 +1,8 @@
+import { Skeleton } from "@rneui/themed";
 import { useRequest } from "ahooks";
 import { getGoodsDetail } from "axios/api/goods";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useWindowDimensions } from "react-native";
 import RenderHtml, { HTMLSource } from "react-native-render-html";
 
@@ -14,22 +15,21 @@ const DetailPage: React.FC<DetailPageProps> = ({ goodsId }) => {
   const { width } = useWindowDimensions();
   const { loading } = useRequest(() => getGoodsDetail({ id: goodsId }), {
     onSuccess: (res) => {
+      console.log(res?.data.info.detail);
       setGoodDetail(res?.data.info.detail);
     },
   });
   return (
-    // <ScrollView>
-    //   {list.map((img, index) => {
-    //     return (
-    //       <Image
-    //         key={`${index}${img}`}
-    //         source={{ uri: img }}
-    //         style={{ width: "100%", height: scaleSizeH(320) }}
-    //       />
-    //     );
-    //   })}
-    // </ScrollView>
-    <RenderHtml contentWidth={width} source={(goodDetail as any) || ""} />
+    <ScrollView>
+      {loading ? (
+        <Skeleton width={300} height={300} />
+      ) : (
+        <RenderHtml
+          contentWidth={width}
+          source={{ html: (goodDetail as any) || "" }}
+        />
+      )}
+    </ScrollView>
   );
 };
 

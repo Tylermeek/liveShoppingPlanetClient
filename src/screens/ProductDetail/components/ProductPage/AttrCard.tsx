@@ -33,7 +33,6 @@ export default function AttrCard({
           }}
         >
           <Text h4>商品属性</Text>
-          <Icon name="chevron-right" size={20} />
         </RowFlexConatiner>
       </TouchableOpacity>
       <BottomSheet
@@ -48,11 +47,7 @@ export default function AttrCard({
         ></TouchableOpacity>
         {attributeList.map((attr, i) => (
           <ListItem key={i} bottomDivider>
-            <Icon
-              name="trash-can-outline"
-              type="material-community"
-              color="grey"
-            />
+            <Icon name="chevron-right" size={20} />
             <ListItem.Content>
               <ListItem.Title>{attr.attribute}</ListItem.Title>
               <ListItem.Subtitle>{attr.value}</ListItem.Subtitle>

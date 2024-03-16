@@ -1,5 +1,5 @@
 import { Avatar, Button, Icon } from "@rneui/base";
-import { Divider, Image, Text } from "@rneui/themed";
+import { Divider, Image, Skeleton, Text } from "@rneui/themed";
 import { useRequest } from "ahooks";
 import { FliterType, getGoodsDetail } from "axios/api/goods";
 import React, { useEffect, useState } from "react";
@@ -52,7 +52,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{ flex: 1, backgroundColor: "rgb(221, 221, 221)" }}>
         <View
           style={{
             flexDirection: "row",
@@ -83,124 +83,161 @@ const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
             {`带图评论(${withImgComment.length})`}
           </Button>
         </View>
-        <View
-          style={{
-            backgroundColor: "rgb(221, 221, 221)",
-            borderTopLeftRadius: scaleSizeW(15),
-            borderTopRightRadius: scaleSizeW(15),
-          }}
-        >
-          {list.map((comment) => {
-            return (
-              <View key={comment.id} style={{ padding: scaleSizeW(10) }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginBottom: scaleSizeH(5),
-                  }}
-                >
-                  <Avatar size={32} rounded source={{ uri: comment.avatar }} />
-                  <Text
-                    style={{
-                      marginLeft: scaleSizeW(5),
-                      fontSize: scaleSizeW(11),
-                    }}
-                  >
-                    {comment.nickname}
-                  </Text>
-                </View>
-                <View style={styles.contentContainer}>
-                  <Text style={{ fontSize: scaleSizeW(10) }}>
-                    {comment.content}
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    {comment.picList &&
-                      !isEmptyArr(comment.picList) &&
-                      comment.picList.map((img, index) => {
-                        return (
-                          <Image
-                            key={index}
-                            source={{
-                              uri: img,
-                            }}
-                            containerStyle={{
-                              width: scaleSizeW(100),
-                              height: scaleSizeH(100),
-                              borderRadius: scaleSizeW(5),
-                              marginTop: scaleSizeW(5),
-                              marginRight: scaleSizeW(5),
-                            }}
+        {loading ? (
+          <>
+            <View
+              style={{
+                margin: scaleSizeW(10),
+                width: "auto",
+                backgroundColor: "rgb(221, 221, 221)",
+              }}
+            >
+              <Skeleton height={30} width={30} style={{margin:scaleSizeW(5)}} circle/>
+              <Skeleton height={30} width={200} style={{margin:scaleSizeW(5)}}/>
+              <Skeleton height={30} width={320} style={{margin:scaleSizeW(5)}}/>
+            </View>
+            <View
+              style={{
+                margin: scaleSizeW(10),
+                width: "auto",
+                backgroundColor: "rgb(221, 221, 221)",
+              }}
+            >
+              <Skeleton height={30} width={30} style={{margin:scaleSizeW(5)}} circle/>
+              <Skeleton height={30} width={200} style={{margin:scaleSizeW(5)}}/>
+              <Skeleton height={30} width={320} style={{margin:scaleSizeW(5)}}/>
+            </View>
+          </>
+        ) : (
+          <>
+            <View
+              style={{
+                backgroundColor: "rgb(221, 221, 221)",
+                borderTopLeftRadius: scaleSizeW(15),
+                borderTopRightRadius: scaleSizeW(15),
+              }}
+            >
+              {list.map((comment) => {
+                return (
+                  <View key={comment.id} style={{ padding: scaleSizeW(10) }}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        marginBottom: scaleSizeH(5),
+                      }}
+                    >
+                      <Avatar
+                        size={32}
+                        rounded
+                        source={{
+                          uri:
+                            comment.avatar ||
+                            "https://randomuser.me/api/portraits/men/28.jpg",
+                        }}
+                      />
+                      <Text
+                        style={{
+                          marginLeft: scaleSizeW(5),
+                          fontSize: scaleSizeW(11),
+                        }}
+                      >
+                        {comment.nickname}
+                      </Text>
+                    </View>
+                    <View style={styles.contentContainer}>
+                      <Text style={{ fontSize: scaleSizeW(10) }}>
+                        {comment.content}
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                        }}
+                      >
+                        {comment.picList &&
+                          !isEmptyArr(comment.picList) &&
+                          comment.picList.map((img, index) => {
+                            return (
+                              <Image
+                                key={index}
+                                source={{
+                                  uri: img,
+                                }}
+                                containerStyle={{
+                                  width: scaleSizeW(100),
+                                  height: scaleSizeH(100),
+                                  borderRadius: scaleSizeW(5),
+                                  marginTop: scaleSizeW(5),
+                                  marginRight: scaleSizeW(5),
+                                }}
+                              />
+                            );
+                          })}
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginTop: scaleSizeW(5),
+                        }}
+                      >
+                        <Button
+                          titleStyle={{
+                            fontSize: scaleSizeW(8),
+                            color: "black",
+                            fontWeight: "800",
+                          }}
+                          color={"transparent"}
+                        >
+                          <Icon
+                            name="share"
+                            size={15}
+                            iconStyle={{ marginRight: scaleSizeW(5) }}
                           />
-                        );
-                      })}
+                          分享
+                        </Button>
+                        <Button
+                          titleStyle={{
+                            fontSize: scaleSizeW(8),
+                            color: "black",
+                            fontWeight: "800",
+                          }}
+                          color={"transparent"}
+                        >
+                          <Icon
+                            name="textsms"
+                            size={15}
+                            iconStyle={{ marginRight: scaleSizeW(5) }}
+                          />
+                          评论
+                        </Button>
+                        <Button
+                          titleStyle={{
+                            fontSize: scaleSizeW(8),
+                            color: "black",
+                            fontWeight: "800",
+                          }}
+                          color={"transparent"}
+                        >
+                          <Icon
+                            name="recommend"
+                            size={15}
+                            iconStyle={{ marginRight: scaleSizeW(5) }}
+                          />
+                          点赞
+                        </Button>
+                      </View>
+                    </View>
                   </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginTop: scaleSizeW(5),
-                    }}
-                  >
-                    <Button
-                      titleStyle={{
-                        fontSize: scaleSizeW(8),
-                        color: "black",
-                        fontWeight: "800",
-                      }}
-                      color={"transparent"}
-                    >
-                      <Icon
-                        name="share"
-                        size={15}
-                        iconStyle={{ marginRight: scaleSizeW(5) }}
-                      />
-                      分享
-                    </Button>
-                    <Button
-                      titleStyle={{
-                        fontSize: scaleSizeW(8),
-                        color: "black",
-                        fontWeight: "800",
-                      }}
-                      color={"transparent"}
-                    >
-                      <Icon
-                        name="textsms"
-                        size={15}
-                        iconStyle={{ marginRight: scaleSizeW(5) }}
-                      />
-                      评论
-                    </Button>
-                    <Button
-                      titleStyle={{
-                        fontSize: scaleSizeW(8),
-                        color: "black",
-                        fontWeight: "800",
-                      }}
-                      color={"transparent"}
-                    >
-                      <Icon
-                        name="recommend"
-                        size={15}
-                        iconStyle={{ marginRight: scaleSizeW(5) }}
-                      />
-                      点赞
-                    </Button>
-                  </View>
-                </View>
-              </View>
-            );
-          })}
-        </View>
+                );
+              })}
+            </View>
+          </>
+        )}
       </ScrollView>
     </>
   );
