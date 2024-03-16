@@ -1,4 +1,16 @@
 import { BrandInfo } from "./info";
+import { IFilterCategory, ISearchGood, ISearchParams } from "./search";
+
+export interface IGetGoodsParams extends ISearchParams {}
+
+export interface IGetGoodsRes {
+  list: ISearchGood[];
+  total: number;
+  page: number;
+  limit: number;
+  pages: number;
+  filterCategoryList: IFilterCategory[];
+}
 
 export interface IGoodDetail {
   attribute: IAttributeInfo[];

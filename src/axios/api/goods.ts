@@ -1,9 +1,14 @@
 import { request } from "axios/config";
-import { IGoodDetail, IRelatedGoodsList } from "types/goods";
+import {
+  IGetGoodsParams,
+  IGetGoodsRes,
+  IGoodDetail,
+  IRelatedGoodsList,
+} from "types/goods";
 import { CommentInfo, ProductInfo } from "types/info";
 
-export const getGoodsList = () => {
-  return request.get("/goods/list", {});
+export const getGoodsList = (params: IGetGoodsParams) => {
+  return request.get<IGetGoodsRes>("/goods/list", { params });
 };
 
 export const getGoodsCategory = () => request.get("/goods/category");
