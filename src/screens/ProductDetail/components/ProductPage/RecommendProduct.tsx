@@ -1,6 +1,7 @@
 import { Button, Divider, Text } from "@rneui/themed";
 import { getRelateGoods } from "axios/api/goods";
 import WaterFall from "components/WaterFall";
+import { chunk } from "lodash-es";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ProductCard from "screens/SearchResultList/components/ProductList/ProductCard";
@@ -17,7 +18,7 @@ const RecommendProduct: React.FC<RecommendProductProps> = ({
   goodId,
   isEndReached,
 }) => {
-  const [list, setList] = useState<IRelatedGood[]>([]);
+  const [coloumLists, setColoumLists] = useState<IRelatedGood[][]>([[], []]);
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const RecommendProduct: React.FC<RecommendProductProps> = ({
   const getList = async () => {
     setLoading(true);
     const res = await getRelateGoods(goodId);
-    setList(res.data.list);
+    setColoumLists(chunk(res.data.list, Math.floor(res.data.list.length / 2)));
     setLoading(false);
   };
 
@@ -34,7 +35,14 @@ const RecommendProduct: React.FC<RecommendProductProps> = ({
     setLoadingMore(true);
     setPageNo(pageNo + 1);
     const res = await getRelateGoods(goodId);
-    setList(list.concat(res.data.list));
+    const tempLists = chunk(
+      res.data.list,
+      Math.floor(res.data.list.length / 2)
+    );
+    setColoumLists((preList) => [
+      [...preList[0], ...tempLists[0]],
+      [...preList[1], ...tempLists[1]],
+    ]);
     setLoadingMore(false);
   };
 
@@ -54,10 +62,10 @@ const RecommendProduct: React.FC<RecommendProductProps> = ({
         <Button type="clear" loading size="sm" />
       ) : (
         <WaterFall
-          list={list}
+          coloumLists={coloumLists}
           isEndReached={isEndReached}
           loadingMore={loadingMore}
-          updateListCb={setList}
+          updateListCb={setColoumLists}
           getMoreList={getMoreList}
           ContentCard={ProductCard}
         />

@@ -27,7 +27,6 @@ const WaterFall: React.FC<WaterFallProps> = (
         loadingMore,
         coloumLists,
         ContentCard,
-        columLen = 2,
         getMoreList
     }
 ) => {
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         margin: scaleSizeW(10),
-        // marginLeft:0,
     },
     endLine: {
         height: scaleSizeH(30),
