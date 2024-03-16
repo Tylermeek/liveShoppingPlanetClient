@@ -1,9 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button, color } from "@rneui/base";
 import { Badge, Icon, Tab } from "@rneui/themed";
 import GoBack from "components/GoBack";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { useAppSelector } from "store/hooks";
+import { Views } from "types/navigation";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 export interface BannerProps {
@@ -19,9 +21,9 @@ const tabConfig = [
 
 const TopBanner: React.FC<BannerProps> = ({ activeTab, setActiveTab }) => {
   const { cartTotal } = useAppSelector((state) => state.cartInfo);
+  const { navigate } = useNavigation();
   const handlePressCart = () => {
-    // todo 跳转购物车功能
-    console.log("cart");
+    navigate(Views.Cart);
   };
   return (
     <>
