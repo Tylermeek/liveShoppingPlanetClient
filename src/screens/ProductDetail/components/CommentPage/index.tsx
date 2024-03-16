@@ -9,17 +9,17 @@ import { isEmptyArr } from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 interface CommentPageProps {
-  productId: number;
+  goodsId: number;
 }
 
-const CommentPage: React.FC<CommentPageProps> = ({ productId }) => {
+const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
   // todo 评论分享、留言、点赞功能
   const [comment, setComment] = useState<IGoodComment>();
   const [list, setList] = useState<commentDetail[]>([]);
   const [allComment, setAllComment] = useState<commentDetail[]>([]);
   const [withImgComment, setWithImgComment] = useState<commentDetail[]>([]);
   const [fliterType, setFliterType] = useState<FliterType>(FliterType.Default);
-  const { data } = useRequest(() => getGoodsDetail({ id: productId }), {
+  const { loading } = useRequest(() => getGoodsDetail({ id: goodsId }), {
     onSuccess: (res) => {
       setComment(res?.data.comment);
       setList(res.data.comment.data);

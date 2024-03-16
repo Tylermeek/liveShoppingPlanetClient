@@ -17,17 +17,13 @@ import { isEmptyArr } from "utlis/method";
 const SearchDetail: React.FC = () => {
   const [searchRef, setSearchRef] = useState<any>(null);
   const [keyword, setKeyword] = useState("");
-  const [suggestionList, setSuggestionList] = useState<SuggestionsList>([]);
-  const { run, loading } = useRequest(
+  const { data } = useRequest(
     () => {
       return getSearchSuggesttion(keyword);
     },
     {
       debounceMaxWait: 500,
       refreshDeps: [keyword],
-      onSuccess: (res) => {
-        setSuggestionList(res.data);
-      },
     }
   );
 
@@ -53,20 +49,13 @@ const SearchDetail: React.FC = () => {
           },
         }}
       />
-
-      {/* {isEmptyArr(suggestionList) ? (
-        <SuggestionList suggestionList={suggestionList}></SuggestionList>
-      ) : (
+      <SuggestionList suggestionList={data?.data}></SuggestionList>
+      {!keyword && (
         <View style={styles.searchContainer}>
           <SearchHistory></SearchHistory>
           <SearchRecommend></SearchRecommend>
         </View>
-      )} */}
-      <SuggestionList suggestionList={suggestionList}></SuggestionList>
-      <View style={styles.searchContainer}>
-        <SearchHistory></SearchHistory>
-        <SearchRecommend></SearchRecommend>
-      </View>
+      )}
     </GestureHandlerRootView>
   );
 };

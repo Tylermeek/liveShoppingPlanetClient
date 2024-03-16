@@ -2,7 +2,10 @@ import { Image, ListItem, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
-import { changeProductBuyCount, checkProsThunk } from "slice/cart/cartSlice";
+import {
+  checkProsThunk,
+  updateProNumThunk,
+} from "slice/cart/cartSlice";
 import NumInput from "components/NumInput";
 import { CartProductInfo } from "types/cart";
 import { useAppDispatch } from "store/hooks";
@@ -24,7 +27,14 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
   };
 
   const handleEditCount = (number: number) => {
-    dispatch(changeProductBuyCount({ number, product }));
+    dispatch(
+      updateProNumThunk({
+        number,
+        productId: product.productId,
+        id: product.id,
+        goodsId: product.goodsId,
+      })
+    );
   };
 
   return (
@@ -32,6 +42,7 @@ const ProductCart: React.FC<ProductCartProps> = ({ product }) => {
       <ListItem
         containerStyle={{
           padding: scaleSizeW(10),
+          marginBottom:scaleSizeW(10),
           borderRadius: scaleSizeW(10),
         }}
       >

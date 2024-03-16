@@ -1,40 +1,19 @@
-import { Image, Skeleton } from "@rneui/themed";
-import {
-  CoverList,
-  getGoodsDetail,
-  getProductCoverList,
-  getProductInfo,
-} from "axios/api/goods";
-import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Carousel from "react-native-reanimated-carousel";
-import { ProductInfo } from "types/info";
-import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
+import { getGoodsDetail } from "axios/api/goods";
+import React, { useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 import CoverSwipper from "./CoverSwipper";
 import IntroCard from "./IntroCard";
-import ShopCard from "./ShopCard";
 import RecommendProduct from "./RecommendProduct";
 import { handleMomentumScrollEnd } from "utlis/method";
 import { useRequest } from "ahooks";
-import { IGoodDetail } from "types/goods";
+import BrandCard from "./BrandCard";
 
 interface ProductInfoProps {
-  productId: number;
+  goodsId: number;
 }
-const ProductPage: React.FC<ProductInfoProps> = ({ productId }) => {
-  const [goodDetail, setGoodDetail] = useState<IGoodDetail>();
+const ProductPage: React.FC<ProductInfoProps> = ({ goodsId }) => {
   const [isEndReached, setIsEndReached] = useState<boolean>(false);
-  const { data } = useRequest(() => getGoodsDetail({ id: productId }), {
-    onSuccess: (res) => {
-      setGoodDetail(res?.data);
-    },
-  });
+  const { data } = useRequest(() => getGoodsDetail({ id: goodsId }));
 
   return (
     <>
@@ -45,13 +24,13 @@ const ProductPage: React.FC<ProductInfoProps> = ({ productId }) => {
         }
         scrollEventThrottle={50}
       >
-        <CoverSwipper goodsGallery={goodDetail?.info.gallery} />
-        {goodDetail && (
+        <CoverSwipper goodsGallery={data?.data?.info.gallery} />
+        {data?.data && (
           <>
-            <IntroCard goodDetail={goodDetail} />
-            {/* <ShopCard shopInfo={info} /> */}
+            <IntroCard goodDetail={data.data} />
+            <BrandCard brandInfo={data.data.brand} />
             <RecommendProduct
-              goodId={goodDetail.info.id}
+              goodId={data.data.info.id}
               isEndReached={isEndReached}
             ></RecommendProduct>
           </>

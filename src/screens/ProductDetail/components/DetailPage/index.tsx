@@ -6,13 +6,13 @@ import { useWindowDimensions } from "react-native";
 import RenderHtml, { HTMLSource } from "react-native-render-html";
 
 interface DetailPageProps {
-  productId: number;
+  goodsId: number;
 }
 
-const DetailPage: React.FC<DetailPageProps> = ({ productId }) => {
+const DetailPage: React.FC<DetailPageProps> = ({ goodsId }) => {
   const [goodDetail, setGoodDetail] = useState<string>();
   const { width } = useWindowDimensions();
-  const { data } = useRequest(() => getGoodsDetail({ id: productId }), {
+  const { loading } = useRequest(() => getGoodsDetail({ id: goodsId }), {
     onSuccess: (res) => {
       setGoodDetail(res?.data.info.detail);
     },

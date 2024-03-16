@@ -9,13 +9,13 @@ import { useAuth } from "hook/useAuth";
 import { useNavigation } from "@react-navigation/native";
 
 const Cart: React.FC = () => {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const { canVisit } = useAuth(Views.Cart);
 
   useEffect(() => {
     console.log(canVisit);
     // dispatch(getCartlistThunk())
-    if (!canVisit) navigation.navigate(Views.LogIn);
+    if (!canVisit) navigate(Views.LogIn);
   }, [canVisit]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

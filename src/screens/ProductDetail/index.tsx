@@ -14,21 +14,21 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 const ProductDetail: React.FC = () => {
     const route = useRoute<RootRouteType<Views.ProductDetail>>()
     const [activeTab, setActiveTab] = useState<number>(0)
-    const productId = route.params.productId
+    const goodsId = route.params.goodsId
     return <GestureHandlerRootView style={{ flex: 1 }}>
         <Banner activeTab={activeTab} setActiveTab={setActiveTab} />
         <TabView containerStyle={{ flex: 1 }} value={activeTab} onChange={setActiveTab}>
             <TabView.Item style={{ backgroundColor: "transparent" }}>
-                <ProductPage productId={productId} />
+                <ProductPage goodsId={goodsId} />
             </TabView.Item>
             <TabView.Item style={{ flex: 1 }}>
-                <DetailPage productId={productId}></DetailPage>
+                <DetailPage goodsId={goodsId}></DetailPage>
             </TabView.Item>
             <TabView.Item style={{ flex: 1 }}>
-                <CommentPage productId={productId}></CommentPage>
+                <CommentPage goodsId={goodsId}></CommentPage>
             </TabView.Item>
         </TabView>
-        <BottomBanner></BottomBanner>
+        <BottomBanner goodsId={goodsId}></BottomBanner>
     </GestureHandlerRootView>
 }
 

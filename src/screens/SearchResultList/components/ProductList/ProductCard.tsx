@@ -22,39 +22,38 @@ const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
   const handlePressProduct = () => {
     console.log(contentInfo.name, contentInfo.id);
     if (route.name === Views.ProductDetail) {
-      // 如果是商品详情页点击其他商品，那么久必须要使用push，因为是在同一个screen下
-      navigation.push(Views.ProductDetail, { productId: contentInfo.id });
+      // 如果是商品详情页点击其他商品，那么必须要使用push，因为是在同一个screen下
+      navigation.push(Views.ProductDetail, { goodsId: contentInfo.id });
     } else
-      navigation.navigate(Views.ProductDetail, { productId: contentInfo.id });
+      navigation.navigate(Views.ProductDetail, { goodsId: contentInfo.id });
   };
   //   const handlePressShop = () => {
   //     console.log(contentInfo.shopInfo.name);
   //   };
 
   return (
-    <>
-      <TouchableOpacity
-        ref={(ref) => bindRef && bindRef(ref)}
-        style={[styles.container, { height: scaleSizeH(250) }]}
-        onPress={handlePressProduct}
-      >
-        <View style={{ flex: 1 }}>
-          <Image
-            source={{ uri: contentInfo.picUrl }}
-            style={styles.cover}
-          ></Image>
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.titleContainer}>
-            {/* {contentInfo.activity && (
+    <TouchableOpacity
+      ref={(ref) => bindRef && bindRef(ref)}
+      style={[styles.container, { height: scaleSizeH(250) }]}
+      onPress={handlePressProduct}
+    >
+      <View style={{ flex: 1 }}>
+        <Image
+          source={{ uri: contentInfo.picUrl }}
+          style={styles.cover}
+        ></Image>
+      </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.titleContainer}>
+          {/* {contentInfo.activity && (
               <Text style={styles.activity}>{contentInfo.activity}</Text>
             )} */}
-            <Text style={styles.title} numberOfLines={2} ellipsizeMode="clip">
-              {contentInfo.name}
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", marginBottom: scaleSizeW(2.5) }}>
-            {/* {!isEmptyArr(contentInfo.features || []) &&
+          <Text style={styles.title} numberOfLines={2} ellipsizeMode="clip">
+            {contentInfo.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", marginBottom: scaleSizeW(2.5) }}>
+          {/* {!isEmptyArr(contentInfo.features || []) &&
               contentInfo.features?.map((spec, index) => {
                 return (
                   <Text key={spec} style={styles.features}>
@@ -62,20 +61,20 @@ const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
                   </Text>
                 );
               })} */}
-            <Text style={styles.features}>{contentInfo.brief}</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              marginBottom: scaleSizeW(2.5),
-            }}
-          >
-            <Text style={{ fontSize: scaleSizeW(11), color: "red" }}>
-              ￥{contentInfo.counterPrice}
-            </Text>
-            {/* <Text
+          <Text style={styles.features}>{contentInfo.brief}</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            marginBottom: scaleSizeW(2.5),
+          }}
+        >
+          <Text style={{ fontSize: scaleSizeW(11), color: "red" }}>
+            ￥{contentInfo.counterPrice}
+          </Text>
+          {/* <Text
               style={{
                 fontSize: scaleSizeW(7),
                 color: "grey",
@@ -84,8 +83,8 @@ const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
             >
               {contentInfo.sold}+人付款
             </Text> */}
-          </View>
-          {/* <View style={styles.shopInfo}>
+        </View>
+        {/* <View style={styles.shopInfo}>
             <TouchableOpacity
               style={styles.shopButton}
               onPress={handlePressShop}
@@ -94,9 +93,8 @@ const ProductCard: React.FC<CardProps> = ({ contentInfo, bindRef = null }) => {
               <Icon name="chevron-right" size={scaleSizeW(8)}></Icon>
             </TouchableOpacity>
           </View> */}
-        </View>
-      </TouchableOpacity>
-    </>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     marginBottom: scaleSizeW(10),
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     borderRadius: scaleSizeW(5),
     display: "flex",
   },

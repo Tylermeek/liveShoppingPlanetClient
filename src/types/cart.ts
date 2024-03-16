@@ -99,7 +99,7 @@ export interface CartTotal {
   goodsCount: number;
 }
 
-export interface IAddCartData {
+export interface IAddProData {
   goodsId: number;
   number: number;
   productId: number;
@@ -115,4 +115,8 @@ export interface IUpdateProData {
 export interface ICheckProsData {
   productIds: number[];
   isChecked: number;
+}
+
+export interface IDelProsData {
+  productIds: number[];
 }

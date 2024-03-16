@@ -17,7 +17,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ contentInfo, bindRef = null }
     const handlePress = (contentInfo: LiveInfo | ProductInfo) => {
         console.log(contentInfo.title, contentInfo.type);
         if (contentInfo.type === InfoType.ProductInfo) {
-            navigation.navigate(Views.ProductDetail, { productId: contentInfo.id })
+            navigation.navigate(Views.ProductDetail, { goodsId: contentInfo.id })
         }
 
     }

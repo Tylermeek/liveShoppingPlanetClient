@@ -9,7 +9,7 @@ export const getGoodsList = () => {
 export const getGoodsCategory = () => request.get("/goods/category");
 
 export const getGoodsDetail = ({ id }: { id: number }) =>
-  request.get<IGoodDetail>("/goods/detail");
+  request.get<IGoodDetail>("/goods/detail", { params: { id } });
 
 export const getProductInfo = (productId: number) => {
   return request.get<ProductInfo>("/product/info", { params: { productId } });

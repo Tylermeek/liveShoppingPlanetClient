@@ -3,10 +3,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
   changeCartStatus,
-  changeCheckAllStatus,
   checkProsThunk,
-  delAllProducts,
-  delProducts,
+  delProsThunk,
 } from "slice/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { CartProductInfo, CartState, CartStatus } from "types/cart";
@@ -49,13 +47,19 @@ const BottomBanner: React.FC = () => {
   };
 
   const handleDelAll = () => {
-    // console.warn("del all")
-    dispatch(delAllProducts());
+    dispatch(
+      delProsThunk({ productIds: cartList.map((pro) => pro.productId) })
+    );
   };
 
   const handleDel = () => {
-    // console.warn("del")
-    dispatch(delProducts());
+    dispatch(
+      delProsThunk({
+        productIds: cartList
+          .filter((pro) => pro.checked)
+          .map((pro) => pro.productId),
+      })
+    );
   };
 
   return (

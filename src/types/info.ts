@@ -44,7 +44,7 @@ export interface LiveInfo {
   /**
    * 店铺信息
    */
-  shopInfo: ShopInfo;
+  shopInfo: any;
   /**
    * 直播间标题
    */
@@ -125,7 +125,7 @@ export interface ProductInfo {
   /**
    * 商品所属店铺信息
    */
-  shopInfo: ShopInfo;
+  shopInfo: any;
   /**
    * 商品销量
    */
@@ -171,32 +171,16 @@ export interface Rate {
 /**
  * ShopInfo，店铺信息
  */
-export interface ShopInfo {
-  /**
-   * 店铺头像
-   */
-  avatar: string;
-  /**
-   * 店铺关注人数
-   */
-  follower: number;
-  /**
-   * 店铺ID
-   */
-  id: string;
-  /**
-   * 店铺名
-   */
+export interface BrandInfo {
+  id: number;
   name: string;
-  /**
-   * 店铺商品数量
-   */
-  productNum: number;
-  /**
-   * 店铺评分
-   */
-  rate: Rate;
-  [property: string]: any;
+  desc: string;
+  picUrl: string;
+  sortOrder: number;
+  floorPrice: number;
+  addTime: string;
+  updateTime: string;
+  deleted: boolean;
 }
 
 /**

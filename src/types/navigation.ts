@@ -30,7 +30,7 @@ interface SearchResultListProps {
 }
 
 interface ProductDetailProps {
-  productId: number;
+  goodsId: number;
 }
 
 // 处理参数路由映射表

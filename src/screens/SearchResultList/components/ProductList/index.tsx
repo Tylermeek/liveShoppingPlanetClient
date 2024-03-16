@@ -123,12 +123,14 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     borderTopLeftRadius: scaleSizeW(10),
     borderTopRightRadius: scaleSizeW(10),
   },
   tabConatiner: {
-    height: scaleSizeH(25),
+    height: scaleSizeW(30),
+    backgroundColor:"white",
+    alignItems:"center",
   },
   TabItemConatiner: {
     height: scaleSizeH(25),

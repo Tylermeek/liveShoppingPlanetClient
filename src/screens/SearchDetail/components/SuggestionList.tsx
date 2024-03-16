@@ -6,10 +6,10 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Views } from "types/navigation";
 import { SuggestionsList } from "types/search";
 import { isEmptyArr } from "utlis/method";
-import { scaleSizeH } from "utlis/scaleSize";
+import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 export type SuggestionListProps = {
-  suggestionList: SuggestionsList;
+  suggestionList?: SuggestionsList;
 };
 
 const SuggestionList: React.FC<SuggestionListProps> = ({
@@ -18,14 +18,13 @@ const SuggestionList: React.FC<SuggestionListProps> = ({
   const navigation = useNavigation();
 
   const handlePress = (content: string) => {
-    // getSearchResultList
     navigation.navigate(Views.SearchResultList, {
       content,
     });
   };
   return (
     !isEmptyArr(suggestionList) && (
-      <View style={{ height: "30px", width: "100%" }}>
+      <View style={{ height: scaleSizeW(30), width: "100%" }}>
         {suggestionList.map((suggestion) => {
           return (
             <ListItem bottomDivider key={uniqueId(suggestion)}>

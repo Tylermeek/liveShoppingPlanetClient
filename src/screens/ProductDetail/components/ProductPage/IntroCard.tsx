@@ -1,4 +1,5 @@
 import { Divider, Icon, Text } from "@rneui/themed";
+import RowFlexConatiner from "components/RowFlexContainer";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IGoodDetail } from "types/goods";
@@ -20,15 +21,28 @@ const IntroCard: React.FC<IntroCardProps> = ({ goodDetail }) => {
         >
           {goodDetail.info.name}
         </Text>
-        <Text
-          style={{
-            color: "#E36235",
-            fontSize: scaleSizeW(18),
-            marginTop: scaleSizeW(5),
-          }}
-        >
-          ￥{goodDetail?.info.counterPrice}
-        </Text>
+        <RowFlexConatiner containerStyle={{ justifyContent: "flex-start" }}>
+          <Text
+            style={{
+              color: "#E36235",
+              fontSize: scaleSizeW(18),
+              marginTop: scaleSizeW(5),
+            }}
+          >
+            ￥{goodDetail?.info.retailPrice}
+          </Text>
+          <Text
+            style={{
+              color: "grey",
+              fontSize: scaleSizeW(12),
+              marginTop: scaleSizeW(5),
+              marginLeft: scaleSizeW(5),
+              textDecorationLine: "line-through",
+            }}
+          >
+            ￥{goodDetail?.info.counterPrice}
+          </Text>
+        </RowFlexConatiner>
         {/* <View style={styles.subTitleContainer}>
           <Text style={styles.subTitle}>月销:{goodDetail.sold}</Text>
         </View> */}

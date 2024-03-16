@@ -1,6 +1,8 @@
+import { BrandInfo } from "./info";
+
 export interface IGoodDetail {
   attribute: string[];
-  brand: { [key: string]: any };
+  brand: BrandInfo;
   comment: IGoodComment;
   groupon: string[];
   info: IGoodInfo;
