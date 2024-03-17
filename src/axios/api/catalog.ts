@@ -16,7 +16,7 @@ export const getFirCategoryDetail = (id: number) =>
   request.get<IFirCategoryDetail>("/catalog/index", { params: { id } });
 
 export const getAllCategoryDetail = () =>
-  request.get<IAllCategoryDetail>("/catalog/queryAll");
+  request.get<IAllCategoryDetail>("/catalog/all");
 
 export const getCurrentCategoryDetail = (id: number) =>
   request.get<ICurrentCategoryDetail>("/catelog/current", { params: { id } });

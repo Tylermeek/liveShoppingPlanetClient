@@ -20,7 +20,7 @@ export interface IFirCategoryDetail {
 }
 
 export interface ICategoryById {
-  [id: string]: ICategory;
+  [id: string]: ICategory[];
 }
 
 export interface IAllCategoryDetail {

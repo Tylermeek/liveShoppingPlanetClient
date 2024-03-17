@@ -7,7 +7,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { getEnumValue } from "utlis/type";
 import { TabIconName, tabConfig } from "./TabConfig";
-import { scaleSizeH } from "utlis/scaleSize";
+import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { canVisit, isLogin } from "hook/useAuth";
 import { Views } from "types/navigation";
 
@@ -18,7 +18,7 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       style={{
         flexDirection: "row",
         backgroundColor: "white",
-        height: scaleSizeH(40),
+        height: scaleSizeW(40),
       }}
     >
       {state.routes.map((route, index) => {

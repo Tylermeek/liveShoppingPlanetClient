@@ -1,5 +1,6 @@
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import Cart from "screens/Cart";
+import Catalog from "screens/Catalog";
 import Home from "screens/Home";
 import Live from "screens/Live";
 import LogIn from "screens/LogIn";
@@ -10,7 +11,7 @@ import Playground from "screens/Playground";
 export const tabConfig = [
   {
     name: "Playground",
-    component: LogIn,
+    component: Playground,
     options: {
       title: "Playground",
     },
@@ -20,6 +21,13 @@ export const tabConfig = [
     component: Home,
     options: {
       title: "首页",
+    },
+  },
+  {
+    name: "Catalog",
+    component: Catalog,
+    options: {
+      title: "分类",
     },
   },
   {
@@ -51,5 +59,6 @@ export enum TabIconName {
   Live = "cast",
   Cart = "shopping-cart",
   Mine = "home",
-  LogIn = "home"
+  LogIn = "home",
+  Catalog = "home",
 }
