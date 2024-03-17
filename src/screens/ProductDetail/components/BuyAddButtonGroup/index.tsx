@@ -11,12 +11,12 @@ export default function BuyAddButtonGroup({
   goodsId,
   num = 1,
   containerStyle = { width: scaleSizeW(180) },
-  type = "default",
+  onAddSuccess,
 }: {
   num?: number;
-  type?: string;
   goodsId: number;
   containerStyle: {};
+  onAddSuccess: Function;
 }) {
   const dispatch = useAppDispatch();
   const [productId, setProductId] = useState<number>();
@@ -28,7 +28,9 @@ export default function BuyAddButtonGroup({
   const handleAddCart = () => {
     if (productId) {
       console.log("加入购物车", goodsId, productId);
-      dispatch(addProThunk({ productId, goodsId, number: num }));
+      dispatch(addProThunk({ productId, goodsId, number: num })).then(() =>
+        onAddSuccess()
+      );
     }
   };
 

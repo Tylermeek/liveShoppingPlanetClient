@@ -174,14 +174,14 @@ const LogIn: React.FC<LogInProps> = () => {
               onPress={handleSubmit(onLogin)}
               containerStyle={{ marginTop: scaleSizeW(60) }}
             />
-            <Button
+            {/* <Button
               title="登出"
               size="md"
               loading={loading}
               radius={"lg"}
               onPress={handleLogOut}
               containerStyle={{ marginTop: scaleSizeW(60) }}
-            />
+            /> */}
           </View>
           <View
             style={{

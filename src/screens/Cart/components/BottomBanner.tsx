@@ -50,7 +50,9 @@ const BottomBanner: React.FC = () => {
   const handleDelAll = () => {
     dispatch(
       delProsThunk({ productIds: cartList.map((pro) => pro.productId) })
-    )
+    ).then(() => {
+      dispatch(getCartlistThunk());
+    });
   };
 
   const handleDel = () => {
@@ -60,9 +62,9 @@ const BottomBanner: React.FC = () => {
           .filter((pro) => pro.checked)
           .map((pro) => pro.productId),
       })
-    ).then(()=>{
+    ).then(() => {
       dispatch(getCartlistThunk());
-    })
+    });
   };
 
   return (

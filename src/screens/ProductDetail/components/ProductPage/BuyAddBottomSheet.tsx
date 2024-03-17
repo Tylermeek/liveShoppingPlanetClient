@@ -11,7 +11,6 @@ export default function BuyBottomSheet({
   isVisible,
   onIsVisible,
   goodDetail,
-  type = "default",
 }: {
   isVisible: boolean;
   onIsVisible: (isVisible: boolean) => void;
@@ -102,7 +101,7 @@ export default function BuyBottomSheet({
           num={num}
           goodsId={selectGoodsId || goodDetail.info.id}
           containerStyle={styles.buttonGroup}
-          type={type}
+          onAddSuccess={()=> onIsVisible(false)}
         />
       </View>
     </BottomSheet>

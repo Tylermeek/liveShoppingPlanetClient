@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { scaleSizeW } from "utlis/scaleSize";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { getCartlistThunk } from "slice/cart/cartSlice";
 import { Button } from "@rneui/base";
-import RecommendList from "components/RecommendList";
 import { handleMomentumScrollEnd } from "utlis/method";
 import { CartStatus } from "types/cart";
 import ProductCart from "./ProductCart";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CartList: React.FC = () => {
   const { cartList, cartTotal, cartStatus } = useAppSelector(
@@ -15,9 +15,11 @@ const CartList: React.FC = () => {
   );
   const dispatch = useAppDispatch();
   const [isEndReached, setIsEndReached] = useState<boolean>(false);
-  useEffect(() => {
-    dispatch(getCartlistThunk());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getCartlistThunk());
+    }, [])
+  );
   return (
     <View style={{ flex: 1 }}>
       <ScrollView

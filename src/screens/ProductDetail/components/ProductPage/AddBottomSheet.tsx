@@ -99,7 +99,7 @@ export default function BuyBottomSheet({
             setNum={setNum}
           ></NumInput>
         </RowFlexConatiner>
-        <AddButton num={num} goodsId={selectGoodsId || goodDetail.info.id} />
+        <AddButton num={num} goodsId={selectGoodsId || goodDetail.info.id} onAddSuccess={()=>onIsVisible(false)} />
       </View>
     </BottomSheet>
   );

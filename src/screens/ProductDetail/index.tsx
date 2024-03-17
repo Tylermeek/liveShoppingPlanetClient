@@ -10,6 +10,7 @@ import ProductPage from "./components/ProductPage";
 import DetailPage from "./components/DetailPage";
 import CommentPage from "./components/CommentPage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Toast from "react-native-toast-message";
 
 const ProductDetail: React.FC = () => {
     const route = useRoute<RootRouteType<Views.ProductDetail>>()

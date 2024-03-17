@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   buttonWrap: { flex: 1, justifyContent: "center" },
   buttonContaniner: {
-    width: scaleSizeW(180),
+    width: scaleSizeW(200),
     flexDirection: "row",
     marginRight: scaleSizeW(10),
   },

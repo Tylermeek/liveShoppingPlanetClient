@@ -6,13 +6,16 @@ import { useAppDispatch } from "store/hooks";
 import { useRequest } from "ahooks";
 import { getGoodsDetail } from "axios/api/goods";
 import { addProThunk } from "slice/cart/cartSlice";
+import Toast from "react-native-toast-message";
 
 export default function AddButton({
   goodsId,
   num,
+  onAddSuccess,
 }: {
   goodsId: number;
   num: number;
+  onAddSuccess: Function;
 }) {
   const dispatch = useAppDispatch();
   const [productId, setProductId] = useState<number>();
@@ -24,7 +27,9 @@ export default function AddButton({
   const handleAddCart = () => {
     if (productId) {
       console.log("加入购物车", goodsId, productId);
-      dispatch(addProThunk({ productId, goodsId, number: num }));
+      dispatch(addProThunk({ productId, goodsId, number: num })).then(() => {
+        onAddSuccess();
+      });
     }
   };
   return (
