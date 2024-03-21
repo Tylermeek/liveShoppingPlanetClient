@@ -1,4 +1,4 @@
-import { Avatar, Button, Icon, Image, Text } from "@rneui/themed";
+import { Avatar, Button, Chip, Icon, Image, Text } from "@rneui/themed";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { IOrder } from "types/order";
@@ -22,7 +22,7 @@ export default function OrderItem({ order }: { order: IOrder }) {
         <View style={[styles.flexRowBox, { justifyContent: "space-between" }]}>
           <View style={[styles.flexRowBox]}>
             <Text style={{ marginLeft: scaleSizeW(5), fontWeight: "bold" }}>
-              订单sn {order.orderSn}
+              订单 {order.id}
             </Text>
             <Icon
               style={{ marginLeft: scaleSizeW(5) }}
@@ -37,28 +37,35 @@ export default function OrderItem({ order }: { order: IOrder }) {
           <>
             <View
               key={good.id}
-              style={{ height: scaleSizeW(70), width: scaleSizeW(70) }}
+              style={[styles.flexRowBox, { justifyContent: "space-between" }]}
             >
-              <Image
-                source={{ uri: good.picUrl }}
-                style={{ height: "100%", width: "100%" }}
-                borderRadius={scaleSizeW(5)}
-              />
-            </View>
-            <View style={{ marginLeft: scaleSizeW(10), flex: 1 }}>
-              <Text style={{ fontSize: scaleSizeW(16), fontWeight: "600" }}>
-                {good.goodsName}
-              </Text>
-              <Text style={{ color: "grey", marginTop: scaleSizeW(5) }}>
-                {good.specifications.map((spec) => spec + " ")}
-              </Text>
-            </View>
-            <View style={{ marginLeft: scaleSizeW(10) }}>
-              <Text style={{ fontSize: scaleSizeW(16), fontWeight: "600" }}>
-                ${good.price}
-              </Text>
+              <View
+                style={[styles.flexRowBox, { justifyContent: "space-between" }]}
+              >
+                <Image
+                  source={{ uri: good.picUrl }}
+                  style={{ height: scaleSizeW(100), width: scaleSizeW(100) }}
+                  borderRadius={scaleSizeW(5)}
+                />
+                <View>
+                  <Text h3 style={{ fontWeight: "600" }}>
+                    {good.goodsName}
+                  </Text>
+                  <Text h4 style={{ color: "grey", marginTop: scaleSizeW(5) }}>
+                    {good.specifications.map((spec) => spec + " ")}
+                  </Text>
+                </View>
+              </View>
               <Text style={{ color: "grey", marginTop: scaleSizeW(5) }}>
                 x{good.number}
+              </Text>
+            </View>
+            <View style={{ marginLeft: scaleSizeW(10), flex: 1 }}></View>
+            <View
+              style={{ marginLeft: scaleSizeW(10), alignItems: "flex-end" }}
+            >
+              <Text style={{ fontSize: scaleSizeW(14), fontWeight: "600" }}>
+                实付款 ￥{good.price}
               </Text>
             </View>
           </>
@@ -95,6 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
+    flex: 1,
     backgroundColor: "white",
     margin: scaleSizeW(10),
     marginBottom: 0,

@@ -4,6 +4,7 @@ import { IHandleOption } from "types/order";
 import { Button } from "@rneui/themed";
 import { useRequest } from "ahooks";
 import { delOrder } from "axios/api/order";
+import { scaleSizeW } from "utlis/scaleSize";
 
 const ButtonFactory = ({ type, orderId }: any) => {
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,23 @@ const ButtonFactory = ({ type, orderId }: any) => {
       title = "Unknown";
   }
 
-  return <Button loading={loading} title={title} onPress={handlePress} />;
+  return (
+    <Button
+      radius="lg"
+      size="sm"
+      loading={loading}
+      title={title}
+      type="outline"
+      titleStyle={{
+        fontSize: scaleSizeW(11),
+        color: type === "confirm" ? "#EC9A86" : "grey",
+      }}
+      buttonStyle={{
+        borderColor: type === "confirm" ? "#EC9A86" : "grey",
+      }}
+      onPress={handlePress}
+    />
+  );
 };
 
 export default function ManageBar({
@@ -91,5 +108,6 @@ const styles = StyleSheet.create({
   flexRowBox: {
     flexDirection: "row",
     alignItems: "center",
+    padding: scaleSizeW(10),
   },
 });
