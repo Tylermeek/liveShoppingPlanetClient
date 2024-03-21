@@ -3,11 +3,24 @@ import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { LinearGradient } from "expo-linear-gradient";
-import { useAppSelector } from "store/hooks";
+import { useAppDispatch, useAppSelector } from "store/hooks";
+import { logout } from "axios/api/auth";
+import { useNavigation } from "@react-navigation/native";
+import { Views } from "types/navigation";
+import { clear } from "slice/userInfo";
 
 export default function Header() {
   const { userInfo, Token } = useAppSelector((state) => state.user);
   console.log(userInfo, Token);
+  const { navigate } = useNavigation();
+  const dispatch = useAppDispatch();
+
+  function handleLogOut(): void {
+    logout().then(() => {
+      navigate(Views.Home);
+      dispatch(clear());
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -57,10 +70,11 @@ export default function Header() {
       <Button
         icon={<Icon name="settings" />}
         iconPosition="top"
-        title="设置"
+        title="登出"
         size="sm"
         type="clear"
         titleStyle={{ fontSize: scaleSizeW(12), color: "grey" }}
+        onPress={handleLogOut}
       />
     </View>
   );

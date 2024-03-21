@@ -4,7 +4,16 @@ import cartReducer from "../slice/cart/cartSlice";
 import orderReducer from "../slice/order";
 import userReducer from "../slice/userInfo";
 import catalogReducer from "../slice/catalog";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+  persistReducer,
+  persistStore,
+} from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const rootReducer = combineReducers({
@@ -18,13 +27,19 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["user"],
+  // whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);

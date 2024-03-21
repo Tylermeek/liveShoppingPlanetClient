@@ -8,6 +8,7 @@ import Empty from "./Empty";
 import { useAppSelector } from "store/hooks";
 import { useRequest } from "ahooks";
 import { getOrderList } from "axios/api/order";
+import { IOrder } from "types/order";
 
 export default function OrderList({ tabIndex }: { tabIndex: number }) {
   const { currentTab } = useAppSelector((state) => state.order);
@@ -16,73 +17,42 @@ export default function OrderList({ tabIndex }: { tabIndex: number }) {
     defaultParams: [{ showType: currentTab }],
   });
 
-  const list = [
+  const list: IOrder[] = [
     {
-      order_id: "ORD123456",
-      customer_name: "张三",
-      customer_email: "zhangsan@example.com",
-      order_date: "2024-03-09",
-      order_status: "pending",
-      shipping_address: {
-        street: "123 Main St",
-        city: "Beijing",
-        province: "Beijing",
-        country: "China",
-        postal_code: "100000",
+      orderStatusText: "已取消(系统)",
+      aftersaleStatus: 0,
+      isGroupin: false,
+      orderSn: "20240314784711",
+      actualPrice: 599,
+      goodsList: [
+        {
+          number: 1,
+          picUrl:
+            "http://yanxuan.nosdn.127.net/149dfa87a7324e184c5526ead81de9ad.png",
+          price: 599,
+          id: 1,
+          goodsName: "日式和风懒人沙发",
+          specifications: ["标准"],
+        },
+      ],
+      id: 1,
+      handleOption: {
+        cancel: false,
+        delete: true,
+        pay: false,
+        comment: false,
+        confirm: false,
+        refund: false,
+        rebuy: false,
+        aftersale: false,
       },
-      shopInfo: {
-        name: "shop1",
-        avatar: "https://randomuser.me/api/portraits/men/31.jpg",
-      },
-      productInfo: {
-        product_id: "PROD001",
-        product_name: "电视",
-        sku: "TV-001",
-        quantity: 1,
-        unit_price: 3000,
-        product_image: "https://randomuser.me/api/portraits/men/6.jpg",
-        package_included: true,
-        shipping_status: "not_shipped",
-      },
-      totalMoney: 2800,
-      shipping_status: "partially_shipped",
-    },
-    {
-      order_id: "ORD789012",
-      customer_name: "李四",
-      customer_email: "lisi@example.com",
-      order_date: "2024-03-10",
-      order_status: "processing",
-      shipping_address: {
-        street: "456 Park Ave",
-        city: "Shanghai",
-        province: "Shanghai",
-        country: "China",
-        postal_code: "200000",
-      },
-      shopInfo: {
-        name: "shop2",
-        avatar: "https://randomuser.me/api/portraits/women/50.jpg",
-      },
-      productInfo: {
-        product_id: "PROD002",
-        product_name: "冰箱",
-        sku: "FRIDGE-002",
-        quantity: 1,
-        unit_price: 5000,
-        product_image: "https://randomuser.me/api/portraits/women/4.jpg",
-        package_included: false,
-        shipping_status: "shipped",
-      },
-      totalMoney: 4800,
-      shipping_status: "shipped",
     },
   ];
 
   return !isEmptyArr(list) ? (
     <ScrollView style={{ flex: 1 }}>
       {list.map((order) => (
-        <OrderItem key={order.order_id} order={order} />
+        <OrderItem key={order.id} order={order} />
       ))}
     </ScrollView>
   ) : (

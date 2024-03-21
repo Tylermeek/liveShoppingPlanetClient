@@ -15,6 +15,7 @@ export enum Views {
   Mine = "Mine",
   LogIn = "LogIn",
   Order = "Order",
+  ResetPassword = "ResetPassword",
 }
 
 // 设置每个路由需要接受的参数列表 注意与组件的参数不同
@@ -46,6 +47,7 @@ export type RootStackParamList = {
   [Views.Mine]: undefined;
   [Views.LogIn]: undefined;
   [Views.Order]: undefined;
+  [Views.ResetPassword]: undefined;
 };
 
 // 定义每个子路由接受的具体参数类型，否则useRoute会丢失参数声明

@@ -18,7 +18,7 @@ interface FormData {
   secPass: string;
 }
 
-export default function Playground() {
+export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [imgCode, setImgCode] = useState<string | null>(null);
   const navigation = useNavigation();

@@ -5,9 +5,9 @@ import { Views } from "types/navigation";
 
 export interface IResponse<T = any>
   extends Promise<{
-    code: number;
+    errno: number;
     data: T;
-    message: string;
+    errmsg: string;
   }> {}
 
 interface MyAxiosInstance extends Axios {

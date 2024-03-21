@@ -21,6 +21,7 @@ import Playground from "screens/Playground";
 import Order from "screens/Order";
 import Message from "screens/Message";
 import ContactSearch from "screens/ContactSearch";
+import ResetPassword from "screens/ResetPassword";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> =
   CompositeScreenProps<
@@ -72,6 +73,10 @@ const routeConfig = [
   {
     name: "ContactSearch",
     component: ContactSearch,
+  },
+  {
+    name: "ResetPassword",
+    component: ResetPassword,
   },
 ];
 

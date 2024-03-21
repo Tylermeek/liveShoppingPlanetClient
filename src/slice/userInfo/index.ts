@@ -10,7 +10,7 @@ const initialState: {
 };
 
 const userSlice = createSlice({
-  name: "order",
+  name: "user",
   initialState,
   reducers: {
     setUserInfo: (state, action) => {
@@ -19,8 +19,12 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.Token = action.payload;
     },
+    clear: (state) => {
+      state.Token = null;
+      state.userInfo = null;
+    },
   },
 });
 
-export const { setUserInfo, setToken } = userSlice.actions;
+export const { setUserInfo, setToken,clear } = userSlice.actions;
 export default userSlice.reducer;

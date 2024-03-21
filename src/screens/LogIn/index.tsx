@@ -82,17 +82,11 @@ const LogIn: React.FC<LogInProps> = () => {
     // 处理注册逻辑
     navigation.navigate(Views.SignUp);
   };
-  async function handleLogOut() {
-    try {
-      await storage.remove({ key: "userInfo" });
-      await storage.remove({ key: "Token" });
-      dispatch(setToken(null));
-      dispatch(setUserInfo(null));
-    } catch (error) {
-      console.warn(error);
-    }
-  }
 
+  const handleForgetPass = () => {
+    navigation.navigate(Views.ResetPassword);
+  };
+  
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -121,6 +115,7 @@ const LogIn: React.FC<LogInProps> = () => {
                 type="clear"
                 title="立即注册"
                 titleStyle={{ fontSize: scaleSizeW(16) }}
+                onPress={handleRegister}
               />
             </View>
           </View>
@@ -148,7 +143,7 @@ const LogIn: React.FC<LogInProps> = () => {
             <Controller
               control={control}
               rules={{
-                maxLength: 100,
+                required: true,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <View style={styles.inputContainer}>
@@ -159,6 +154,7 @@ const LogIn: React.FC<LogInProps> = () => {
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
+                    secureTextEntry
                   />
                 </View>
               )}
@@ -194,6 +190,7 @@ const LogIn: React.FC<LogInProps> = () => {
               title={"忘记密码"}
               type="clear"
               titleStyle={{ fontSize: scaleSizeW(15) }}
+              onPress={handleForgetPass}
             />
             <Button
               title={"注册"}

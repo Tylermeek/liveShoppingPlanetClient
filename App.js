@@ -8,6 +8,7 @@ import { scaleSizeW } from "utlis/scaleSize";
 import "dayjs/locale/zh-cn";
 import * as dayjs from "dayjs";
 import { PersistGate } from "redux-persist/integration/react";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 
 dayjs.locale("zh-cn");
 
@@ -52,18 +53,20 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <StatusBar
-            animated={true}
-            hidden={false}
-            translucent={true}
-            backgroundColor="transparent"
-            barStyle={"default"}
-            showHideTransition={"fade"}
-            networkActivityIndicatorVisible={true}
-          />
-          <RootStack></RootStack>
-        </ThemeProvider>
+        <GluestackUIProvider>
+          <ThemeProvider theme={theme}>
+            <StatusBar
+              animated={true}
+              hidden={false}
+              translucent={true}
+              backgroundColor="transparent"
+              barStyle={"default"}
+              showHideTransition={"fade"}
+              networkActivityIndicatorVisible={true}
+            />
+            <RootStack></RootStack>
+          </ThemeProvider>
+        </GluestackUIProvider>
       </PersistGate>
     </Provider>
   );

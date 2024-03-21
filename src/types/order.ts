@@ -33,23 +33,23 @@ export interface IOrderList {
 }
 
 export interface IOrder {
-  actualPrice?: number;
-  aftersaleStatus?: number;
-  goodsList?: IOrderGoodInfo[];
-  handleOption?: IHandleOption;
-  id?: number;
-  isGroupin?: boolean;
-  orderSn?: string;
-  OrderTypeText?: string;
+  actualPrice: number;
+  aftersaleStatus: number;
+  goodsList: IOrderGoodInfo[];
+  handleOption: IHandleOption;
+  id: number;
+  isGroupin: boolean;
+  orderSn: string;
+  orderStatusText: string;
 }
 
 export interface IOrderGoodInfo {
-  goodsName?: string;
-  id?: number;
-  number?: number;
-  picUrl?: string;
-  price?: number;
-  specifications?: string[];
+  goodsName: string;
+  id: number;
+  number: number;
+  picUrl: string;
+  price: number;
+  specifications: string[];
 }
 
 export interface IHandleOption {
@@ -71,4 +71,53 @@ export const enum OrderType {
   Undelivered,
   Unrated,
   RefundOrAftersales,
+}
+
+export interface IOrderDetail {
+  expressInfo: string[];
+  orderGoods: IOrderGood[];
+  orderInfo: IOrderInfo;
+}
+
+export interface IOrderGood {
+  goodsId: number;
+  goodsName: string;
+  goodsSn: string;
+  id: number;
+  number: number;
+  orderId: number;
+  picUrl: string;
+  price: number;
+  productId: number;
+  specifications: string[];
+  addTime: string;
+  comment: number;
+  deleted: boolean;
+  updateTime: string;
+}
+
+export interface IOrderInfo {
+  actualPrice: number;
+  address: string;
+  addTime: string;
+  aftersaleStatus: number;
+  consignee: string;
+  couponPrice: number;
+  freightPrice: number;
+  goodsPrice: number;
+  handleOption: IHandleOption;
+  id: number;
+  message: string;
+  mobile: string;
+  orderSn: string;
+  orderStatusText: string;
+}
+
+export interface IOrderSubmitInfo {
+  cartId: number;
+  addressId: number;
+  couponId: number;
+  message: string;
+  grouponRulesId: number;
+  grouponLinkId: number;
 }

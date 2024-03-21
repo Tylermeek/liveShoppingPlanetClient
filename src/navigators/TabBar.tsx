@@ -18,7 +18,7 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       style={{
         flexDirection: "row",
         backgroundColor: "white",
-        height: scaleSizeW(40),
+        height: scaleSizeW(50),
       }}
     >
       {state.routes.map((route, index) => {
