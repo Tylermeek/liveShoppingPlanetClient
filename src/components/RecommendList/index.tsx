@@ -34,7 +34,6 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
   const [pageNo, setPageNo] = useState<number>(1);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [init, setInit] = useState(true);
   const getList = async () => {
     setLoading(true);
     // todo 迁移接口到统一的获取推荐商品列表
@@ -42,7 +41,6 @@ const RecommendProductList: React.FC<RecommendProductListProps> = ({
     const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
     setColoumLists([tempList[0], tempList[1]]);
     setLoading(false);
-    setInit(false)
   };
 
   const getMoreList = async () => {

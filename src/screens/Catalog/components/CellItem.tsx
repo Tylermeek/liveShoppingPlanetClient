@@ -1,13 +1,16 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { scaleSizeW } from "utlis/scaleSize";
+import { useNavigation } from "@react-navigation/native";
+import { Views } from "types/navigation";
 
-export default function CellItem({
-  item,
-  sectionIndex,
-  index,
-  itemOnPress,
-}: any) {
+export default function CellItem({ item, sectionIndex, index, rootId }: any) {
+  const { navigate } = useNavigation();
+  function handlePressItem(): void {
+    // console.log({ index, rootId });
+    navigate(Views.CatalogDetail, { index, rootId });
+  }
+
   //   index === 0 && console.log(item, sectionIndex, index, itemOnPress);
 
   return (
@@ -22,11 +25,7 @@ export default function CellItem({
           paddingBottom: 15,
         },
       ]}
-      onPress={() =>
-        itemOnPress
-          ? itemOnPress(item, sectionIndex, index)
-          : console.log(`点击了第${sectionIndex}组中的第${index}个商品`)
-      }
+      onPress={handlePressItem}
     >
       <Image
         style={{

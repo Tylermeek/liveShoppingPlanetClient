@@ -14,7 +14,7 @@ import RowFlexConatiner from "components/RowFlexContainer";
 import GoBack from "components/GoBack";
 import { scaleSizeW } from "utlis/scaleSize";
 
-export default function Playground() {
+export default function CatalogDetail() {
   const route = useRoute<RootRouteType<Views.PlayGround>>();
   const index = route.params?.index!;
   console.log(index);

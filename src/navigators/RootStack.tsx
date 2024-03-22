@@ -23,6 +23,7 @@ import Message from "screens/Message";
 import ContactSearch from "screens/ContactSearch";
 import ResetPassword from "screens/ResetPassword";
 import SearchOrderList from "screens/SearchOrderList";
+import CatalogDetail from "screens/CatalogDetail";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> =
   CompositeScreenProps<
@@ -31,6 +32,10 @@ export type CompositeTabScreenParamList<T extends keyof TabBarParamList> =
   >;
 
 const routeConfig = [
+  {
+    name: "PlayGround",
+    component: Playground,
+  },
   {
     name: "Tab",
     component: TabBar,
@@ -82,6 +87,10 @@ const routeConfig = [
   {
     name: "SearchOrderList",
     component: SearchOrderList,
+  },
+  {
+    name: "CatalogDetail",
+    component: CatalogDetail,
   },
 ];
 

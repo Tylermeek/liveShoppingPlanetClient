@@ -17,6 +17,8 @@ export enum Views {
   Order = "Order",
   ResetPassword = "ResetPassword",
   SearchOrderList = "SearchOrderList",
+  PlayGround = "PlayGround",
+  CatalogDetail = "CatalogDetail",
 }
 
 // 设置每个路由需要接受的参数列表 注意与组件的参数不同
@@ -35,8 +37,14 @@ interface ProductDetailProps {
   goodsId: number;
 }
 
+interface CatalogDetailProps {
+  rootId: number;
+  index: number;
+}
+
 // 处理参数路由映射表
 export type RootStackParamList = {
+  [Views.PlayGround]: any;
   [Views.Home]: undefined;
   [Views.Live]: undefined;
   [Views.Cart]: undefined;
@@ -50,6 +58,7 @@ export type RootStackParamList = {
   [Views.Order]: undefined;
   [Views.ResetPassword]: undefined;
   [Views.SearchOrderList]: undefined;
+  [Views.CatalogDetail]: CatalogDetailProps;
 };
 
 // 定义每个子路由接受的具体参数类型，否则useRoute会丢失参数声明
