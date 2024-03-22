@@ -1,6 +1,7 @@
 import { Button, Image, Text } from "@rneui/themed";
 import { useRequest } from "ahooks";
 import { getOrderList } from "axios/api/order";
+import { isEmpty } from "lodash-es";
 import React from "react";
 import { Dimensions, TouchableOpacity, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
@@ -17,7 +18,7 @@ export default function RecentOrder() {
   };
 
   return (
-    data?.data.list && (
+    !isEmpty(data?.data?.list || []) && (
       <View
         style={{ backgroundColor: "#ebebeb", borderRadius: scaleSizeW(10) }}
       >

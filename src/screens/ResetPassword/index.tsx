@@ -10,6 +10,8 @@ import { Views } from "types/navigation";
 import { useCountdown } from "hook/useCountDown";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import ErrorTip from "components/ErrorTip";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 interface FormData {
   mobile: string;
@@ -17,6 +19,32 @@ interface FormData {
   password: string;
   secPass: string;
 }
+
+const schema = yup
+  .object({
+    mobile: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "手机号必须是10位数字") // 使用正则表达式匹配手机号格式
+      .required("手机号不能为空"), // 手机号不能为空,
+    code: yup.string().required("验证码不能为空"), // 验证码不能为空
+    password: yup
+      .string()
+      .matches(
+        /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+        "密码必须包含数字和字母"
+      ) // 使用正则表达式匹配密码格式
+      .min(8, "密码长度至少为8位") // 密码长度至少为8位
+      .required("密码不能为空"), // 密码不能为空
+    secPass: yup
+      .string()
+      .matches(
+        /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+        "密码必须包含数字和字母"
+      ) // 使用正则表达式匹配密码格式
+      .min(8, "密码长度至少为8位") // 密码长度至少为8位
+      .required("密码不能为空"), // 密码不能为空
+  })
+  .required();
 
 export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
@@ -31,6 +59,7 @@ export default function ResetPassword() {
     handleSubmit,
     getValues,
     setError,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -39,6 +68,7 @@ export default function ResetPassword() {
       password: "",
       secPass: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const handleGetCode = async () => {
@@ -130,7 +160,7 @@ export default function ResetPassword() {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入手机号"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("mobile")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -138,7 +168,7 @@ export default function ResetPassword() {
                 </View>
               )}
             />
-            {errors.mobile && <ErrorTip tip={"未输入手机号"} />}
+            {errors.mobile && <ErrorTip tip={errors.mobile.message} />}
             <Controller
               control={control}
               rules={{
@@ -150,7 +180,7 @@ export default function ResetPassword() {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入验证码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("code")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -181,7 +211,7 @@ export default function ResetPassword() {
               )}
             />
 
-            {errors.code && <ErrorTip tip={"未输入验证码"} />}
+            {errors.code && <ErrorTip tip={errors.code?.message} />}
             <Controller
               control={control}
               rules={{
@@ -193,7 +223,7 @@ export default function ResetPassword() {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入密码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("password")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -202,7 +232,7 @@ export default function ResetPassword() {
                 </View>
               )}
             />
-            {errors.password && <ErrorTip tip={"未输入密码"} />}
+            {errors.password && <ErrorTip tip={errors.password?.message} />}
             <Controller
               control={control}
               rules={{
@@ -214,7 +244,7 @@ export default function ResetPassword() {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请确认密码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("secPass")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -223,7 +253,7 @@ export default function ResetPassword() {
                 </View>
               )}
             />
-            {errors.secPass && <ErrorTip tip={"密码不一致"} />}
+            {errors.secPass && <ErrorTip tip={errors.secPass?.message} />}
             <Button
               title="确认重置"
               onPress={handleSubmit(handleReset)}

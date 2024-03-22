@@ -24,15 +24,21 @@ export default function RootCategoryItem({
   flatListRef,
   sectionListRef,
 }: IRootCategoryItemProps) {
-  const { selectedRootCate, rootCateData } = useAppSelector(
-    (state) => state.catalog
+  // const { selectedRootCate, rootCateData } = useAppSelector(
+  //   (state) => state.catalog
+  // );
+  const selectedRootCate = useAppSelector(
+    (state) => state.catalog.selectedRootCate
+  );
+  const rootCateDatalen = useAppSelector(
+    (state) => state.catalog.rootCateData.length
   );
   const dispatch = useAppDispatch();
   const sHeight = Dimensions.get("window").height;
   function handlePress(): void {
     setTimeout(() => {
       // todo sh 320
-      (rootCateData.length - index) * scaleSizeW(44) >
+      (rootCateDatalen - index) * scaleSizeW(44) >
       sHeight - scaleSizeW(40) - scaleSizeW(44)
         ? flatListRef.scrollToOffset({
             animated: true,

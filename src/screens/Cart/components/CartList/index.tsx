@@ -8,6 +8,7 @@ import { handleMomentumScrollEnd } from "utlis/method";
 import { CartStatus } from "types/cart";
 import ProductCart from "./ProductCart";
 import { useFocusEffect } from "@react-navigation/native";
+import * as Progress from "react-native-progress";
 
 const CartList: React.FC = () => {
   const { cartList, cartTotal, cartStatus } = useAppSelector(
@@ -37,13 +38,11 @@ const CartList: React.FC = () => {
         {/* <RecommendList isEndReached={isEndReached} ></RecommendList> */}
       </ScrollView>
       {cartStatus === CartStatus.Loading && (
-        <Button
-          loading
-          radius={"lg"}
-          color={"#E36235"}
-          containerStyle={styles.loadingContainer}
-          buttonStyle={styles.loading}
-          titleStyle={{ fontSize: scaleSizeW(12) }}
+        <Progress.Circle
+          size={30}
+          indeterminate={true}
+          color="#EC9A86"
+          style={{ position: "absolute", top: "50%", left: "50%" }}
         />
       )}
     </View>

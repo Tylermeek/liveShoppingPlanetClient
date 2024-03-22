@@ -6,6 +6,8 @@ import { StatusBar } from "react-native";
 import { authRegisterCaptcha, login, signUp } from "axios/api/auth";
 import { scaleSizeW } from "utlis/scaleSize";
 import { useNavigation } from "@react-navigation/native";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { Views } from "types/navigation";
 import { useCountdown } from "hook/useCountDown";
 import { useAppDispatch } from "store/hooks";
@@ -21,6 +23,36 @@ interface FormData {
   secPass: string;
 }
 
+const schema = yup
+  .object({
+    mobile: yup
+      .string()
+      .matches(/^[0-9]{11}$/, "手机号必须是11位数字") // 使用正则表达式匹配手机号格式
+      .required("手机号不能为空"), // 手机号不能为空,
+    username: yup.string().required("用户名不能为空"),
+    code: yup
+      .string()
+      .matches(/^[0-9]{6}$/, "验证码必须是6位数字") // 使用正则表达式匹配6位数字格式
+      .required("验证码不能为空"), // 验证码不能为空
+    password: yup
+      .string()
+      .matches(
+        /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+        "密码必须包含数字和字母"
+      ) // 使用正则表达式匹配密码格式
+      .min(8, "密码长度至少为8位") // 密码长度至少为8位
+      .required("密码不能为空"), // 密码不能为空
+    secPass: yup
+      .string()
+      .matches(
+        /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+        "密码必须包含数字和字母"
+      ) // 使用正则表达式匹配密码格式
+      .min(8, "密码长度至少为8位") // 密码长度至少为8位
+      .required("密码不能为空"), // 密码不能为空
+  })
+  .required();
+
 const SignUp: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
@@ -33,6 +65,7 @@ const SignUp: React.FC = () => {
     control,
     handleSubmit,
     getValues,
+    trigger,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -42,21 +75,22 @@ const SignUp: React.FC = () => {
       password: "",
       secPass: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const handleGetCode = async () => {
     const mobile = getValues("mobile");
-    if (!mobile) {
-      if (errors.mobile) {
-        errors.mobile.type = "required";
-      }
-      return;
-    }
     try {
+      await trigger("mobile");
+      if (errors.mobile) {
+        return;
+      }
       start();
       const res = await authRegisterCaptcha({ mobile });
       console.log(res);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRegister: SubmitHandler<FormData> = async ({
@@ -70,7 +104,6 @@ const SignUp: React.FC = () => {
       setLoading(true);
       try {
         console.log({ mobile, code, username, password });
-
         const res = await signUp({ mobile, code, username, password });
         console.log(res);
         if (res.errno === 0) {
@@ -79,8 +112,9 @@ const SignUp: React.FC = () => {
           navigation.navigate(Views.Home);
         }
       } catch (error) {
+        console.warn(error);
       } finally {
-        setLoading(true);
+        setLoading(false);
       }
     }
   };
@@ -127,7 +161,7 @@ const SignUp: React.FC = () => {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入手机号"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("mobile")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -135,7 +169,7 @@ const SignUp: React.FC = () => {
                 </View>
               )}
             />
-            {errors.mobile && <ErrorTip tip={"未输入手机号"} />}
+            {errors.mobile && <ErrorTip tip={errors.mobile.message} />}
             <Controller
               control={control}
               rules={{
@@ -147,7 +181,7 @@ const SignUp: React.FC = () => {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入验证码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("code")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -162,7 +196,7 @@ const SignUp: React.FC = () => {
                 </View>
               )}
             />
-            {errors.code && <ErrorTip tip={"未输入验证码"} />}
+            {errors.code && <ErrorTip tip={errors.code.message} />}
             <Controller
               control={control}
               rules={{
@@ -174,7 +208,7 @@ const SignUp: React.FC = () => {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入用户名"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("username")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -183,7 +217,7 @@ const SignUp: React.FC = () => {
                 </View>
               )}
             />
-            {errors.username && <ErrorTip tip={"未输入用户名"} />}
+            {errors.username && <ErrorTip tip={errors.username.message} />}
             <Controller
               control={control}
               rules={{
@@ -195,7 +229,7 @@ const SignUp: React.FC = () => {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请输入密码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("password")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -204,7 +238,7 @@ const SignUp: React.FC = () => {
                 </View>
               )}
             />
-            {errors.password && <ErrorTip tip={"未输入密码"} />}
+            {errors.password && <ErrorTip tip={errors.password.message} />}
             <Controller
               control={control}
               rules={{
@@ -216,7 +250,7 @@ const SignUp: React.FC = () => {
                   <Icon name="lock" />
                   <TextInput
                     placeholder="请确认密码"
-                    onBlur={onBlur}
+                    onBlur={() => trigger("secPass")}
                     onChangeText={onChange}
                     value={value}
                     style={styles.input}
@@ -225,7 +259,7 @@ const SignUp: React.FC = () => {
                 </View>
               )}
             />
-            {errors.secPass && <ErrorTip tip={"密码不一致"} />}
+            {errors.secPass && <ErrorTip tip={errors.secPass.message} />}
             <Button
               title="确认注册"
               onPress={handleSubmit(handleRegister)}

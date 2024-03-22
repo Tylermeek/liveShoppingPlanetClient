@@ -1,8 +1,8 @@
 import { random } from "lodash-es";
 import { NativeSyntheticEvent, NativeScrollEvent } from "react-native";
-import { scaleSizeH } from "./scaleSize";
+import { scaleSizeH, scaleSizeW } from "./scaleSize";
 
-export const isEmptyArr = (arr:any[]) => {
+export const isEmptyArr = (arr: any[]) => {
   return Array.isArray(arr) && arr.length === 0;
 };
 
@@ -28,7 +28,7 @@ export const handleMomentumScrollEnd = (
   const contentHeight = event.nativeEvent.contentSize.height;
   const layoutHeight = event.nativeEvent.layoutMeasurement.height;
   const isEndReachedNow =
-    offsetY >= contentHeight - layoutHeight - scaleSizeH(150);
+    offsetY >= contentHeight - layoutHeight - scaleSizeW(200);
   if (isEndReachedNow !== isEndReached) {
     setIsEndReached(isEndReachedNow);
   }
@@ -47,3 +47,15 @@ export const numberFormat = (num: number): string | number => {
       return `${(num / 10000).toFixed(1)}万`;
   }
 };
+
+export function splitAndInterleave<T>(array: T[]): [T[], T[]] {
+  const result: [T[], T[]] = [[], []];
+  let index = 0;
+
+  for (const item of array) {
+    result[index % 2].push(item);
+    index++;
+  }
+
+  return result;
+}

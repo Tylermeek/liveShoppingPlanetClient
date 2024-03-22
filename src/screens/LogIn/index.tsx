@@ -10,6 +10,8 @@ import { scaleSizeW } from "utlis/scaleSize";
 import { Views } from "types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { isLogin } from "hook/useAuth";
 import { useAppDispatch } from "store/hooks";
 import { setToken, setUserInfo } from "slice/userInfo";
@@ -20,6 +22,13 @@ interface FormData {
   username: string;
   password: string;
 }
+
+const schema = yup
+  .object({
+    username: yup.string().required(),
+    password: yup.string().required(),
+  })
+  .required();
 
 const LogIn: React.FC<LogInProps> = () => {
   const [loading, setLoading] = useState(false);
@@ -34,14 +43,15 @@ const LogIn: React.FC<LogInProps> = () => {
       username: "",
       password: "",
     },
+    resolver: yupResolver(schema),
   });
 
   const onLogin: SubmitHandler<FormData> = async ({ username, password }) => {
     if (username && password) {
       try {
         setLoading(true);
-        const { data } = await login({ username, password });
-        console.log(data);
+        const { data,errmsg } = await login({ username, password });
+        console.log(data,errmsg);
         dispatch(setToken(data.token));
         dispatch(setUserInfo(data.userInfo));
         await storage.save({
@@ -86,7 +96,7 @@ const LogIn: React.FC<LogInProps> = () => {
   const handleForgetPass = () => {
     navigation.navigate(Views.ResetPassword);
   };
-  
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>

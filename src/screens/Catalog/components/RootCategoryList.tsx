@@ -28,6 +28,7 @@ export default function RootCategoryList({
       <FlatList
         ref={(ref) => onSetFlatListRef(ref)}
         data={rootCateData}
+        initialNumToRender={3}
         ListHeaderComponent={() => <View />}
         ListFooterComponent={() => <View />}
         // ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: '#F5F5F5' }} />}

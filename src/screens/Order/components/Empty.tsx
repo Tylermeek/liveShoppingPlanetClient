@@ -1,8 +1,9 @@
 import { Icon, Text } from "@rneui/themed";
+import RecommendProductList from "components/RecommendList";
 import RowDivider from "components/RowDivider";
+import React from "react";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import RecommendList from "screens/Home/components/RecommendList";
 import { handleMomentumScrollEnd } from "utlis/method";
 import { scaleSizeW } from "utlis/scaleSize";
 
@@ -31,7 +32,7 @@ export default function Empty() {
                     <Text style={{ color: "#E36235", fontSize: scaleSizeW(13), marginLeft: scaleSizeW(5) }}>你可能喜欢</Text>
                 </View>
             </RowDivider>
-            <RecommendList isEndReached={isEndReached}></RecommendList>
+            <RecommendProductList isEndReached={isEndReached} />
         </ScrollView>
     )
 }

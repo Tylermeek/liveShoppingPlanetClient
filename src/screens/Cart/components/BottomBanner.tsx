@@ -17,6 +17,7 @@ const BottomBanner: React.FC = () => {
   );
   const dispatch = useAppDispatch();
   const handleCheckAll = () => {
+    if (cartTotal.goodsCount === 0) return;
     // 处理已有勾选状态的情况
     if (cartTotal.goodsCount === cartTotal.checkedGoodsCount) {
       dispatch(
@@ -48,6 +49,7 @@ const BottomBanner: React.FC = () => {
   };
 
   const handleDelAll = () => {
+    if(cartTotal.goodsCount === 0) return
     dispatch(
       delProsThunk({ productIds: cartList.map((pro) => pro.productId) })
     ).then(() => {
@@ -56,6 +58,7 @@ const BottomBanner: React.FC = () => {
   };
 
   const handleDel = () => {
+    if(cartTotal.goodsCount === 0) return
     dispatch(
       delProsThunk({
         productIds: cartList
@@ -73,7 +76,10 @@ const BottomBanner: React.FC = () => {
         <ListItem.CheckBox
           title={"全选"}
           textStyle={{ color: "#acacad", fontSize: scaleSizeW(10) }}
-          checked={cartTotal.checkedGoodsCount === cartTotal.goodsCount}
+          checked={
+            cartTotal.checkedGoodsCount === cartTotal.goodsCount &&
+            cartTotal.goodsCount !== 0
+          }
           onPress={handleCheckAll}
         />
         <ListItem.Content style={{ padding: scaleSizeW(2) }}>

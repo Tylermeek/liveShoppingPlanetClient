@@ -1,20 +1,26 @@
-import { Button, Tab, TabView, Text } from "@rneui/themed";
+import { Button, Icon, Tab, TabView, Text } from "@rneui/themed";
 import WaterFall from "components/WaterFall";
 import ProductCard from "screens/SearchResultList/components/ProductList/ProductCard";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { LiveInfo, ProductInfo } from "types/info";
-import { handleMomentumScrollEnd, randomArr } from "utlis/method";
+import {
+  handleMomentumScrollEnd,
+  randomArr,
+  splitAndInterleave,
+} from "utlis/method";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 import { IGoodInfo } from "types/goods";
-import { ISearchGood, SortTypes } from "types/search";
+import { ISearchGood, SortOrder, SortTypes } from "types/search";
 import { getSearchProductList } from "axios/api/search";
 import { chunk } from "lodash-es";
+import { useRoute } from "@react-navigation/native";
+import { RootRouteType, Views } from "types/navigation";
 export interface ProductListProps {
-  searchContent: string;
+  // searchContent: string;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
+const ProductList: React.FC<ProductListProps> = () => {
   const [coloumLists, setColoumLists] = useState<ISearchGood[][]>([[], []]);
   const [pageNo, setPageNo] = useState<number>(1);
   const [activeSubTab, setSubActiveTab] = useState<number>(0);
@@ -22,6 +28,10 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
   const [isEndReached, setIsEndReached] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [isAsc, setisAsc] = useState(true);
+  const route = useRoute<any>();
+  const searchContent = route.params.searchContent;
+  console.log(searchContent);
 
   const sortTabOpts = [
     {
@@ -45,6 +55,7 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
     const res = await getSearchProductList({
       keyword: searchContent,
       sort: sortType,
+      order: isAsc ? "asc" : "desc",
       page: newPageNo,
     });
     const tempList = chunk(res.data.list, Math.floor(res.data.list.length / 2));
@@ -55,19 +66,29 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
     setLoadingMore(false);
   };
 
-  const handleinitList = async () => {
+  const handleinitList = async (
+    sort: SortTypes,
+    page: number,
+    order: SortOrder
+  ) => {
     setRefreshing(true);
+    console.log({
+      sort,
+      page,
+      order,
+    });
     const res = await getSearchProductList({
       keyword: searchContent,
-      sort: sortType,
-      page: pageNo,
+      sort,
+      page,
+      order,
     });
     setRefreshing(false);
-    setColoumLists(chunk(res.data.list, Math.floor(res.data.list.length / 2)));
+    setColoumLists(splitAndInterleave(res.data.list));
   };
 
   useEffect(() => {
-    handleinitList();
+    handleinitList(sortType, pageNo, "asc");
   }, []);
   return (
     <>
@@ -83,16 +104,24 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
           value={activeSubTab}
           onChange={(tabIndex) => {
             console.log(tabIndex);
+            if (tabIndex === activeSubTab && tabIndex === 0) return;
+            if (tabIndex === activeSubTab) {
+              setisAsc(!isAsc);
+              handleinitList(sortType, 1, !isAsc ? "asc" : "desc");
+              return;
+            }
             setSubActiveTab(tabIndex);
             setSortType(sortTabOpts[tabIndex].value);
+            setPageNo(1);
+            setisAsc(true);
             // todo 更新搜索
-            handleinitList();
+            handleinitList(sortType, 1, "asc");
           }}
           style={styles.tabConatiner}
           disableIndicator={true}
           scrollable={false}
         >
-          {sortTabOpts.map((tabItem) => {
+          {sortTabOpts.map((tabItem, index) => {
             return (
               <Tab.Item
                 key={tabItem.value}
@@ -105,6 +134,24 @@ const ProductList: React.FC<ProductListProps> = ({ searchContent }) => {
                 }}
                 containerStyle={styles.TabItemConatiner}
                 buttonStyle={styles.TabItemButton}
+                iconRight
+                icon={
+                  activeSubTab === index &&
+                  index !== 0 && (
+                    <View>
+                      <Icon
+                        name="keyboard-arrow-up"
+                        size={15}
+                        color={isAsc ? "#E36235" : "grey"}
+                      />
+                      <Icon
+                        name="keyboard-arrow-down"
+                        size={15}
+                        color={!isAsc ? "#E36235" : "grey"}
+                      />
+                    </View>
+                  )
+                }
               />
             );
           })}

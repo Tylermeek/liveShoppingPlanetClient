@@ -9,6 +9,7 @@ import {
 import ContentItem from "./ContentItem";
 import SectionHeader from "./SectionHeader";
 import { scaleSizeW } from "utlis/scaleSize";
+import { useVirtualList } from "ahooks";
 
 export default function CategoryContentList({
   needScrollTo,
@@ -16,8 +17,14 @@ export default function CategoryContentList({
   flatListRef,
 }: any) {
   const dispatch = useAppDispatch();
-  const { cateData, isScroll, rootCateData } = useAppSelector(
-    (state) => state.catalog
+  const cateData = useAppSelector(
+    (state) => state.catalog.cateData
+  );
+  const isScroll = useAppSelector(
+    (state) => state.catalog.isScroll
+  );
+  const rootCateDataLen = useAppSelector(
+    (state) => state.catalog.rootCateData.length
   );
   const sHeight = Dimensions.get("window").height;
 
@@ -27,7 +34,7 @@ export default function CategoryContentList({
     if (isScroll) {
       dispatch(updateSelectedRootCate(currentIndex));
       dispatch(updateRootSelItem(cateData[currentIndex]));
-      (rootCateData.length - currentIndex) * scaleSizeW(44) >
+      (rootCateDataLen- currentIndex) * scaleSizeW(44) >
       sHeight - scaleSizeW(110)
         ? flatListRef.scrollToOffset({
             animated: true,
@@ -48,9 +55,9 @@ export default function CategoryContentList({
       <SectionList
         ref={(ref) => onSetSectionListRef(ref)}
         renderSectionHeader={(item) => <SectionHeader item={item} />}
-        renderItem={(item) => {
-          return <ContentItem item={item} needScrollTo={needScrollTo} />;
-        }}
+        renderItem={(item) => (
+          <ContentItem item={item} needScrollTo={needScrollTo} />
+        )}
         sections={cateData}
         // ListEmptyComponent={<DefaultPage style={{ height: 200 }} />}
         ItemSeparatorComponent={() => <View />}

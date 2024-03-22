@@ -30,7 +30,7 @@ export enum SortTypes {
   Name = "name",
 }
 
-export type SortOrder = "desc" | "aesc";
+export type SortOrder = "desc" | "asc";
 
 export interface ISearchInitContent {
   historyKeywordList: HistoryKeywordList;

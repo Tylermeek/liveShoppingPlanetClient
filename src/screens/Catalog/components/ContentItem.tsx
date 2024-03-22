@@ -6,7 +6,7 @@ import CellItem from "./CellItem";
 
 export default function ContentItem({ needScrollTo, item }: any) {
   const sHeight = Dimensions.get("screen").height;
-  const { cateData } = useAppSelector((state) => state.catalog);
+  const cateDataLen = useAppSelector((state) => state.catalog.cateData.length);
   //   console.log(item.section.rootIndex === 0 && item);
 
   return item.index === 0 ? (
@@ -32,7 +32,7 @@ export default function ContentItem({ needScrollTo, item }: any) {
       {needScrollTo && (
         <>
           {
-            item?.section?.rootIndex !== cateData?.length - 1 ? (
+            item?.section?.rootIndex !== cateDataLen - 1 ? (
               <View style={{ height: 1, backgroundColor: "#efefef" }} />
             ) : (
               <View
