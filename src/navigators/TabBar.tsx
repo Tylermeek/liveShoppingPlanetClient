@@ -95,7 +95,7 @@ const TabBar: React.FC<TabBarParamList> = () => {
   return (
     <>
       <TabNav.Navigator
-        initialRouteName="Catalog"
+        initialRouteName="Home"
         tabBar={(props) => <MyTabBar {...props} />}
         screenOptions={{ headerShown: false }}
         sceneContainerStyle={{ backgroundColor: "transparent" }}

@@ -1,96 +1,146 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Tab } from "@rneui/themed";
-import { useRoute } from "@react-navigation/native";
-import { RootRouteType, Views } from "types/navigation";
-import { useRequest } from "ahooks";
-import { getSecondCategoryList } from "axios/api/catalog";
-import { getGoodsList } from "axios/api/goods";
-import CircleLoading from "components/CircleLoading";
-import GoodCard from "./components/GoodCard";
-import { isEmpty } from "lodash-es";
-import RowFlexConatiner from "components/RowFlexContainer";
-import GoBack from "components/GoBack";
+import { StatusBar } from "react-native";
 import { scaleSizeW } from "utlis/scaleSize";
+import LottieView from "lottie-react-native";
+import { BottomSheet, Button, Image, Text } from "@rneui/themed";
+import RowFlexConatiner from "components/RowFlexContainer";
+
+const animationList = [
+  {
+    name: "love",
+    source: require("../../../assets/animation/love.json"),
+  },
+  {
+    name: "crown",
+    source: require("../../../assets/animation/crown.json"),
+  },
+  {
+    name: "firework",
+    source: require("../../../assets/animation/firework.json"),
+  },
+  {
+    name: "spaceShip",
+    source: require("../../../assets/animation/spaceShip.json"),
+  },
+];
 
 export default function Playground() {
-  const route = useRoute<RootRouteType<Views.PlayGround>>();
-  const index = route.params?.index!;
-  console.log(index);
-  const [activeTab, setactiveTab] = useState(index || 0);
-  const rootId = route.params?.rootId!;
-  console.log("rootId",rootId);
-  
-  const { data: secCatelist } = useRequest(getSecondCategoryList, {
-    defaultParams: [rootId],
-  });
-
-  const {
-    data: goodsList,
-    loading,
-    run,
-  } = useRequest(getGoodsList, {
-    refreshDeps: [activeTab],
-    manual: true,
-  });
+  const animationRef = useRef<LottieView>(null);
+  const [showGif, setshowGif] = useState(false);
+  const [showGifSource, setshowGifSource] = useState();
+  const [openList, setOpenList] = useState(false);
 
   useEffect(() => {
-    console.log(secCatelist?.data);
-    if (!isEmpty(secCatelist?.data)) {
-      run({ categoryId: secCatelist?.data[activeTab || index]?.id });
+    if (showGif) {
+      animationRef.current?.play();
+      // fix me 关闭动画时机问题
+      setTimeout(() => {
+        animationRef.current?.pause();
+        setshowGif(false);
+      }, 3500);
     }
-    // console.log(goodsList);
-  }, [secCatelist]);
+  }, [showGif]);
+  function handleOpenGiftList(): void {
+    throw new Error("Function not implemented.");
+  }
+
+
 
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        <Button
+          title={"送礼物"}
+          onPress={() => setOpenList(true)}
+          buttonStyle={{ margin: scaleSizeW(100) }}
+        />
+        <BottomSheet
+          modalProps={{}}
+          isVisible={openList}
+          onBackdropPress={() => setOpenList(false)}
+        >
           <RowFlexConatiner
             containerStyle={{
-              backgroundColor: "white",
-              padding: scaleSizeW(10),
-              paddingTop: StatusBar.currentHeight,
+              justifyContent: "space-around",
+              backgroundColor: "grey",
             }}
           >
-            <GoBack />
-            <Tab
-              value={activeTab}
-              onChange={(index) => {
-                setactiveTab(index);
-                run({ categoryId: secCatelist?.data[index]?.id });
-              }}
-              dense
-              scrollable
-              style={{
-                marginLeft: scaleSizeW(20),
-              }}
-              titleStyle={(active) => ({
-                color: active ? "#E36235" : "grey",
-              })}
-            >
-              {!isEmpty(secCatelist?.data) &&
-                secCatelist?.data.map((cate) => (
-                  <Tab.Item key={cate.id}>{cate.name}</Tab.Item>
-                ))}
-            </Tab>
+            {animationList.map((animation) => (
+              <View
+                key={animation.name}
+                style={{
+                  borderRadius: scaleSizeW(15),
+                  overflow: "hidden",
+                  // height: scaleSizeW(100),
+                  // width: scaleSizeW(80),
+                  margin: StatusBar.currentHeight,
+                }}
+              >
+                <Image
+                  style={{
+                    height: scaleSizeW(70),
+                    width: scaleSizeW(70),
+                    borderRadius: scaleSizeW(15),
+                  }}
+                  source={require("../../../assets/animationCover/love.png")}
+                />
+                <Text h2 style={{ textAlign: "center" }}>
+                  {animation.name}
+                </Text>
+                <Button
+                  title="赠送"
+                  radius="md"
+                  onPress={() => {
+                    setshowGifSource(animation.source);
+                    setshowGif(true);
+                  }}
+                  buttonStyle={{
+                    padding: scaleSizeW(2),
+                  }}
+                  containerStyle={{
+                    margin: scaleSizeW(5),
+                  }}
+                  titleStyle={{
+                    fontSize: scaleSizeW(11),
+                  }}
+                />
+              </View>
+            ))}
           </RowFlexConatiner>
-          <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-            {!loading && (
-              <>
-                {!isEmpty(goodsList?.data.list) &&
-                  goodsList?.data.list.map((good) => (
-                    <GoodCard key={good.id} good={good} />
-                  ))}
-              </>
-            )}
-          </ScrollView>
-          {loading && <CircleLoading />}
-        </View>
+        </BottomSheet>
+        {showGif && (
+          <LottieView
+            ref={animationRef}
+            source={showGifSource}
+            style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "transparent",
+              position: "absolute",
+            }}
+            loop
+            // autoPlay
+          />
+        )}
       </GestureHandlerRootView>
     </>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: "row",
+    margin: scaleSizeW(10),
+    alignItems: "center",
+  },
+  input: {
+    flex: 1,
+    fontSize: scaleSizeW(15),
+    paddingLeft: scaleSizeW(10),
+    paddingVertical: scaleSizeW(10),
+    borderBottomWidth: 1,
+    borderRadius: 10,
+  },
+});

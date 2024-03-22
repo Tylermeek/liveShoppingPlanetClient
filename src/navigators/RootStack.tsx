@@ -33,10 +33,6 @@ export type CompositeTabScreenParamList<T extends keyof TabBarParamList> =
 
 const routeConfig = [
   {
-    name: "PlayGround",
-    component: Playground,
-  },
-  {
     name: "Tab",
     component: TabBar,
   },
@@ -91,6 +87,10 @@ const routeConfig = [
   {
     name: "CatalogDetail",
     component: CatalogDetail,
+  },
+  {
+    name: "PlayGround",
+    component: Playground,
   },
 ];
 

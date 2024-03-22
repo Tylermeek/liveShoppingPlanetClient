@@ -12,7 +12,7 @@ interface FormData {
   secPass: string;
 }
 
-export default function Playground() {
+export default function Gift() {
   const animationRef = useRef<LottieView>(null);
   const [showGif, setshowGif] = useState(false);
 
