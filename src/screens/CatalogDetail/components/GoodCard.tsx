@@ -1,19 +1,29 @@
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import React from "react";
 import { ISearchGood } from "types/search";
 import { scaleSizeW } from "utlis/scaleSize";
 import { Image, Text } from "@rneui/themed";
 import RowFlexConatiner from "components/RowFlexContainer";
+import { useNavigation } from "@react-navigation/native";
+import { Views } from "types/navigation";
 
 export default function GoodCard({ good }: { good: ISearchGood }) {
+  const { navigate } = useNavigation();
+  function handlePress(): void {
+    navigate(Views.ProductDetail, {
+      goodsId: good.id,
+    });
+  }
+
   return (
-    <View
+    <TouchableOpacity
       style={{
         margin: scaleSizeW(10),
         padding: scaleSizeW(10),
         backgroundColor: "white",
         borderRadius: scaleSizeW(10),
       }}
+      onPress={handlePress}
     >
       <RowFlexConatiner>
         <Image
@@ -41,6 +51,6 @@ export default function GoodCard({ good }: { good: ISearchGood }) {
           </Text>
         </View>
       </RowFlexConatiner>
-    </View>
+    </TouchableOpacity>
   );
 }

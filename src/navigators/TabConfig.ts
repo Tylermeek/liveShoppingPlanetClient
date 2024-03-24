@@ -9,13 +9,13 @@ import Playground from "screens/Playground";
 
 // TODO Tab栏完善
 export const tabConfig = [
-  {
-    name: "Playground",
-    component: Playground,
-    options: {
-      title: "Playground",
-    },
-  },
+  // {
+  //   name: "Playground",
+  //   component: Playground,
+  //   options: {
+  //     title: "Playground",
+  //   },
+  // },
   {
     name: "Home",
     component: Home,

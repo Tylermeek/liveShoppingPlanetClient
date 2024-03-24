@@ -1,79 +1,106 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "react-native";
 import { scaleSizeW } from "utlis/scaleSize";
 import LottieView from "lottie-react-native";
-import { Button, Image } from "@rneui/themed";
-interface FormData {
-  mobile: string;
-  code: string;
-  password: string;
-  secPass: string;
-}
+import { BottomSheet, Button, Image, Text } from "@rneui/themed";
+import RowFlexConatiner from "components/RowFlexContainer";
+import LikeButton from "./components/LikeButton";
+import Animation from "./components/Animation";
 
-export default function Gift() {
+const animationList = [
+  {
+    name: "love",
+    source: require("../../../assets/animation/love.json"),
+  },
+  {
+    name: "crown",
+    source: require("../../../assets/animation/crown.json"),
+  },
+  {
+    name: "firework",
+    source: require("../../../assets/animation/firework.json"),
+  },
+  {
+    name: "spaceShip",
+    source: require("../../../assets/animation/spaceShip.json"),
+  },
+];
+
+export default function Playground() {
   const animationRef = useRef<LottieView>(null);
   const [showGif, setshowGif] = useState(false);
+  const [showGifSource, setshowGifSource] = useState();
+  const [openList, setOpenList] = useState(false);
 
-  useEffect(() => {
-    if (showGif) {
-      animationRef.current?.play();
-      setTimeout(() => {
-        animationRef.current?.pause();
-        setshowGif(false);
-      }, 2500);
-    }
-  }, [showGif]);
+  function handleOpenGiftList(): void {
+    // throw new Error("Function not implemented.");
+  }
+
   return (
     <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View
-          style={{
-            borderRadius: scaleSizeW(15),
-            overflow: "hidden",
-            // height: scaleSizeW(100),
-            width: scaleSizeW(80),
-            margin: StatusBar.currentHeight,
+      <Button title={"送礼物"} onPress={() => setOpenList(true)} />
+      <BottomSheet
+        modalProps={{}}
+        isVisible={openList}
+        onBackdropPress={() => setOpenList(false)}
+      >
+        <RowFlexConatiner
+          containerStyle={{
+            justifyContent: "space-around",
+            backgroundColor: "grey",
           }}
         >
-          <Image
-            style={{ height: scaleSizeW(80), width: scaleSizeW(80) }}
-            source={require("../../../assets/animationCover/love.png")}
-          />
-          <Button
-            title="赠送"
-            radius="md"
-            onPress={() => setshowGif(true)}
-            buttonStyle={{
-              padding: scaleSizeW(2),
-            }}
-            containerStyle={{
-              margin: scaleSizeW(5),
-            }}
-            titleStyle={{
-              fontSize: scaleSizeW(11),
-            }}
-          />
-        </View>
-        {showGif && (
-          <View
-            style={{
-              paddingTop: StatusBar.currentHeight,
-              paddingLeft: scaleSizeW(40),
-              paddingRight: scaleSizeW(40),
-            }}
-          >
-            <LottieView
-              ref={animationRef}
-              source={require("../../../assets/animation/love.json")}
-              style={{ width: "100%", height: "100%" }}
-              loop
-              // autoPlay
-            />
-          </View>
-        )}
-      </GestureHandlerRootView>
+          {animationList.map((animation) => (
+            <View
+              key={animation.name}
+              style={{
+                borderRadius: scaleSizeW(15),
+                overflow: "hidden",
+                // height: scaleSizeW(100),
+                // width: scaleSizeW(80),
+                margin: StatusBar.currentHeight,
+              }}
+            >
+              <Image
+                style={{
+                  height: scaleSizeW(70),
+                  width: scaleSizeW(70),
+                  borderRadius: scaleSizeW(15),
+                }}
+                source={require("../../../assets/animationCover/love.png")}
+              />
+              <Text h2 style={{ textAlign: "center" }}>
+                {animation.name}
+              </Text>
+              <Button
+                title="赠送"
+                radius="md"
+                onPress={() => {
+                  setshowGifSource(animation.source);
+                  setshowGif(true);
+                }}
+                buttonStyle={{
+                  padding: scaleSizeW(2),
+                }}
+                containerStyle={{
+                  margin: scaleSizeW(5),
+                }}
+                titleStyle={{
+                  fontSize: scaleSizeW(11),
+                }}
+              />
+            </View>
+          ))}
+        </RowFlexConatiner>
+      </BottomSheet>
+      <Animation
+        showGif={showGif}
+        setshowGif={setshowGif}
+        showGifSource={showGifSource}
+      />
+      {/* <LikeButton /> */}
     </>
   );
 }

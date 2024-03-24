@@ -12,6 +12,8 @@ const authScreens: Views[] = [
 
 export const isLogin = () => {
   const { Token } = useAppSelector((state) => state.user);
+  console.log(Token);
+  
   return !!Token;
 };
 

@@ -46,7 +46,7 @@ export default function SpecCart({ goodDetail }: { goodDetail: IGoodDetail }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    height: scaleSizeW(30),
+    height: scaleSizeW(40),
     marginTop: scaleSizeH(10),
   },
   contentContainer: {

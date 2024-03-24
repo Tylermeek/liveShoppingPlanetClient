@@ -35,6 +35,8 @@ function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             canPreventDefault: true,
           });
           if (!isFocused && !event.defaultPrevented) {
+            console.log(canVisit(logined, Views[route.name as Views]));
+
             if (canVisit(logined, Views[route.name as Views])) {
               navigation.navigate(route.name, route.params);
             } else {

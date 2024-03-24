@@ -6,6 +6,8 @@ import { scaleSizeW } from "utlis/scaleSize";
 import LottieView from "lottie-react-native";
 import { BottomSheet, Button, Image, Text } from "@rneui/themed";
 import RowFlexConatiner from "components/RowFlexContainer";
+import LikeButton from "./components/LikeButton";
+import Animation from "./components/Animation";
 
 const animationList = [
   {
@@ -32,21 +34,9 @@ export default function Playground() {
   const [showGifSource, setshowGifSource] = useState();
   const [openList, setOpenList] = useState(false);
 
-  useEffect(() => {
-    if (showGif) {
-      animationRef.current?.play();
-      // fix me 关闭动画时机问题
-      setTimeout(() => {
-        animationRef.current?.pause();
-        setshowGif(false);
-      }, 3500);
-    }
-  }, [showGif]);
   function handleOpenGiftList(): void {
-    throw new Error("Function not implemented.");
+    // throw new Error("Function not implemented.");
   }
-
-
 
   return (
     <>
@@ -54,7 +44,7 @@ export default function Playground() {
         <Button
           title={"送礼物"}
           onPress={() => setOpenList(true)}
-          buttonStyle={{ margin: scaleSizeW(100) }}
+          containerStyle={{ margin: scaleSizeW(100) }}
         />
         <BottomSheet
           modalProps={{}}
@@ -110,20 +100,12 @@ export default function Playground() {
             ))}
           </RowFlexConatiner>
         </BottomSheet>
-        {showGif && (
-          <LottieView
-            ref={animationRef}
-            source={showGifSource}
-            style={{
-              width: "100%",
-              height: "100%",
-              backgroundColor: "transparent",
-              position: "absolute",
-            }}
-            loop
-            // autoPlay
-          />
-        )}
+        <Animation
+          showGif={showGif}
+          setshowGif={setshowGif}
+          showGifSource={showGifSource}
+        />
+        {/* <LikeButton /> */}
       </GestureHandlerRootView>
     </>
   );

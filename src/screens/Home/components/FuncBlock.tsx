@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Icon, Image, Text } from "@rneui/base";
 import { Skeleton } from "@rneui/themed";
 import { useRequest } from "ahooks";
@@ -12,6 +13,7 @@ import {
 } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { ICategory } from "types/catalog";
+import { Views } from "types/navigation";
 import { scaleSizeH, scaleSizeW } from "utlis/scaleSize";
 
 export interface FuncInfo {
@@ -22,65 +24,13 @@ export interface FuncInfo {
 
 export type FuncList = FuncInfo[];
 
-const funcList: FuncList = [
-  {
-    name: "PopularProduct",
-    title: "热门商品",
-    icon: `https://img.icons8.com/color/48/mando.png`,
-  },
-  {
-    name: "PointsParadise",
-    title: "积分乐园",
-    icon: "https://img.icons8.com/color/48/baby-yoda.png",
-  },
-  {
-    name: "Supermarket",
-    title: "超市百货",
-    icon: "https://img.icons8.com/color/48/morpheus.png",
-  },
-  {
-    name: "logistics",
-    title: "物流",
-    icon: "https://img.icons8.com/color/48/neo.png",
-  },
-  {
-    name: "Categories",
-    title: "商品分类",
-    icon: "https://img.icons8.com/color/48/stormtrooper.png",
-  },
-  {
-    name: "PopularProduct",
-    title: "热门商品",
-    icon: "https://img.icons8.com/color/48/deadpool.png",
-  },
-  {
-    name: "PointsParadise",
-    title: "积分乐园",
-    icon: "https://img.icons8.com/color/48/harley-quinn-dc.png",
-  },
-  {
-    name: "Supermarket",
-    title: "超市百货",
-    icon: "https://img.icons8.com/color/48/martian.png",
-  },
-  {
-    name: "logistics",
-    title: "物流",
-    icon: "https://img.icons8.com/color/48/r2-d2.png",
-  },
-  {
-    name: "Categories",
-    title: "商品分类",
-    icon: "https://img.icons8.com/color/48/agent-smith.png",
-  },
-];
-
 const FuncBlock: React.FC = () => {
   // TODO 功能列表配置化
   const { data, loading } = useRequest(getFirstcategoryList);
-
+  const { navigate } = useNavigation();
   const handlePress = (category: ICategory) => {
     console.log(`todo jump to ${category.name}`);
+    navigate(Views.CatalogDetail, { index: 0, rootId: category.id });
   };
 
   return (

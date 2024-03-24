@@ -24,6 +24,7 @@ import ContactSearch from "screens/ContactSearch";
 import ResetPassword from "screens/ResetPassword";
 import SearchOrderList from "screens/SearchOrderList";
 import CatalogDetail from "screens/CatalogDetail";
+import Live from "screens/Live";
 
 export type CompositeTabScreenParamList<T extends keyof TabBarParamList> =
   CompositeScreenProps<
@@ -43,6 +44,10 @@ const routeConfig = [
   {
     name: "LiveRoom",
     component: LiveRoom,
+  },
+  {
+    name: "Live",
+    component: Live,
   },
   {
     name: "SearchResultList",

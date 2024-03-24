@@ -68,19 +68,20 @@ class MyAxios {
     // 响应拦截器
     this.instance.interceptors.response.use(
       (response) => {
-        // const navigation = useNavigation();
         if (response.status === 200) {
           if (response.data.errno === 501) {
+            console.log("test");
+            
             // 清除登录相关内容
             try {
               storage.remove({ key: "userInfo" });
               storage.remove({ key: "Token" });
+
             } catch (e) {
               // Do something when catch error
             }
             // todo 切换到登录页面
-            console.error("need login");
-            // navigation.navigate(Views.LogIn);
+            console.error("need login");            
           } else {
             return response.data;
           }
@@ -111,6 +112,6 @@ class MyAxios {
 }
 
 export const request = new MyAxios({
-  baseURL: "http://10.251.10.74:8080/wx",
+  baseURL: "http://192.168.1.101:8080/wx",
   timeout: 1000 * 5,
 });

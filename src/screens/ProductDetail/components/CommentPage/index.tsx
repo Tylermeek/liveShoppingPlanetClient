@@ -52,7 +52,7 @@ const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
 
   return (
     <>
-      <ScrollView style={{ flex: 1, backgroundColor: "rgb(221, 221, 221)" }}>
+      <ScrollView style={{ flex: 1 }}>
         <View
           style={{
             flexDirection: "row",
@@ -89,30 +89,56 @@ const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
               style={{
                 margin: scaleSizeW(10),
                 width: "auto",
-                backgroundColor: "rgb(221, 221, 221)",
+                // backgroundColor: "rgb(221, 221, 221)",
               }}
             >
-              <Skeleton height={30} width={30} style={{margin:scaleSizeW(5)}} circle/>
-              <Skeleton height={30} width={200} style={{margin:scaleSizeW(5)}}/>
-              <Skeleton height={30} width={320} style={{margin:scaleSizeW(5)}}/>
+              <Skeleton
+                height={30}
+                width={30}
+                style={{ margin: scaleSizeW(5) }}
+                circle
+              />
+              <Skeleton
+                height={30}
+                width={200}
+                style={{ margin: scaleSizeW(5) }}
+              />
+              <Skeleton
+                height={30}
+                width={320}
+                style={{ margin: scaleSizeW(5) }}
+              />
             </View>
             <View
               style={{
                 margin: scaleSizeW(10),
                 width: "auto",
-                backgroundColor: "rgb(221, 221, 221)",
+                // backgroundColor: "rgb(221, 221, 221)",
               }}
             >
-              <Skeleton height={30} width={30} style={{margin:scaleSizeW(5)}} circle/>
-              <Skeleton height={30} width={200} style={{margin:scaleSizeW(5)}}/>
-              <Skeleton height={30} width={320} style={{margin:scaleSizeW(5)}}/>
+              <Skeleton
+                height={30}
+                width={30}
+                style={{ margin: scaleSizeW(5) }}
+                circle
+              />
+              <Skeleton
+                height={30}
+                width={200}
+                style={{ margin: scaleSizeW(5) }}
+              />
+              <Skeleton
+                height={30}
+                width={320}
+                style={{ margin: scaleSizeW(5) }}
+              />
             </View>
           </>
         ) : (
           <>
             <View
               style={{
-                backgroundColor: "rgb(221, 221, 221)",
+                // backgroundColor: "rgb(221, 221, 221)",
                 borderTopLeftRadius: scaleSizeW(15),
                 borderTopRightRadius: scaleSizeW(15),
               }}
@@ -140,16 +166,15 @@ const CommentPage: React.FC<CommentPageProps> = ({ goodsId }) => {
                       <Text
                         style={{
                           marginLeft: scaleSizeW(5),
-                          fontSize: scaleSizeW(11),
+                          // fontSize: scaleSizeW(11),
                         }}
+                        h2
                       >
                         {comment.nickname}
                       </Text>
                     </View>
                     <View style={styles.contentContainer}>
-                      <Text style={{ fontSize: scaleSizeW(10) }}>
-                        {comment.content}
-                      </Text>
+                      <Text h4>{comment.content}</Text>
                       <View
                         style={{
                           flexDirection: "row",
