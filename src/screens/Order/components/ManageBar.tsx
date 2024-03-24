@@ -64,6 +64,9 @@ const ButtonFactory = ({ type, orderId }: any) => {
       buttonStyle={{
         borderColor: type === "confirm" ? "#EC9A86" : "grey",
       }}
+      containerStyle={{
+        marginLeft: scaleSizeW(10),
+      }}
       onPress={handlePress}
     />
   );

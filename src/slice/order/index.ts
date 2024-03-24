@@ -2,15 +2,18 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getOrderList } from "axios/api/order";
 import { cloneDeep } from "lodash-es";
 import { IOrder, OrderType } from "types/order";
+import { boolean } from "yup";
 
 const initialState: {
   currentTab: OrderType;
   orderList: IOrder[];
   curList: IOrder[];
+  loading: boolean;
 } = {
   currentTab: 0, // 初始的订单状态
   orderList: [],
   curList: [],
+  loading: false,
 };
 
 export const getOrderListThunk = createAsyncThunk(
@@ -40,9 +43,16 @@ const orderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getOrderListThunk.fulfilled, (state, { payload }) => {
-      state.orderList = payload?.list || [];
-    });
+    builder
+      .addCase(getOrderListThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getOrderListThunk.fulfilled, (state, { payload }) => {
+        state.orderList = payload?.list || [];
+      })
+      .addCase(getOrderListThunk.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 

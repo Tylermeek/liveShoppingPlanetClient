@@ -82,7 +82,7 @@ const LiveRoom: React.FC = () => {
               isMuted
               // onPlaybackStatusUpdate={handlePlayStatusChange}
             />
-            {!loading && (
+            {loading && (
               <Progress.Circle
                 size={50}
                 borderWidth={scaleSizeW(5)}

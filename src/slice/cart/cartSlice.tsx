@@ -93,7 +93,7 @@ const cartInfoSlice = createSlice({
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(getCartlistThunk.fulfilled, (state, { payload }) => {
-        state.cartStatus = CartStatus.Fetched;
+        state.cartStatus = state.preCartStatus;
         state.cartList = payload.cartList;
         state.cartTotal = payload.cartTotal;
         state.submitList = payload.cartList
@@ -135,6 +135,7 @@ const cartInfoSlice = createSlice({
       .addCase(delProsThunk.pending, (state, { payload }) => {
         console.log("删除商品中");
         state.preCartStatus = state.cartStatus;
+        console.log("删除商品中", state.preCartStatus);
         state.cartStatus = CartStatus.Loading;
       })
       .addCase(delProsThunk.fulfilled, (state) => {

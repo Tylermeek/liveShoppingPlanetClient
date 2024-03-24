@@ -56,11 +56,24 @@ export default function OrderList({ tab }: any) {
     }, [])
   );
 
-  return !isEmptyArr(data?.data?.list || []) ? (
+  return loading ? (
+    <Progress.Circle
+      size={40}
+      indeterminate={true}
+      color="#EC9A86"
+      borderWidth={scaleSizeW(2)}
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: [
+          { translateX: -scaleSizeW(30) },
+          { translateY: -scaleSizeW(30) },
+        ],
+      }}
+    />
+  ) : !isEmptyArr(data?.data?.list || []) ? (
     <ScrollView style={{ flex: 1 }}>
-      {loading && (
-        <Progress.Circle size={30} indeterminate={true} color="#EC9A86" />
-      )}
       {data?.data?.list.map((order) => (
         <OrderItem key={order.id} order={order} />
       ))}

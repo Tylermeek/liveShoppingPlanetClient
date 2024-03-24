@@ -23,7 +23,7 @@ const LiveTitle: React.FC<LiveTitleProps> = ({ liveTitle, liveUser }) => {
           }}
         >
           <LottieView
-            source={require("../../../../../assets/animation/Spectrogram.json")}
+            source={require("../../../../../assets/animation/spectrogram.json")}
             style={{
               width: scaleSizeW(35),
               height: scaleSizeW(20),

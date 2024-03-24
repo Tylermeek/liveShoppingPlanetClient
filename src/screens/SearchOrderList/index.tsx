@@ -14,7 +14,7 @@ export default function SearchOrderList() {
       <SearchOrderBanner />
       <ScrollView style={{ flex: 1 }}>
         {!isEmpty(list) ? (
-          list.map((order) => <OrderItem order={order} />)
+          list.map((order) => <OrderItem key={order.id} order={order} />)
         ) : (
           <Empty />
         )}

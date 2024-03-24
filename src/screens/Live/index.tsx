@@ -291,6 +291,7 @@ const Live: React.FC = () => {
                 blurRadius={5}
               />
               {currentIndex === index && (
+              // {false && (
                 <Video
                   style={{
                     width: "100%",
@@ -327,7 +328,7 @@ const Live: React.FC = () => {
                   onPress={() => handleEnterLive(liveList[currentIndex])}
                 >
                   <LottieView
-                    source={require("../../../assets/animation/Spectrogram.json")}
+                    source={require("../../../assets/animation/spectrogram.json")}
                     style={{
                       width: scaleSizeW(50),
                       height: scaleSizeW(50),
